@@ -1,11 +1,13 @@
 <script>
 import Container from "@/views/container/Container.vue";
+import Button from "@/components/button/index.vue";
 import Search from "../Header/Search/index.vue";
 import Navigation from "../Header/Navigation/index.vue";
 
 export default {
   components: {
     Container,
+    Button,
     Search,
     Navigation,
   },
@@ -26,8 +28,9 @@ export default {
           <Search />
         </div>
 
-        <div class="flex">
+        <div class="flex gap-5">
           <Navigation />
+          <Button class="w-[190px]">Masuk</Button>
         </div>
       </div>
     </Container>
