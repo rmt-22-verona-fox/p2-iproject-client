@@ -1,5 +1,5 @@
 <script>
-import Layout from "./components/layout/Layout.vue";
+import Layout from "@/components/layout/Layout.vue";
 
 export default {
   components: {
@@ -15,8 +15,6 @@ export default {
 </script>
 
 <template>
-  <Layout>
-    <router-view></router-view>
-  </Layout>
-  <button class="text-yellow-70 font-label" v-on:click="payment">Bayar!</button>
+  <router-view></router-view>
+  <!-- <button class="text-yellow-70 font-label" v-on:click="payment">Bayar!</button> -->
 </template>

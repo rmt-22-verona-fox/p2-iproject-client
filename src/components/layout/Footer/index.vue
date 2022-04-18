@@ -67,7 +67,7 @@ export default {
           <FooterInfo
             title="Kontak"
             v-bind:content="[
-              'Jl. Cisitu Lama No 160B',
+              'Jl. Cisitu Lama No VA/160B',
               'Bandung, Jawa Barat',
               'Indonesia',
               '(022)8888888',
