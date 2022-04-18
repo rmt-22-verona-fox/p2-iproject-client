@@ -1,9 +1,11 @@
 <script>
 import Header from "@/components/layout/Header/index.vue";
+import Footer from "@/components/layout/Footer/index.vue";
 
 export default {
   components: {
     Header,
+    Footer,
   },
 };
 </script>
@@ -12,6 +14,6 @@ export default {
   <div>
     <Header />
     <slot></slot>
-    <footer></footer>
+    <Footer />
   </div>
 </template>
