@@ -66,7 +66,6 @@ export default {
 
 <style scoped>
 .section {
-  padding-top: 85px;
   position: relative;
 
   background-image: url("@/assets/login/login-bg.png");
