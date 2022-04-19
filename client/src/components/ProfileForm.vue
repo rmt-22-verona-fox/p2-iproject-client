@@ -11,24 +11,29 @@ export default {
         age: "",
         gender: "",
         address: "",
+        bio: "",
       },
       file: "",
     };
   },
   methods: {
-    ...mapActions(useDatingStore, ["updateProfile"]),
+    ...mapActions(useDatingStore, ["updateProfilePhoto", "updateProfile"]),
     photo() {
       this.file = this.$refs.myFiles.files[0];
     },
     async upload() {
       const formdata = new FormData();
       formdata.append("file", this.file);
+       this.updateProfilePhoto(formdata);
       try {
-        await this.updateProfile({
-          formdata: formdata,
-          formProfile: this.formProfile,
+        await this.updateProfile(this.formProfile);
+      } catch (error) {
+        this.$swal({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
         });
-      } catch (error) {}
+      }
     },
   },
 };
@@ -76,6 +81,15 @@ export default {
             class="form-control"
             placeholder="enter address"
             v-model="formProfile.address"
+          />
+        </div>
+        <div class="col-md-12">
+          <label class="labels">bio</label
+          ><input
+            type="text"
+            class="form-control"
+            placeholder="enter address"
+            v-model="formProfile.bio"
           />
         </div>
         <div class="col-md-12 gender">
