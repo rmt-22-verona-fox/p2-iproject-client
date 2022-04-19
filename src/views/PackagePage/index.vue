@@ -3,6 +3,7 @@ import Container from "../container/Container.vue";
 import Layout from "@/components/layout/Layout.vue";
 import ImageCard from "@/views/PackagePage/ImageCard/index.vue";
 import Testimonies from "@/views/PackagePage/Testimonials/index.vue";
+import Package from "@/views/PackagePage/Package/index.vue";
 import Arrow from "@/views/PackagePage/Arrow/index.vue";
 import HelperSection from "@/views/PackagePage/HelperSection/index.vue";
 
@@ -12,6 +13,7 @@ export default {
     Layout,
     ImageCard,
     Testimonies,
+    Package,
     Arrow,
     HelperSection,
   },
@@ -75,7 +77,8 @@ export default {
       <HelperSection />
       <hr />
 
-      <Testimonies class="mb-14" />
+      <Testimonies />
+      <Package />
     </Container>
   </Layout>
 </template>

@@ -29,7 +29,7 @@ const router = createRouter({
       component: ProfileView,
     },
     {
-      path: "/detil/:id",
+      path: "/detil-paket/:id",
       name: "detail-page",
       component: PackageView,
     },

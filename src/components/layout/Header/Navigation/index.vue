@@ -11,8 +11,8 @@ export default {
 <template>
   <nav class="flex items-center gap-5">
     <NavItem link="/" label="Beranda" />
-    <NavItem link="/profile" label="profile" />
-    <NavItem link="/detil/1" label="Paket" />
+    <NavItem link="/profil" label="profile" />
+    <NavItem link="/detil-paket/1" label="Paket" />
     <NavItem link="/" label="Testimonial" />
   </nav>
 </template>

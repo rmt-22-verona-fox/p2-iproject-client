@@ -20,7 +20,7 @@ export default {
             Sudah punya akun?
           </p>
           <router-link
-            to="/login"
+            to="/masuk"
             class="text-heading-5 text-blue-100 font-semibold ml-2 hover-underline"
           >
             Masuk disini

@@ -20,7 +20,7 @@ export default {
             Belum punya akun?
           </p>
           <router-link
-            to="/register"
+            to="/daftar"
             class="text-heading-5 text-blue-100 font-semibold ml-2 hover-underline"
           >
             Daftar disini

@@ -14,7 +14,7 @@ export default {
 
   methods: {
     loginButtonHandler() {
-      this.$router.push("/login");
+      this.$router.push("/masuk");
     },
   },
 };
