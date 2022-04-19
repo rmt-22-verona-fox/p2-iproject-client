@@ -1,13 +1,20 @@
-<script></script>
+<script>
+export default {
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.push("/login");
+    },
+  },
+};
+</script>
 
 <template>
   <section class="ftco-section">
     <div class="container">
       <div class="row justify-content-between">
         <div class="col">
-          <a class="navbar-brand" href="index.html"
-            >To <span>Love Ru</span></a
-          >
+          <a class="navbar-brand" href="index.html">To <span>Love Ru</span></a>
         </div>
         <div class="col d-flex justify-content-end">
           <div class="social-media">
@@ -15,8 +22,9 @@
               <a
                 href="#"
                 class="d-flex align-items-center justify-content-center"
-                ><i class="far fa-comment"></i></a
-              >
+                @click.prevent="logout"
+                ><i class="fas fa-sign-out-alt"></i
+              ></a>
             </p>
           </div>
         </div>
@@ -38,6 +46,9 @@
         >
           <span class="fa fa-bars"></span> Menu
         </button>
+        <a href="#" class="order-lg-last chat"
+          ><i class="far fa-comment"></i
+        ></a>
         <form action="#" class="searchform order-lg-last">
           <div class="form-group d-flex">
             <input type="text" class="form-control pl-3" placeholder="Search" />
@@ -48,7 +59,7 @@
         </form>
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item">
               <a href="#" class="nav-link">Home</a>
             </li>
             <li class="nav-item dropdown">
