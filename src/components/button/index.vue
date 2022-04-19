@@ -11,7 +11,6 @@ export default {
   <!-- FALLTHROUGH ATTRIBUTE WILL BE USED -->
   <button
     class="text-white bg-blue-100 p-3 h-[45px] text-heading-4 font-label font-bold rounded-md flex justify-center items-center"
-    v-bind:class="(isFullWidth && fullWidth) || (isOutlined && outlined)"
   >
     <slot></slot>
   </button>

@@ -8,6 +8,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@egjs/vue3-flicking": "^4.6.0",
     "axios": "^0.26.1",
     "pinia": "^2.0.13",
     "snapjs": "^1.2.1",
