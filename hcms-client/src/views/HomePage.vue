@@ -117,7 +117,12 @@ export default {
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Accusantium consequuntur.
                 </p>
-                <a href="#" class="new-btn-d br-2">Read More</a>
+                <a
+                  href="#"
+                  @click.prevent="monitoringClick()"
+                  class="new-btn-d br-2"
+                  >Start Monitoring Service</a
+                >
               </div>
             </div>
             <div class="item">
@@ -130,7 +135,12 @@ export default {
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Accusantium consequuntur.
                 </p>
-                <a href="#" class="new-btn-d br-2">Read More</a>
+                <a
+                  href="#"
+                  @click.prevent="hospitalClick()"
+                  class="new-btn-d br-2"
+                  >See Available Beds</a
+                >
               </div>
             </div>
             <div class="item">
@@ -143,7 +153,12 @@ export default {
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Accusantium consequuntur.
                 </p>
-                <a href="#" class="new-btn-d br-2">Read More</a>
+                <a
+                  href="#"
+                  @click.prevent="appointmentClick()"
+                  class="new-btn-d br-2"
+                  >Seek Professional Help</a
+                >
               </div>
             </div>
           </div>
