@@ -1,0 +1,53 @@
+.landingPageHeight{
+  height: 80vh;
+  
+}
+
+.prayerTimeBox{
+  width: 500px;
+  background-color: #F8F9FA;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.surahBox{
+  width: 350px;
+  height: 75px;
+  background-color: #F8F9FA;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+
+.namaSurah{
+  color: black;
+  text-decoration: none;
+
+    transition: color .20s ease-in-out;
+    -moz-transition: color .20s ease-in-out;
+    -webkit-transition: color .20s ease-in-out;
+}
+.namaSurah:hover{
+color: olive;
+
+    transition: color .20s ease-in-out;
+    -moz-transition: color .20s ease-in-out;
+    -webkit-transition: color .20s ease-in-out;
+
+}
+.red-btn{
+  align-self:flex-start;
+
+}
+
+.dailySurah{
+
+width: 1000px;
+  background-color: #F8F9FA;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+
+.breakWord{
+  overflow-wrap: break-word;
+}
