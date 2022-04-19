@@ -1,7 +1,5 @@
 <script></script>
 
 <template>
-  <main>
-    <h1>Home View</h1>
-  </main>
+  <div>Filter Bar</div>
 </template>

@@ -1,7 +1,7 @@
 <script></script>
 
 <template>
-  <nav class="bg-white shadow-lg">
+  <nav class="bg-white shadow">
     <div class="mx-auto max-w-6xl px-4">
       <div class="flex justify-between">
         <div class="flex space-x-7">
@@ -21,13 +21,15 @@
         </div>
         <!-- Primary Navbar items -->
         <div class="hidden items-center space-x-1 md:flex">
-          <a
+          <router-link
+            to="/"
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
-            >Home</a
+            >Home</router-link
           >
-          <a
+          <router-link
+            to="/pokedex"
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
-            >My Pokémon</a
+            >Pokédex</router-link
           >
           <a
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
