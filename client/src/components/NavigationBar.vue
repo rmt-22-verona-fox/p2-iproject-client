@@ -7,7 +7,7 @@
         <div class="flex space-x-7">
           <div>
             <!-- Website Logo -->
-            <a class="flex items-center py-4 px-2">
+            <a class="flex items-center py-4">
               <img
                 src="@/assets/logo.png"
                 alt="Logo"

@@ -10,6 +10,7 @@ export default {
 <template>
   <NavigationBar></NavigationBar>
   <RouterView></RouterView>
+  <div class="mt-10 bg-black py-8"></div>
 </template>
 
 <style></style>
