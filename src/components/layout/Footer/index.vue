@@ -78,8 +78,8 @@ export default {
       </div>
     </Container>
 
-    <div className="bg-blue-100 p-3">
-      <p className="text-heading-5 text-white font-bold text-center">
+    <div class="bg-blue-100 p-3">
+      <p class="text-heading-5 text-white font-bold text-center">
         Diaz Linggaputra &copy; 2022 Travelio. All Rights Reserved.
       </p>
     </div>

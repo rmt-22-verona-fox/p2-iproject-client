@@ -1,8 +1,6 @@
 <template>
-  <article className="flex flex-col w-[182px]">
-    <figure
-      className="relative w-full h-[179px] rounded-xl overflow-hidden mb-5"
-    >
+  <article class="flex flex-col w-[182px]">
+    <figure class="relative w-full h-[179px] rounded-xl overflow-hidden mb-5">
       <img
         src="@/assets/home/bromo.png"
         alt="Borobudur"
@@ -10,6 +8,6 @@
       />
     </figure>
 
-    <p className="text-heading-3 text-gray-100 font-bold">Gunung</p>
+    <p class="text-heading-3 text-gray-100 font-bold">Gunung</p>
   </article>
 </template>

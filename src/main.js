@@ -11,6 +11,8 @@ import "@egjs/vue3-flicking/dist/flicking.css";
 
 import "@egjs/vue3-flicking/dist/flicking-inline.css";
 
+/* add icons to the library */
+
 const app = createApp(App);
 
 app.use(createPinia());

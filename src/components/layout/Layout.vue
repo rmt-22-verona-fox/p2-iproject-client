@@ -7,6 +7,8 @@ export default {
     Header,
     Footer,
   },
+
+  props: ["noFooter"],
 };
 </script>
 
@@ -14,6 +16,6 @@ export default {
   <div>
     <Header />
     <slot></slot>
-    <Footer />
+    <Footer v-bind:class="noFooter ? 'hidden' : ''" />
   </div>
 </template>

@@ -11,6 +11,12 @@ export default {
     Search,
     Navigation,
   },
+
+  methods: {
+    loginButtonHandler() {
+      this.$router.push("/login");
+    },
+  },
 };
 </script>
 
@@ -19,18 +25,22 @@ export default {
     <Container>
       <div class="flex justify-between items-center">
         <div class="flex">
-          <img
-            src="@/assets/travelio-logo-header.svg"
-            alt="header-logo"
-            height="48"
-            width="200"
-          />
+          <router-link to="/">
+            <img
+              src="@/assets/travelio-logo-header.svg"
+              alt="header-logo"
+              height="48"
+              width="200"
+            />
+          </router-link>
           <Search />
         </div>
 
         <div class="flex gap-5">
           <Navigation />
-          <Button class="w-[190px]">Masuk</Button>
+          <Button v-on:click="loginButtonHandler" class="w-[190px]"
+            >Masuk</Button
+          >
         </div>
       </div>
     </Container>

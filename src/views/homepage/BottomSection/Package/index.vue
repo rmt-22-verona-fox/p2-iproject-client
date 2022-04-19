@@ -10,14 +10,14 @@ export default {
 
 <template>
   <div>
-    <h3 className="text-heading-3 text-white font-label font-bold pt-14 mb-1">
+    <h3 class="text-heading-3 text-white font-label font-bold pt-14 mb-1">
       Paket Liburan Populer
     </h3>
-    <p className="text-heading-4 text-white mb-4">
+    <p class="text-heading-4 text-white mb-4">
       Paket terbaik yang sering dipilih oleh pelanggan
     </p>
 
-    <div className="flex justify-between">
+    <div class="flex justify-between">
       <PackageCard />
       <PackageCard />
       <PackageCard />
