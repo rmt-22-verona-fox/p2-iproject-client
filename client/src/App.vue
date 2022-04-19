@@ -1,4 +1,29 @@
-<script setup></script>
+<script>
+export default {
+  created(){
+    var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+  }
+}
+</script>
 
 <template>
   <div>
@@ -140,6 +165,16 @@
           <a href="" class="red-btn"><i class="bi bi-bookmark"></i></a>
         </div>
       </div>
+    </div>
+    <!-- detail surah -->
+    <div class="container-fluid">
+      <div class=" d-flex justify-content-center align-items-center flex-column">
+        <p class="my-3 ms-3 fs-3 fst-italic fw-bold">Al-Kahf</p>
+        <p class="mb-3 ms-3 fw-bold fs-5">Manusia</p>
+          </div>
+          <div>
+            
+          </div>
     </div>
   </div>
 </template>
