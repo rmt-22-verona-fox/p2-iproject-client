@@ -22,7 +22,7 @@
 .namaSurah{
   color: black;
   text-decoration: none;
-
+  cursor: pointer;
     transition: color .20s ease-in-out;
     -moz-transition: color .20s ease-in-out;
     -webkit-transition: color .20s ease-in-out;
@@ -50,4 +50,12 @@ width: 1000px;
 
 .breakWord{
   overflow-wrap: break-word;
+}
+
+.hurufArab{
+  direction: rtl;
+}
+
+.detailSurah{
+  width: 1000px;
 }
