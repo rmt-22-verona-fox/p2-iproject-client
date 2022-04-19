@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 $(document).ready(function () {
 
 	$('#js-main-slider').pogoSlider({
