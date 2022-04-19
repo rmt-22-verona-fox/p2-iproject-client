@@ -29,23 +29,24 @@ export const useDatingStore = defineStore({
       });
     },
     updateProfile(data) {
-      console.log(data.formProfile.name);
-      return axios.post(
-        "http://localhost:3000/users/addprofile",
-        {
-          FormData: data.formdata,
-          name: data.formProfile.name,
-          age: data.formProfile.age,
-          gender : data.formProfile.gender,
-          phoneNumber: data.formProfile.phoneNumber,
-          address : data.formProfile.address
+      console.log(data);
+      return axios.post("http://localhost:3000/users/addprofile", data, {
+        headers: {
+          access_token: localStorage.getItem("access_token"),
         },
-        {
+      });
+    },
+    async updateProfilePhoto(data) {
+      try {
+        console.log(data);
+        axios.post("http://localhost:3000/users/addprofilePhoto", data, {
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
-        }
-      );
+        });
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
     },
   },
 });
