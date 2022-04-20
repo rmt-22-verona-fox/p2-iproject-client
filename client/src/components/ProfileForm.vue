@@ -5,28 +5,36 @@ export default {
   data() {
     return {
       formProfile: {
-        file: {},
         name: "",
         phoneNumber: "",
         age: "",
         gender: "",
         address: "",
-        bio: "",
       },
       file: "",
     };
   },
   methods: {
-    ...mapActions(useDatingStore, ["updateProfilePhoto", "updateProfile"]),
+    ...mapActions(useDatingStore, ["updateProfile"]),
     photo() {
       this.file = this.$refs.myFiles.files[0];
     },
     async upload() {
       const formdata = new FormData();
       formdata.append("file", this.file);
-       this.updateProfilePhoto(formdata);
+      formdata.append("name", this.formProfile.name);
+      formdata.append("phoneNumber", this.formProfile.phoneNumber);
+      formdata.append("age", this.formProfile.age);
+      formdata.append("gender", this.formProfile.gender);
+      formdata.append("address", this.formProfile.address);
+
       try {
-        await this.updateProfile(this.formProfile);
+        await this.updateProfile(formdata);
+        this.$swal({
+          icon: "success",
+          text: "success add profile",
+        });
+        this.$router.push("/");
       } catch (error) {
         this.$swal({
           icon: "error",
@@ -56,6 +64,18 @@ export default {
             v-model="formProfile.name"
           />
         </div>
+        <div class="col-md-12 gender">
+          <label class="labels">Select your gender</label><br />
+          <select
+            class="form-select form-select-sm"
+            aria-label=".form-select-lg example"
+            v-model="formProfile.gender"
+          >
+            <option default hidden value="">Please select gender</option>
+            <option value="female">Female</option>
+            <option value="male">male</option>
+          </select>
+        </div>
         <div class="col-md-12">
           <label class="labels">Age</label
           ><input
@@ -82,27 +102,6 @@ export default {
             placeholder="enter address"
             v-model="formProfile.address"
           />
-        </div>
-        <div class="col-md-12">
-          <label class="labels">bio</label
-          ><input
-            type="text"
-            class="form-control"
-            placeholder="enter address"
-            v-model="formProfile.bio"
-          />
-        </div>
-        <div class="col-md-12 gender">
-          <label class="labels">Select your gender</label><br />
-          <select
-            class="form-select form-select-sm"
-            aria-label=".form-select-lg example"
-            v-model="formProfile.gender"
-          >
-            <option default hidden value="">Please select gender</option>
-            <option value="female">Female</option>
-            <option value="male">male</option>
-          </select>
         </div>
         <div class="col-md-12 gender">
           <label class="labels">Upload Photo Profile</label><br />

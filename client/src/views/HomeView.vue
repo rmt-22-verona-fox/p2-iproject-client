@@ -12,14 +12,12 @@ export default {
     async getProfile() {
       try {
         await this.profile();
-        localStorage.removeItem("profile");
       } catch (error) {
         this.$swal({
           icon: "error",
           title: "Oops...",
           text: error.response.data.message,
         });
-        localStorage.setItem("profile", null);
         this.$router.push("/addProfile");
       }
     },

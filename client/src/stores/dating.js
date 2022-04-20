@@ -30,23 +30,12 @@ export const useDatingStore = defineStore({
     },
     updateProfile(data) {
       console.log(data);
+
       return axios.post("http://localhost:3000/users/addprofile", data, {
         headers: {
           access_token: localStorage.getItem("access_token"),
         },
       });
-    },
-    async updateProfilePhoto(data) {
-      try {
-        console.log(data);
-        axios.post("http://localhost:3000/users/addprofilePhoto", data, {
-          headers: {
-            access_token: localStorage.getItem("access_token"),
-          },
-        });
-      } catch (error) {
-        console.log(error.response.data.message);
-      }
     },
   },
 });
