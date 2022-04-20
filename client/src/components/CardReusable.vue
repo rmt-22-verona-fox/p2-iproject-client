@@ -1,31 +1,39 @@
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      test: 10,
+    };
+  },
+  props: {
+    product: Object,
+  },
+  computed: {
+    idrPrice: function () {
+      return `IDR ${+this.product.retailPrice * 14000},00`;
+    },
+  },
+};
 </script>
 
 <template>
   <div class="profile-card-2">
     <img
-      src="https://image.goat.com/attachments/product_template_pictures/images/067/561/185/original/887470_00.png.png"
-      class="img img-responsive"
-      width="300px"
+      :src="product.image.thumbnail"
+      class="card-img-top"
+      :alt="product.name"
     />
-    <div class="profile-name">JOHN DOE</div>
-    <div class="profile-username">@johndoesurname</div>
-    <div class="profile-icons">
-      <a href="#"><i class="fa fa-facebook"></i></a
-      ><a href="#"><i class="fa fa-twitter"></i></a
-      ><a href="#"><i class="fa fa-linkedin"></i></a>
+    <div class="card-body">
+      <h5 class="card-title text-center profile-name">{{ product.name }}</h5>
+      <p style="text-align: right">{{ idrPrice }}</p>
+    </div>
+    <div class="text-center my-4">
+      <button class="btn btn-primary">Buy</button>
     </div>
   </div>
 </template>
 
 <style scoped>
-a,
-a:hover,
-a:focus {
-  color: inherit;
-}
-
 .profile-card-2 {
   max-width: 300px;
   background-color: #fff;
@@ -45,8 +53,8 @@ a:focus {
 .profile-card-2 .profile-name {
   position: absolute;
   left: 30px;
-  bottom: 40px;
-  font-size: 30px;
+  bottom: 70px;
+  font-size: 15px;
   color: rgb(109, 107, 107);
   text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
   font-weight: bold;

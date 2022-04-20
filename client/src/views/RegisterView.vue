@@ -1,6 +1,7 @@
 <script>
 import { mapActions } from "pinia";
 import { useUserStore } from "@/stores/user";
+import NavBar from "../components/NavBar.vue";
 export default {
   data() {
     return {
@@ -11,7 +12,9 @@ export default {
       address: "",
     };
   },
-  components: {},
+  components: {
+    NavBar,
+  },
   methods: {
     ...mapActions(useUserStore, ["registerAction"]),
     async registerEvent() {
@@ -58,6 +61,7 @@ export default {
 </script>
 
 <template>
+  <NavBar></NavBar>
   <!-- register-page -->
   <div class="register-page">
     <div class="row g-3 align-items-center">
@@ -129,6 +133,8 @@ export default {
 <style>
 /* register-page */
 .register-page {
-  margin: 15%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-top: 5%;
 }
 </style>

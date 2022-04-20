@@ -2,6 +2,7 @@
 import { mapActions } from "pinia";
 import { useUserStore } from "../stores/user";
 import ThreeComponent from "../components/ThreeComponent.vue";
+import NavBar from "../components/NavBar.vue";
 export default {
   data() {
     return {
@@ -11,6 +12,7 @@ export default {
   },
   components: {
     ThreeComponent,
+    NavBar,
   },
   methods: {
     ...mapActions(useUserStore, ["loginAction"]),
@@ -58,14 +60,14 @@ export default {
 </script>
 
 <template>
+  <NavBar></NavBar>
   <!-- login-page -->
-  <img src="@/assets/logo.png" />
   <div class="login-page">
     <div class="container">
       <div class="row">
         <div class="col-sm-6 col-md-7 intro-section">
           <div class="intro-content-wrapper">
-            <h1 class="intro-title">Welcome to Bligspit !</h1>
+            <h1 class="intro-title">Buy 100% Authentic Sneakers !</h1>
           </div>
         </div>
         <div class="col-sm-6 col-md-5 form-section">
@@ -112,3 +114,25 @@ export default {
     </div>
   </div>
 </template>
+
+<style scoped>
+.login-page {
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(136, 136, 136, 0.896796218487395) 42%,
+    rgba(94, 103, 113, 0.8295693277310925) 100%
+  );
+  background-size: cover;
+  position: absolute;
+
+  top: 11%;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.container {
+  margin-top: 10%;
+}
+</style>
