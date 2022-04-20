@@ -15,6 +15,9 @@ export default {
 <template>
   <div class="col text-center">
     <div class="row d-flex justify-content-center">
+      <p class=" mx-3 fs-3 fst-italic fw-bold breakWord">
+        Waktu Shalat
+      </p>
       <p class="my-3 mx-3 fs-3 fst-italic fw-bold breakWord">
         {{ currentPrayerTime?.date }}
       </p>

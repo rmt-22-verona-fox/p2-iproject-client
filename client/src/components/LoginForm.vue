@@ -10,10 +10,17 @@ export default {
       },
     };
   },
-  methods:{
-      ...mapActions(useLoginStore, ['submitLogin']),
+  methods: {
+    ...mapActions(useLoginStore, ["submitLogin"]),
 
-  }
+    toRegister() {
+      this.loginForm = false;
+      this.registerForm = true;
+    },
+  },
+  computed: {
+    ...mapWritableState(useLoginStore, ["loginForm", "registerForm"]),
+  },
 };
 </script>
 
@@ -25,9 +32,7 @@ export default {
           <form @submit.prevent="submitLogin(login)">
             <h1 class="mb-3">Login</h1>
             <div class="mb-3 mx-5">
-              <label for="exampleInputEmail1" class="form-label"
-                >Email address</label
-              >
+              <label for="exampleInputEmail1" class="form-label">Email</label>
               <input
                 v-model="login.email"
                 type="email"
@@ -51,6 +56,9 @@ export default {
             <div class="text-center">
               <button type="submit" class="btn btn-primary">Login</button>
             </div>
+            <p class="mt-3">
+              Register <a @click.prevent="toRegister" style="text-decoration: none" href="">Here</a>
+            </p>
           </form>
         </div>
       </div>

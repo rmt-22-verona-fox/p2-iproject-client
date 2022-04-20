@@ -1,13 +1,16 @@
 <script>
-import { mapActions, mapWritableState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useLoginStore } from "../stores/LoginStore";
 
 export default {
   methods: {
-    ...mapActions(useLoginStore, ["getGeolocation"]),
+    ...mapActions(useLoginStore, ["getGeolocation", "logout"]),
     triggerGeo() {
       this.getGeolocation();
     },
+  },
+  computed: {
+    ...mapState(useLoginStore, ["isLogin"]),
   },
 };
 </script>
@@ -32,16 +35,30 @@ export default {
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item"></li>
-          <li class="nav-item">
-            <router-link class="nav-link active" to="/login"
-              >Logout</router-link
-            >
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link active" to="/bookmarks"
-              >Bookmarks</router-link
-            >
-          </li>
+          <div v-if="isLogin">
+            <li class="nav-item">
+              <router-link
+                @click.prevent="logout()"
+                class="nav-link active"
+                to="/login"
+                >Logout</router-link
+              >
+            </li>
+          </div>
+          <div v-if="isLogin">
+            <li class="nav-item">
+              <router-link class="nav-link active" to="/bookmarks"
+                >Bookmarks</router-link
+              >
+            </li>
+          </div>
+           <div v-if="!isLogin">
+            <li class="nav-item">
+              <router-link class="nav-link active" to="/login"
+                >Login</router-link
+              >
+            </li>
+          </div>
         </ul>
       </div>
     </div>

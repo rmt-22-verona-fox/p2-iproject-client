@@ -10,6 +10,8 @@ export const useLoginStore = defineStore({
     latitude: "",
     isLogin: false,
     currentPrayerTime: {},
+    loginForm: true,
+    registerForm: false,
   }),
   getters: {},
   actions: {
@@ -19,6 +21,7 @@ export const useLoginStore = defineStore({
         console.log(data);
         localStorage.access_token = data.accessToken;
         this.isLogin = true;
+
         this.randomSurahLogin();
         this.router.push("/");
       } catch (err) {
@@ -83,6 +86,24 @@ export const useLoginStore = defineStore({
           confirmButtonText: "Try Again",
         });
       }
+    },
+    async submitRegister(register) {
+      try {
+        const { data } = await axios.post(`${baseUrl}/register`, register);
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+        Swal.fire({
+          title: err.response.statusText,
+          text: err.response.data.error.message,
+          icon: "error",
+          confirmButtonText: "Try Again",
+        });
+      }
+    },
+    logout() {
+      localStorage.clear();
+      this.isLogin = false;
     },
   },
 });

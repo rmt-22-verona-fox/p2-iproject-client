@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useSurahStore } from "../stores/SurahStore";
+import { useLoginStore } from "../stores/LoginStore";
 export default {
   props: ["surah"],
   methods: {
@@ -14,6 +15,9 @@ export default {
       this.addBoomark(id)
     }
   },
+  computed:{
+    ...mapState(useLoginStore,['isLogin'])
+  }
 };
 </script>
 
@@ -32,6 +36,6 @@ export default {
     <div class="mx-4">
       <p class="m-0 text-center fs-3">{{ surah.arab }}</p>
     </div>
-    <a href="" @click.prevent="addBookmarkComponent(surah.number)" class="red-btn"><i class="bi bi-bookmark"></i></a>
+    <a v-if="isLogin" href="" @click.prevent="addBookmarkComponent(surah.number)" class="red-btn"><i class="bi bi-bookmark"></i></a>
   </div>
 </template>
