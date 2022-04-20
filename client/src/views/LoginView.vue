@@ -21,6 +21,7 @@ export default {
         const { data: response } = await this.loginRequest(this.loginData);
         localStorage.setItem("access_token", response.access_token);
         this.trainer.username = response.username;
+        localStorage.username = response.username;
         this.isLoggedIn = true;
         this.$router.push("/");
       } catch (err) {

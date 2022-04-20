@@ -36,16 +36,14 @@ export default {
         <div class="flex space-x-7">
           <div>
             <!-- Website Logo -->
-            <a class="flex items-center py-4">
+            <router-link to="/" class="flex cursor-pointer items-center py-4">
               <img
-                src="@/assets/logo.png"
+                src="@/assets/logo-48.png"
                 alt="Logo"
                 class="mr-2 h-8 w-8 object-contain"
               />
-              <span class="text-lg font-semibold text-gray-500"
-                >Navigation</span
-              >
-            </a>
+              <span class="font-pkmnsolid">Twittemon</span>
+            </router-link>
           </div>
         </div>
         <!-- Primary Navbar items -->
@@ -64,9 +62,10 @@ export default {
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
             >Friends</a
           >
-          <a
+          <router-link
+            to="/trade"
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
-            >Trade</a
+            >Trade</router-link
           >
           <a
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
