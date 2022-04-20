@@ -1,9 +1,42 @@
 <script>
+import { mapWritableState, mapActions } from "pinia";
+import { useToast } from "vue-toastification";
+import { usePackageStore } from "../../../../stores/package";
 import PackageCard from "./PackageCard/index.vue";
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
+
   components: {
     PackageCard,
+  },
+
+  computed: {
+    ...mapWritableState(usePackageStore, ["packageList"]),
+  },
+
+  methods: {
+    ...mapActions(usePackageStore, ["renderAllPackage"]),
+
+    async renderAllPackageOnCreate() {
+      try {
+        const response = await this.renderAllPackage();
+
+        this.packageList = response.data;
+      } catch (err) {
+        const response = await this.renderAllPackage();
+
+        this.packageList = response.data;
+        this.toast.error(err.response?.data?.message);
+      }
+    },
+  },
+
+  async created() {
+    await this.renderAllPackageOnCreate();
   },
 };
 </script>
@@ -18,9 +51,11 @@ export default {
     </p>
 
     <div class="flex justify-between">
-      <PackageCard />
-      <PackageCard />
-      <PackageCard />
+      <PackageCard
+        v-for="(eachPackage, i) in packageList"
+        v-bind:key="i"
+        v-bind:eachPackage="eachPackage"
+      />
     </div>
   </div>
 </template>

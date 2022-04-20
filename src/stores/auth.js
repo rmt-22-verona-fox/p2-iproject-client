@@ -9,7 +9,7 @@ export const useAuthStore = defineStore({
   getters: {},
   actions: {
     formRegisterHandler(credentials) {
-      return axiosAuth.post("/user/register", {
+      return axiosAuth().post("/user/register", {
         fullName: credentials.fullName,
         email: credentials.email,
         password: credentials.password,
@@ -17,7 +17,7 @@ export const useAuthStore = defineStore({
     },
 
     formLoginHandler(credentials) {
-      return axiosAuth.post("/user/login", {
+      return axiosAuth().post("/user/login", {
         email: credentials.email,
         password: credentials.password,
       });

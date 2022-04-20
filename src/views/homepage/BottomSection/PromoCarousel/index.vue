@@ -28,15 +28,14 @@ export default {
         const response = await this.renderPromoPackage();
 
         this.promoPackageList = response.data;
-        console.log(this.promoPackageList);
       } catch (err) {
         this.toast.error(err.response?.data?.message);
       }
     },
   },
 
-  created() {
-    this.renderPromoPackageOnCreate();
+  async created() {
+    await this.renderPromoPackageOnCreate();
   },
 };
 </script>
@@ -52,11 +51,11 @@ export default {
         bound: true,
         align: 'center',
       }"
-      class="py-5"
+      class="py-5 flicking-panel"
     >
       <PromoCard
-        v-for="(promoPackage, i) in promoPackageList"
-        v-bind:key="i"
+        v-for="promoPackage in promoPackageList"
+        v-bind:key="promoPackage?.id"
         v-bind:promoPackage="promoPackage"
         class="mx-5"
       />

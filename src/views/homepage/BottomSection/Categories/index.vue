@@ -27,13 +27,13 @@ export default {
 
         this.categoryList = response.data;
       } catch (err) {
-        this.toast.error(err.response?.data?.message);
+        this.toast.warning("Gagal mendapatkan data kategori");
       }
     },
   },
 
-  created() {
-    this.renderCategoryOnCreate();
+  async created() {
+    await this.renderCategoryOnCreate();
   },
 };
 </script>

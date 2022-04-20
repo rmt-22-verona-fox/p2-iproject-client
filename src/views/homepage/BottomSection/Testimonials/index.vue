@@ -27,13 +27,16 @@ export default {
 
         this.homeTestimonyList = response.data;
       } catch (err) {
-        this.toast.error(err.response?.data?.message);
+        const response = await this.renderUserTestimonies();
+
+        this.homeTestimonyList = response.data;
+        this.toast.warning("Gagal mendapatkan data testimoni");
       }
     },
   },
 
-  created() {
-    this.renderTestimoniesOnCreate();
+  async created() {
+    await this.renderTestimoniesOnCreate();
   },
 };
 </script>

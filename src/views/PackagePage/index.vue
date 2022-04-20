@@ -54,16 +54,15 @@ export default {
         const response = await this.renderUserTestimonies();
 
         this.homeTestimonyList = response.data;
-        console.log(response.data);
       } catch (err) {
         this.toast.error(err.response?.data?.message);
       }
     },
   },
 
-  created() {
-    this.fetchPackageDetail();
-    this.renderTestimoniesOnCreate();
+  async created() {
+    await this.fetchPackageDetail();
+    await this.renderTestimoniesOnCreate();
   },
 };
 </script>

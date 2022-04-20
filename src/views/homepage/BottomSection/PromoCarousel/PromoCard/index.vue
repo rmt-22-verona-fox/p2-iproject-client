@@ -7,6 +7,12 @@ export default {
   },
 
   props: ["promoPackage"],
+
+  methods: {
+    detailClickHandler(id) {
+      this.$router.push(`/detail-paket/${id}`);
+    },
+  },
 };
 </script>
 
@@ -64,6 +70,7 @@ export default {
         <div class="flex justify-between gap-3">
           <Button
             class="w-full bg-white border border-blue-100 text-blue-100 text-sm"
+            v-on:click="detailClickHandler(promoPackage?.id)"
           >
             Lihat Detail
           </Button>

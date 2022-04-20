@@ -5,6 +5,7 @@ export const usePackageStore = defineStore({
   id: "package",
   state: () => ({
     promoPackageList: [],
+    packageList: [],
     categoryList: [],
     homeTestimonyList: [],
     packageDetail: {},
@@ -12,19 +13,23 @@ export const usePackageStore = defineStore({
   getters: {},
   actions: {
     renderPromoPackage() {
-      return axiosPackage.get("/packages/promos");
+      return axiosPackage().get("/packages/promos");
+    },
+
+    renderAllPackage() {
+      return axiosPackage().get("/packages/all");
     },
 
     renderPackageCategory() {
-      return axiosPackage.get("/packages/categories");
+      return axiosPackage().get("/packages/categories");
     },
 
     renderUserTestimonies() {
-      return axiosPackage.get("/packages/testimonies");
+      return axiosPackage().get("/packages/testimonies");
     },
 
     renderPackageDetail(id) {
-      return axiosPackage.get(`/packages/${id}`);
+      return axiosPackage().get(`/packages/${id}`);
     },
   },
 });

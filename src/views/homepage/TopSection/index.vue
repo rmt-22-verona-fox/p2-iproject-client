@@ -25,7 +25,7 @@ export default {
 
           <p class="text-heading-3 text-gray-70 w-[526px] mb-7">
             Jelajahi dunia yang indah dengan satu sentuhan dengan pesan tiket di
-            Travel10. <Kamu></Kamu> akan dapatkan pelayanan terbaik untuk wisata
+            Travel10. Kamu akan dapatkan pelayanan terbaik untuk wisata
             liburanmu. Kemana saja dan kapan saja
           </p>
 
