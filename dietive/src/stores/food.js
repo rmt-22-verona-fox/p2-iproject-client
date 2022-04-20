@@ -8,7 +8,9 @@ export const useFoodStore = defineStore({
     allFoodData: [],
     province: [],
     city: [],
-    isLogin: false
+    isLogin: false,
+    userFood: [],
+    userInfo: []
   }),
 
   actions: {
@@ -63,8 +65,55 @@ export const useFoodStore = defineStore({
     async loginAction(payload) {
       try {
         const response = await axios.post("http://localhost:3000/login", payload);
-        // localStorage.setItem("access_token", )
-        console.log(response);
+        localStorage.setItem("access_token", response.data.access_token)
+        localStorage.setItem("email", response.data.data.email)
+        localStorage.setItem("dailCalories", response.data.data.dailyCalories)
+        this.isLogin = true
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getUserFood() {
+      try {
+  
+        const token =  localStorage.getItem("access_token")
+        const response = await axios.get("http://localhost:3000/food", {
+          headers: {
+            access_token: token
+          }
+        });
+
+        console.log(response.data);
+        this.userFood = response.data.data
+        this.userInfo= response.data.user
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async addFoodAction(payload) {
+      try {
+        const token =  localStorage.getItem("access_token")
+        const response = await axios.post("http://localhost:3000/food", payload, {
+          headers: {
+            access_token: token
+          }
+        });
+
+        console.log(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async resetFoodAction() {
+      try {
+        const token = localStorage.getItem("access_token")
+        const response = await axios.delete("http://localhost:3000/food", {
+          headers: {
+            access_token: token
+          }
+        });
+
+        console.log(response.data);
       } catch (err) {
         console.log(err);
       }

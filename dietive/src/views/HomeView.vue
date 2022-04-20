@@ -1,28 +1,51 @@
 <script>
 import { useFoodStore } from "../stores/food";
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 
 export default {
   data () {
     return {
-      keyword: ""
+      keyword: "",
+      // title: "",
+      // seriesNumber: "",
+      // image: "", 
+      // calories: ""
     }
   },
   computed: {
-    ...mapState(useFoodStore, ['allFoodData'])
+    ...mapState(useFoodStore, ['allFoodData']),
+    ...mapWritableState(useFoodStore, ['isLogin'])
   },
   methods: {
-    ...mapActions(useFoodStore, ['searchFeature']),
+    ...mapActions(useFoodStore, ['searchFeature', 'addFoodAction']),
     async searchFood () {
       try {
         await this.searchFeature(this.keyword)
       } catch (err) {
         console.log(err);
       }
+    },
+    async addClick (payload) {
+      try {
+        await this.addFoodAction(payload)
+      } catch (err) {
+        console.log(err);
+      }
     }
   },
   async created() {
-    await this.searchFeature(this.keyword)
+    try {
+      await this.searchFeature(this.keyword)
+      const token = localStorage.getItem("access_token")
+      if (token) {
+        this.isLogin = true
+      } else {
+        this.isLogin = false
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
   }
 }
 </script>
@@ -33,7 +56,6 @@ export default {
       <div class="responsive-wrapper">
         <div class="main-header">
           <h1>Welcome to Dietiv, diet start today ( ͡❛ ͜ʖ ͡❛)✊</h1>
-          
         </div>
         <br>
        
@@ -64,7 +86,7 @@ export default {
               <i class="ph-faders-bold"></i>
               <span>Filters</span>
             </a> -->
-            <div class="search" style="width: 450px">
+            <div class="search" style="width: 450px;">
             <input type="text" v-model="keyword" placeholder="e.g. Cake" />
             <button @click.prevent="searchFood" type="submit">
               <i class="ph-magnifying-glass-bold"></i>
@@ -76,8 +98,10 @@ export default {
         <div class="content">
           <div class="content-panel">
             <div class="vertical-tabs">
-              <a href="#" class="active">All Food</a>
-              <a href="#">My Food</a>
+              <RouterLink class="active" to="/">
+                All Food
+              </RouterLink>
+              <RouterLink to="/food" href="#">My Food</RouterLink>
               <a href="#">Article For You</a>
               <a href="#">Chat Room</a>
             </div>
@@ -103,14 +127,19 @@ export default {
                    <h3 style=" font-weight: bold;">{{data.title}}</h3>
                    <br>
                  
-                  <p style="  padding-bottom: 10px;">Calories: {{data.nutrition.nutrients[0].amount}} kcal</p>
-                  <p style="  padding-bottom: 10px;">Fat: {{data.nutrition.nutrients[1].amount}} g</p>
+                  <p style="  padding-bottom: 10px;"> 🔥 Calories: {{data.nutrition.nutrients[0].amount.toFixed(2)}} kcal</p>
+                  <p style="  padding-bottom: 10px;"> 🔥 Fat: {{data.nutrition.nutrients[1].amount.toFixed(2)}} g</p>
                 </div>
                 <div>
 
                 </div>
                 <div class="card-footer">
-                  <a href="#">+ Add to My Food</a>
+                  <a @click.prevent="addClick({
+                    title: data.title,
+                    seriesNumber: data.id,
+                    image: data.image,
+                    calories: data.nutrition.nutrients[0].amount.toFixed(2)
+                  })">+ Add to My Food</a>
                 </div>
               </article>
 
