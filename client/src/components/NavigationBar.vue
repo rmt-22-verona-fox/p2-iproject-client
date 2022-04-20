@@ -1,4 +1,33 @@
-<script></script>
+<script>
+import { mapWritableState } from "pinia";
+import { useAuthenStore } from "../stores/authentication";
+
+export default {
+  computed: {
+    ...mapWritableState(useAuthenStore, ["isLoggedIn", "trainer"]),
+  },
+  methods: {
+    async logoutAction() {
+      try {
+        if (this.trainer.account === "google") {
+          await this.$gAuth.signOut();
+        }
+        localStorage.clear();
+        this.trainer.account = "";
+        this.trainer.username = "";
+        this.isLoggedIn = false;
+        this.$router.push("/login");
+      } catch (err) {
+        this.$swal({
+          title: "Error",
+          text: err.response.data.error.message,
+          icon: "error",
+        });
+      }
+    },
+  },
+};
+</script>
 
 <template>
   <nav class="bg-white shadow">
@@ -20,7 +49,10 @@
           </div>
         </div>
         <!-- Primary Navbar items -->
-        <div class="hidden items-center space-x-1 md:flex">
+        <div
+          v-if="$route.name !== 'register' || $route.name !== 'login'"
+          class="hidden items-center space-x-1 md:flex"
+        >
           <router-link
             to="/"
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
@@ -46,16 +78,24 @@
         </div>
         <!-- Secondary Navbar items -->
         <div class="hidden items-center space-x-3 md:flex">
-          <a
+          <router-link
+            to="/login"
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
           >
             Log In
-          </a>
-          <button
+          </router-link>
+          <router-link
+            to="/register"
             class="rounded-3xl bg-gray-800 py-2 px-4 text-sm font-medium uppercase text-white transition duration-300 hover:bg-black"
           >
             Sign Up
-          </button>
+          </router-link>
+          <a
+            @click.prevent="logoutAction"
+            class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
+          >
+            Logout
+          </a>
         </div>
         <!-- Mobile menu button -->
         <div class="flex items-center md:hidden">
