@@ -1,10 +1,15 @@
 <script>
+import CardReusable from "../components/CardReusable.vue";
 export default {
   data() {
     return {
       searchFilter: "",
       brandFilter: "",
+      sneakers: "",
     };
+  },
+  components: {
+    CardReusable,
   },
   methods: {
     paginationEvent(num) {},
@@ -21,7 +26,7 @@ export default {
       <!-- sidebar -->
       <div class="sidebar col-2">
         <ul class="d-flex flex-column col-sm">
-          <li class="sidebar-menu text-dark">Categories</li>
+          <li class="sidebar-menu text-dark">Brands</li>
           <select
             class="form-select"
             v-model="brandFilter"
@@ -64,21 +69,20 @@ export default {
         </h1>
         <div class="row">
           <div class="col col-xl d-flex">
-            <!-- <CardReusable
-              v-for="post in posts"
-              :key="post.id"
-              :post="post"
-              :isFavorite="false"
-            ></CardReusable> -->
+            <hr />
+            <CardReusable></CardReusable>
+            <CardReusable></CardReusable>
+            <CardReusable></CardReusable>
+            <CardReusable></CardReusable>
           </div>
         </div>
         <div class="pagination-bar">
           <ul class="pagination pagination-lg justify-content-center">
-            <li class="page-item" v-for="i in totalPages" :key="i">
+            <!-- <li class="page-item" v-for="i in totalPages" :key="i">
               <a class="page-link" @click.prevent="paginationEvent(i)">{{
                 i
               }}</a>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -100,12 +104,14 @@ export default {
   background-size: cover;
   margin-right: 5%;
   margin-top: 3%;
+  height: 30vw;
 }
 
 .content {
   padding: 0;
+  padding-right: 3%;
   align-content: center;
-  margin-left: 3%;
+  margin-left: 2%;
   width: 80%;
 }
 
