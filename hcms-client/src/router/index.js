@@ -1,18 +1,25 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../views/HomePage.vue";
+import DiagnoseForm from "../views/DiagnoseForm.vue";
+import AppointPage from "../views/AppointPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "home",
+      name: "HomePage",
       component: HomePage,
     },
     {
-      path: "/about",
-      name: "about",
-      component: () => import("../views/AboutView.vue"),
+      path: "/diagnose",
+      name: "DiagnoseForm",
+      component: DiagnoseForm,
+    },
+    {
+      path: "/appoint",
+      name: "AppointPage",
+      component: AppointPage,
     },
   ],
 });

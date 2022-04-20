@@ -25,58 +25,58 @@
                 start_clip_slide : function() {
                     return this.slides.eq(1);
                 },
-                loop : function loop(next_slide) {
+                // loop : function loop(next_slide) {
 
-                        for (var i = 0; i < obj.clips_number; i++) {
+                //         for (var i = 0; i < obj.clips_number; i++) {
 
-                            if(obj.start == false) {
-                                obj.start_clip_slide().css({
-                                    'zIndex': 1,
-                                    'display': 'block'
-                                });
-                            }
+                //             if(obj.start == false) {
+                //                 obj.start_clip_slide().css({
+                //                     'zIndex': 1,
+                //                     'display': 'block'
+                //                 });
+                //             }
 
-                            var canvas_element = $('<canvas>').attr({
-                                id: 'canvasID_' + ( i + 1 ),
-                                class: 'canvasClass'
-                            }).attr({
-                                width: 100,
-                                height: 500
-                            }).css('left', 100 * i);
+                //             var canvas_element = $('<canvas>').attr({
+                //                 id: 'canvasID_' + ( i + 1 ),
+                //                 class: 'canvasClass'
+                //             }).attr({
+                //                 width: 100,
+                //                 height: 500
+                //             }).css('left', 100 * i);
 
-                            if(obj.start == false) {
-                                canvas_element.appendTo(obj.start_clip_slide());
-                            } else {
-                                canvas_element.appendTo(next_slide);
-                            }
+                //             if(obj.start == false) {
+                //                 canvas_element.appendTo(obj.start_clip_slide());
+                //             } else {
+                //                 canvas_element.appendTo(next_slide);
+                //             }
 
-                            var canvas = $('#canvasID_' + (i + 1))[0];
+                //             var canvas = $('#canvasID_' + (i + 1))[0];
 
-                            var ctx = canvas.getContext('2d');
-                            ctx.mozImageSmoothingEnabled = false;
-                            ctx.webkitImageSmoothingEnabled = false;
-                            ctx.msImageSmoothingEnabled = false;
-                            ctx.imageSmoothingEnabled = false;
+                //             var ctx = canvas.getContext('2d');
+                //             ctx.mozImageSmoothingEnabled = false;
+                //             ctx.webkitImageSmoothingEnabled = false;
+                //             ctx.msImageSmoothingEnabled = false;
+                //             ctx.imageSmoothingEnabled = false;
 
-                            var img = document.createElement('img');
+                //             var img = document.createElement('img');
 
-                            if(obj.start == false) {
-                                img_src = obj.start_clip_slide().find('img').attr('src');
-                            } else {
-                                img_src = next_slide.find('img').attr('src');
-                            }
+                //             if(obj.start == false) {
+                //                 img_src = obj.start_clip_slide().find('img').attr('src');
+                //             } else {
+                //                 img_src = next_slide.find('img').attr('src');
+                //             }
 
-                            img.src = img_src;
+                //             img.src = img_src;
 
-                            ctx.drawImage(img, 100 * i, 0, 100, 500, 0, 0, 100, 500);
+                //             ctx.drawImage(img, 100 * i, 0, 100, 500, 0, 0, 100, 500);
 
-                        }
+                //         }
 
-                },
+                // },
                 animation :  function animation() {
 
                     if(obj.start == false) {
-                        obj.loop();
+
                     }
                     obj.start = true;
 
@@ -96,7 +96,7 @@
 
                     var next_slide = next_slide;
 
-                    obj.loop(next_slide);
+                    // obj.loop(next_slide);
 
                     obj.animation();
 

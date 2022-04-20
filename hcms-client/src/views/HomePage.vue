@@ -4,6 +4,7 @@ export default {
   methods: {
     diagnoseClick() {
       console.log("diagnose click");
+      this.$router.push("/diagnose");
     },
     monitoringClick() {
       console.log("monitoring click");
@@ -158,6 +159,24 @@ export default {
                   @click.prevent="appointmentClick()"
                   class="new-btn-d br-2"
                   >Seek Professional Help</a
+                >
+              </div>
+            </div>
+            <div class="item">
+              <div class="serviceBox">
+                <div class="service-icon">
+                  <i class="fa fa-h-square" aria-hidden="true"></i>
+                </div>
+                <h3 class="title">Lorem ipsum dolor</h3>
+                <p class="description">
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Accusantium consequuntur.
+                </p>
+                <a
+                  href="#"
+                  @click.prevent="appointmentClick()"
+                  class="new-btn-d br-2"
+                  >Read More</a
                 >
               </div>
             </div>

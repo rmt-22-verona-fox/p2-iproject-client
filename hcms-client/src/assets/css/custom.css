@@ -1,2 +1,6 @@
 
 /** ADD YOUR AWESOME CODES HERE **/
+
+.sortable-handler {
+    touch-action: none;
+  }
