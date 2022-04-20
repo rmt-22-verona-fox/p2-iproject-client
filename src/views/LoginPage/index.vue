@@ -40,13 +40,14 @@ export default {
 
         this.isLoggedIn = true;
 
-        localStorage.setItem("access_token", response.data.access_token);
-        localStorage.setItem("id", response.data.profile.id);
-        localStorage.setItem("email", response.data.profile.email);
-        localStorage.setItem("name", response.data.profile.fullName);
-        localStorage.setItem("bio", response.data.profile.bio);
-        localStorage.setItem("city", response.data.profile.city);
-        localStorage.setItem("picture", response.data.profile.profilePicture);
+        localStorage.setItem("access_token", response.data?.access_token);
+        localStorage.setItem("id", response.data?.profile?.id);
+        localStorage.setItem("email", response.data?.profile?.email);
+        localStorage.setItem("name", response.data?.profile?.fullName);
+        localStorage.setItem("bio", response.data?.profile?.bio);
+        localStorage.setItem("city", response.data?.profile?.city);
+        localStorage.setItem("picture", response.data?.profile?.profilePicture);
+        localStorage.setItem("verified", response.data?.profile?.isVerified);
 
         this.$router.push("/");
         this.toast.success("Berhasil melakukan login");
@@ -108,11 +109,13 @@ export default {
           <Button type="submit" class="w-full">Masuk</Button>
         </form>
 
-        <p class="text-heading-5 text-gray-70 my-8 font-bold">
+        <p class="hidden text-heading-5 text-gray-70 my-8 font-bold">
           Atau masuk dengan
         </p>
-        <Button class="mb-4 bg-red-100">Masuk dengan Google </Button>
-        <Button class="bg-facebook">Masuk dengan Facebook</Button>
+        <Button class="hidden first-letter:mb-4 bg-red-100"
+          >Masuk dengan Google
+        </Button>
+        <Button class="hidden bg-facebook">Masuk dengan Facebook</Button>
       </div>
     </section>
   </Layout>

@@ -1,42 +1,56 @@
 <script>
-// const modal = document.querySelector(".main-modal");
-// const closeButton = document.querySelectorAll(".modal-close");
+import { mapWritableState, mapActions } from "pinia";
+import { useTransactionStore } from "@/stores/transaction";
+import { useToast } from "vue-toastification";
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
+
   data() {
     return {
-      isModalOpen: false,
+      verificationCode: "",
     };
   },
 
+  computed: {
+    ...mapWritableState(useTransactionStore, ["verificationModalState"]),
+  },
+
   methods: {
+    ...mapActions(useTransactionStore, ["verifyEmail"]),
+
     openModal() {
-      this.isModalOpen = true;
+      this.verificationModalState = true;
     },
     closeModal() {
-      this.isModalOpen = false;
+      this.verificationModalState = false;
+    },
+
+    async verifyEmailHandler() {
+      try {
+        const response = await this.verifyEmail(this.verificationCode);
+
+        this.toast.success(response.data?.message);
+        localStorage.setItem("verified", "true");
+        setTimeout(() => {
+          this.verificationModalState = false;
+        }, 1500);
+      } catch (err) {
+        this.toast.error(err.response?.data?.message);
+      }
     },
   },
 };
-
-// for (let i = 0; i < closeButton.length; i++) {
-//   const elements = closeButton[i];
-
-//   elements.onclick = (e) => modalClose();
-
-//   modal.style.display = "none";
-
-//   window.onclick = function (event) {
-//     if (event.target == modal) modalClose();
-//   };
-// }
 </script>
 
 <template>
   <div>
     <button
       v-on:click="openModal"
-      class="bg-blue-500 text-white p-2 rounded text-2xl font-bold"
+      class="hidden bg-blue-500 text-white p-2 rounded text-2xl font-bold"
     >
       Verifikasi Modal
     </button>
@@ -45,9 +59,9 @@ export default {
   <div
     class="fixed w-full h-100 inset-0 z-50 overflow-hidden flex justify-center items-center animated faster"
     v-on:click="closeModal"
-    v-bind:class="isModalOpen ? 'fadeIn flex' : 'fadeOut none'"
+    v-bind:class="verificationModalState ? 'fadeIn flex' : 'fadeOut none'"
     style="background: rgba(0, 0, 0, 0.7)"
-    v-if="isModalOpen"
+    v-if="verificationModalState"
   >
     <div
       class="border rounded-xl shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto z-50 overflow-y-auto"
@@ -77,6 +91,7 @@ export default {
             type="text"
             class="h-3 p-6 my-6 w-full appearance-none border border-gray-70 mb-6 rounded-lg text-heading-5 text-gray-50 focus:outline-none focus:ring-blue-100 focus:border-blue-100 focus:text-primary-black"
             placeholder="Masukkan kode verifikasi email"
+            v-model="verificationCode"
           />
 
           <!-- <div class="">
@@ -119,6 +134,7 @@ export default {
             Kembali
           </button>
           <button
+            v-on:click.prevent="verifyEmailHandler"
             class="focus:outline-none px-4 text-white bg-blue-100 p-3 ml-3 rounded-lg"
           >
             Kirim

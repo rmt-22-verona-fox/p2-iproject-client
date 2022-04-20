@@ -1,16 +1,49 @@
 <script>
+import { mapWritableState } from "pinia";
+import { useTransactionStore } from "@/stores/transaction";
 import Button from "@/components/button/index.vue";
+import { useToast } from "vue-toastification";
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
+
   components: {
     Button,
   },
 
   props: ["promoPackage"],
 
+  computed: {
+    ...mapWritableState(useTransactionStore, [
+      "verificationModalState",
+      "checkoutModalState",
+      "priceToPayState",
+      "packageId",
+    ]),
+  },
+
   methods: {
     detailClickHandler(id) {
       this.$router.push(`/detail-paket/${id}`);
+    },
+
+    checkoutHandler(id) {
+      if (!localStorage.getItem("access_token")) {
+        this.$router.push("/masuk");
+      } else if (localStorage.getItem("verified") === "false") {
+        this.verificationModalState = true;
+      } else if (
+        localStorage.getItem("access_token") &&
+        localStorage.getItem("verified") === "true"
+      ) {
+        this.checkoutModalState = true;
+        this.priceToPayState =
+          this.promoPackage?.price - this.promoPackage.price * 0.1;
+        this.packageId = id;
+      }
     },
   },
 };
@@ -74,7 +107,12 @@ export default {
           >
             Lihat Detail
           </Button>
-          <Button class="w-full text-sm"> Pesan </Button>
+          <Button
+            class="w-full text-sm"
+            v-on:click="checkoutHandler(promoPackage?.id)"
+          >
+            Pesan
+          </Button>
         </div>
       </div>
     </div>

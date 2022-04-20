@@ -27,9 +27,6 @@ export default {
 
         this.packageList = response.data;
       } catch (err) {
-        const response = await this.renderAllPackage();
-
-        this.packageList = response.data;
         this.toast.error(err.response?.data?.message);
       }
     },

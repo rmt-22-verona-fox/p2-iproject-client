@@ -27,9 +27,6 @@ export default {
 
         this.homeTestimonyList = response.data;
       } catch (err) {
-        const response = await this.renderUserTestimonies();
-
-        this.homeTestimonyList = response.data;
         this.toast.warning("Gagal mendapatkan data testimoni");
       }
     },

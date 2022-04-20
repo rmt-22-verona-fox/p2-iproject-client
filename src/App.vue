@@ -1,11 +1,15 @@
 <script>
 import { mapWritableState } from "pinia";
 import { useAuthStore } from "./stores/auth";
+import VerificationModal from "@/components/VerificationModal/index.vue";
+import CheckoutModal from "@/components/CheckoutModal/index.vue";
 import Layout from "@/components/layout/Layout.vue";
 
 export default {
   components: {
     Layout,
+    VerificationModal,
+    CheckoutModal,
   },
 
   methods: {
@@ -27,6 +31,9 @@ export default {
 </script>
 
 <template>
+  <VerificationModal />
+  <CheckoutModal />
+
   <router-view></router-view>
   <!-- <button class="text-yellow-70 font-label" v-on:click="payment">Bayar!</button> -->
 </template>

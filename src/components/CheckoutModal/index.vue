@@ -1,8 +1,16 @@
 <script>
+import { mapWritableState, mapActions } from "pinia";
+import { useTransactionStore } from "@/stores/transaction";
+import { useToast } from "vue-toastification";
 import Container from "../../views/container/Container.vue";
 import Button from "@/components/button/index.vue";
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
+
   components: {
     Container,
     Button,
@@ -10,18 +18,26 @@ export default {
 
   data() {
     return {
-      isModalOpen: false,
       quantity: 1,
     };
   },
 
+  computed: {
+    ...mapWritableState(useTransactionStore, [
+      "checkoutModalState",
+      "priceToPayState",
+    ]),
+  },
+
   methods: {
+    ...mapActions(useTransactionStore, ["paymentHandler", "checkoutHandler"]),
+
     openModal() {
-      this.isModalOpen = true;
+      this.checkoutModalState = true;
     },
 
     closeModal() {
-      this.isModalOpen = false;
+      this.checkoutModalState = false;
     },
 
     incrementQty() {
@@ -29,30 +45,35 @@ export default {
     },
 
     decrementQty() {
-      if (this.quantity === 0) return;
+      if (this.quantity === 0) {
+        return;
+      }
       this.quantity--;
     },
 
     async payment() {
-      await snap.pay("c23056cb-de11-4b1c-916e-7a3e751c5c6b", {
-        // Optional
-        onSuccess: function (result) {
-          console.log(result);
+      if (this.quantity === 0) {
+        return;
+      }
 
-          this.$router.push("/");
+      try {
+        const response = await this.paymentHandler({
+          amount: this.priceToPayState * this.quantity,
+        });
 
-          console.log("pembayaran berhasil");
-          /* You may add your own js here, this is just example */
-        },
-        // Optional
-        onPending: function (result) {
-          /* You may add your own js here, this is just example */
-        },
-        // Optional
-        onError: function (result) {
-          /* You may add your own js here, this is just example */
-        },
-      });
+        await snap.pay(response.data?.token, {
+          onSuccess: (result) => {
+            this.checkoutModalState = false;
+            this.toast.success("Pembayaran berhasil dilakukan");
+          },
+        });
+        await this.checkoutHandler({
+          packageQty: this.quantity,
+        });
+      } catch (err) {
+        console.log(err.response);
+        this.toast.error("Pembayaran gagal dilakukan");
+      }
     },
   },
 };
@@ -61,7 +82,7 @@ export default {
 <template>
   <button
     v-on:click="openModal"
-    class="bg-blue-500 text-white p-2 rounded text-2xl font-bold pointer-events-auto"
+    class="hidden bg-blue-500 text-white p-2 rounded text-2xl font-bold pointer-events-auto"
   >
     Checkout Modal
   </button>
@@ -69,9 +90,9 @@ export default {
   <div
     class="model fixed inset-0 z-50 overflow-auto flex w-full items-end animated faster"
     v-on:click="closeModal"
-    v-bind:class="isModalOpen ? 'fadeIn flex z-50' : 'fadeOut none z-0'"
+    v-bind:class="checkoutModalState ? 'fadeIn flex z-50' : 'fadeOut none z-0'"
     style="background: rgba(0, 0, 0, 0.1)"
-    v-if="isModalOpen"
+    v-if="checkoutModalState"
   >
     <div
       class="border px-6 shadow-lg bg-white z-50 overflow-y-auto w-full"
@@ -98,7 +119,9 @@ export default {
 
         <!--Footer-->
         <div class="flex items-center gap-8">
-          <p class="text-heading-3 font-bold">Total Rp 2.000.000</p>
+          <p class="text-heading-3 font-bold">
+            Total Rp {{ (priceToPayState * quantity).toLocaleString("id-ID") }}
+          </p>
           <Button class="w-[190px]" v-on:click="payment">Bayar</Button>
         </div>
       </div>

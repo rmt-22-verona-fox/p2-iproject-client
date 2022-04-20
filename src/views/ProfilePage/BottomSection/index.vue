@@ -59,7 +59,7 @@ export default {
     </div>
 
     <p
-      class="my-14 text-heading-3 text-blue-100 text-center font-bold"
+      class="my-40 text-heading-4 text-blue-100 text-center font-bold font-label"
       v-if="noHistoryMessage"
     >
       {{ noHistoryMessage }}
