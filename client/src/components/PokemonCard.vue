@@ -1,17 +1,29 @@
 <script>
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
+import { useMyPokemonStore } from "../stores/myPokemons";
 import { usePokemonStore } from "../stores/pokemons";
 
 export default {
   props: { pokemon: Object },
+  computed: {
+    ...mapState(useMyPokemonStore, ["myPokemons"]),
+  },
   methods: {
     ...mapActions(usePokemonStore, ["getTypeColor"]),
+    blurredPokemon() {
+      const myPokemonIds = this.myPokemons.map((el) => el.detail.id);
+      const foundPokemon = myPokemonIds.some((id) => id == this.pokemon.id);
+      if (!foundPokemon) {
+        return ["opacity-10"];
+      }
+      return "opacity-100";
+    },
   },
 };
 </script>
 
 <template>
-  <div class="group">
+  <div class="group" :class="blurredPokemon()">
     <div
       @click="$router.push(`/pokedex/${pokemon.id}`)"
       class="mx-2 flex cursor-pointer flex-col overflow-hidden rounded-lg shadow-lg duration-300 hover:scale-105 hover:shadow-2xl"
@@ -29,7 +41,7 @@ export default {
         <img
           :src="pokemon.imageUrl"
           alt=""
-          class="object-contain transition duration-500 ease-in-out group-hover:scale-105"
+          class="object-contain transition duration-500 ease-in-out"
         />
       </div>
       <div class="p-2">

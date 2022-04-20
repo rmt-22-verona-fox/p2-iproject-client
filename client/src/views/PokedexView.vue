@@ -50,7 +50,11 @@ export default {
       this.getPaginationData(data);
       this.getPokemonDetails(data);
     } catch (err) {
-      console.log(err);
+      this.$swal({
+        title: "Error",
+        text: err,
+        icon: "error",
+      });
     }
   },
 };
