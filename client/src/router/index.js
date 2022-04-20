@@ -18,7 +18,7 @@ const router = createRouter({
           component: () => import("../components/PokedexList.vue"),
         },
         {
-          path: ":name",
+          path: ":id",
           component: () => import("../components/PokemonDetail.vue"),
         },
       ],

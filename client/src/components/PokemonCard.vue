@@ -1,12 +1,19 @@
 <script>
+import { mapActions } from "pinia";
+import { usePokemonStore } from "../stores/pokemons";
+
 export default {
-  props: { pokemon: { Object } },
+  props: { pokemon: Object },
+  methods: {
+    ...mapActions(usePokemonStore, ["getTypeColor"]),
+  },
 };
 </script>
 
 <template>
-  <div class="group md:basis-1/4 xl:basis-1/5">
+  <div class="group">
     <div
+      @click="$router.push(`/pokedex/${pokemon.id}`)"
       class="mx-2 flex cursor-pointer flex-col overflow-hidden rounded-lg shadow-lg duration-300 hover:scale-105 hover:shadow-2xl"
     >
       <p class="bg-gray-100 px-2 py-1 text-sm font-medium text-gray-400">

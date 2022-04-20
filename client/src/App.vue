@@ -9,7 +9,7 @@ export default {
 
 <template>
   <NavigationBar></NavigationBar>
-  <RouterView></RouterView>
+  <RouterView class="min-h-[calc(100vh_-_168px)]"></RouterView>
   <div class="mt-10 bg-black py-8"></div>
 </template>
 
