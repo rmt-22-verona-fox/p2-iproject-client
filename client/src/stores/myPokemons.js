@@ -16,5 +16,13 @@ export const useMyPokemonStore = defineStore({
         headers: { access_token: localStorage.access_token },
       });
     },
+    tradeRequest(tradeData) {
+      return axios({
+        url: baseUrl + "/trade",
+        method: "put",
+        headers: { access_token: localStorage.access_token },
+        data: tradeData
+      });
+    },
   },
 });

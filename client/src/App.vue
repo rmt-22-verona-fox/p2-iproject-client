@@ -14,13 +14,16 @@ export default {
     try {
       if (localStorage.access_token) {
         this.isLoggedIn = true;
+        this.trainer.id = localStorage.id;
         this.trainer.username = localStorage.username;
+        this.$router.push("/");
       } else {
         if (this.trainer.account === "google") {
           await this.$gAuth.signOut();
         }
         localStorage.clear();
         this.trainer.account = "";
+        this.trainer.id = 0;
         this.trainer.username = "";
         this.isLoggedIn = false;
         this.$router.push("/login");

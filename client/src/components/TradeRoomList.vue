@@ -15,10 +15,10 @@ export default {
     <div>
       <img src="@/assets/trade-icon.png" alt="" />
     </div>
-    <h1 class="mb-10 text-3xl font-semibold uppercase">
+    <h1 class="mb-10 text-2xl md:text-3xl font-semibold uppercase">
       Join a room to start trading
     </h1>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
       <div
         class="flex w-96 items-center justify-between rounded-2xl border border-black px-4 py-2 text-2xl font-medium uppercase"
       >

@@ -1,16 +1,21 @@
 <script>
+import axios from "axios";
 import { mapActions, mapState, mapWritableState } from "pinia";
 import { usePokemonStore } from "../stores/pokemons";
 
 export default {
+  data() {
+    return {
+      video: {
+        id: "",
+        thumbnail: "",
+        title: "",
+      },
+    };
+  },
   computed: {
     ...mapState(usePokemonStore, ["pokemons"]),
     ...mapState(usePokemonStore, ["currentPokemon"]),
-    // pokemon() {
-    //   return this.pokemons.find(
-    //     (el) => el.id == this.$route.path.split("/")[2]
-    //   );
-    // },
   },
   methods: {
     ...mapActions(usePokemonStore, [
@@ -28,7 +33,16 @@ export default {
   async created() {
     try {
       await this.getCurrentPokemon(this.$route.path.split("/")[2]);
+      const { data } = await axios.get(
+        `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=pokemon%20${
+          this.currentPokemon.name
+        }%20anime&key=${import.meta.env.VITE_YT_API_KEY}`
+      );
+      this.video.id = data.items[0].id.videoId;
+      this.video.thumbnail = data.items[0].snippet.thumbnails.medium.url;
+      this.video.title = data.items[0].snippet.title;
     } catch (err) {
+      console.log(err);
       this.$swal({
         title: "Error",
         text: err,
@@ -66,7 +80,15 @@ export default {
       </div>
       <div>
         <p>Major appearance</p>
-        <div class="h-[157.5px] w-full bg-black"></div>
+        <div class="h-[157.5px] w-full">
+          <iframe
+            :src="'https://www.youtube.com/embed/' + video.id"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
     </div>
     <div class="basis-2/4">
@@ -102,41 +124,6 @@ export default {
             <div class="h-full w-full bg-gray-400"></div>
           </div>
         </div>
-        <!-- <div class="">
-          <p>ATTACK: 84</p>
-          <div class="relative h-2 overflow-hidden rounded-lg">
-            <div class="absolute h-full w-[calc(84/255*100%)] bg-black"></div>
-            <div class="h-full w-full bg-gray-400"></div>
-          </div>
-        </div>
-        <div class="">
-          <p>DEFENSE: 78</p>
-          <div class="relative h-2 overflow-hidden rounded-lg">
-            <div class="absolute h-full w-[calc(78/255*100%)] bg-black"></div>
-            <div class="h-full w-full bg-gray-400"></div>
-          </div>
-        </div>
-        <div class="">
-          <p>SPEED: 109</p>
-          <div class="relative h-2 overflow-hidden rounded-lg">
-            <div class="absolute h-full w-[calc(109/255*100%)] bg-black"></div>
-            <div class="h-full w-full bg-gray-400"></div>
-          </div>
-        </div>
-        <div class="">
-          <p>SP. ATTACK: 85</p>
-          <div class="relative h-2 overflow-hidden rounded-lg">
-            <div class="absolute h-full w-[calc(85/255*100%)] bg-black"></div>
-            <div class="h-full w-full bg-gray-400"></div>
-          </div>
-        </div>
-        <div class="">
-          <p>SP. DEFENSE: 100</p>
-          <div class="relative h-2 overflow-hidden rounded-lg">
-            <div class="absolute h-full w-[calc(100/255*100%)] bg-black"></div>
-            <div class="h-full w-full bg-gray-400"></div>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>

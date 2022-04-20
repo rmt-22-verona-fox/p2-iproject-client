@@ -1,16 +1,33 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useAuthenStore } from "../stores/authentication";
+import { useMyPokemonStore } from "../stores/myPokemons";
+import PokemonMiniCard from "./PokemonMiniCard.vue";
 
 export default {
+  components: { PokemonMiniCard },
   data() {
     return {
       chatMessage: "",
       chats: [],
+      selectedPokemon: -1,
+      selectedPokemonDetail: {},
+      showPokemonList: false,
+      confirmTradeCount: 0,
     };
   },
   computed: {
     ...mapState(useAuthenStore, ["trainer"]),
+    ...mapState(useMyPokemonStore, ["myPokemons"]),
+  },
+  watch: {
+    selectedPokemon(val) {
+      if (val !== -1) {
+        this.selectedPokemonDetail = this.myPokemons.find(
+          (el) => el.detail.id == val
+        );
+      }
+    },
   },
   sockets: {
     connect() {
@@ -27,21 +44,52 @@ export default {
     },
   },
   methods: {
-    clickButton(msg) {
-      this.$socket.client.emit("customEventFromClient", {
-        message: msg,
-      });
-    },
+    ...mapActions(useMyPokemonStore, ["tradeRequest"]),
     sendMessage() {
       this.$socket.client.emit("sendMessageToServer", {
+        UserId: this.trainer.id,
         user: this.trainer.username,
         message: this.chatMessage.trim(),
       });
       this.chatMessage = "";
     },
+    togglePokemonList() {
+      this.showPokemonList = !this.showPokemonList;
+      this.selectedPokemon = -1;
+    },
+    selectPokemon(id) {
+      this.selectedPokemon = id;
+    },
+    addToTrade() {
+      this.$socket.client.emit("sendPokemonToTrade", {
+        UserId: this.trainer.id,
+        user: this.trainer.username,
+        message: "I want to trade my pokemon",
+        PokemonId: this.selectedPokemon,
+      });
+      this.togglePokemonList();
+    },
+    async confirmTradeHandler() {
+      try {
+        if (this.confirmTradeCount < 1) {
+          this.confirmTradeCount++;
+        } else if (this.confirmTradeCount == 1) {
+          this.confirmTradeCount++;
+          const tradeData = this.chats.slice(-2);
+          // firstUserId, firstPokemonId, secondUserId, secondPokemonId
+          const { data } = await tradeRequest();
+        }
+      } catch (err) {
+        this.$swal({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+        });
+      }
+    },
   },
   created() {
-    // this.$socket.client.emit("setUsername", localStorage.username);
+    this.$socket.client.emit("sendMessageToServer");
   },
 };
 </script>
@@ -78,23 +126,73 @@ export default {
                 >
                   <span class="block font-bold underline">{{ chat.user }}</span>
                   <span class="block">{{ chat.message }}</span>
+                  <!-- Pokemon In Chat -->
+                  <div
+                    v-if="chat.PokemonId"
+                    class="inline-flex items-center gap-x-2"
+                  >
+                    <div class="h-8 w-8 rounded-full border">
+                      <img
+                        :src="chat.imageUrl"
+                        alt=""
+                        class="h-full w-full object-contain"
+                      />
+                    </div>
+                    <div class="text-xs font-bold uppercase">
+                      {{
+                        chat.pokemonName[0].toUpperCase() +
+                        chat.pokemonName.slice(1)
+                      }}
+                    </div>
+                  </div>
                 </div>
+              </li>
+              <li>
+                <button
+                  @click="confirmTradeHandler"
+                  class="w-full bg-green-500 py-2 font-semibold uppercase text-white hover:bg-green-700"
+                >
+                  Confirm Trade ( {{ confirmTradeCount }} / 2 )
+                </button>
               </li>
             </ul>
           </div>
-
           <div
-            class="flex w-full items-center justify-between border-t border-gray-300 p-3"
+            v-if="showPokemonList"
+            class="flex flex-wrap gap-x-4 gap-y-2 border-t py-4"
+          >
+            <PokemonMiniCard
+              v-for="pokemon in myPokemons"
+              :key="pokemon.id"
+              :pokemon="pokemon"
+              :selected-pokemon="selectedPokemon"
+              @select-pokemon="selectPokemon"
+            ></PokemonMiniCard>
+            <button
+              @click="addToTrade"
+              class="rounded-xl border px-2 py-0 text-xs uppercase shadow-lg hover:bg-gray-200"
+            >
+              Submit
+            </button>
+            <button @click="selectedPokemon = -1">
+              <img src="../assets/reset-24.png" alt="" />
+            </button>
+          </div>
+          <div
+            class="flex w-full items-center justify-between gap-x-4 border-t border-gray-300 p-3"
           >
             <input
               @keyup.enter="sendMessage"
               v-model="chatMessage"
               type="text"
               placeholder="Message"
-              class="mx-3 block w-full rounded-full bg-gray-100 py-2 pl-4 outline-none focus:text-gray-700"
+              class="block w-full rounded-full bg-gray-100 py-2 pl-4 outline-none focus:text-gray-700"
               name="message"
               required
             />
+            <button @click="togglePokemonList" type="button">
+              <img src="../assets/pokeballs-32.png" alt="" />
+            </button>
             <button @click="sendMessage" type="submit">
               <svg
                 class="h-5 w-5 origin-center rotate-90 transform text-gray-500"

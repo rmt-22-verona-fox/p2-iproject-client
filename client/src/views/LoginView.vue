@@ -20,7 +20,9 @@ export default {
       try {
         const { data: response } = await this.loginRequest(this.loginData);
         localStorage.setItem("access_token", response.access_token);
+        this.trainer.id = response.id;
         this.trainer.username = response.username;
+        localStorage.id = response.id;
         localStorage.username = response.username;
         this.isLoggedIn = true;
         this.$router.push("/");
@@ -58,7 +60,7 @@ export default {
     <div class="hidden w-[1024px] lg:block">
       <img
         class="h-full w-full object-contain"
-        src="https://assets.pokemon.com/assets//cms2/img/watch-pokemon-tv/_downloads/movie14_wallpaper2_1920.jpg"
+        src="../assets/bg-1.jpg"
         alt=""
       />
     </div>
