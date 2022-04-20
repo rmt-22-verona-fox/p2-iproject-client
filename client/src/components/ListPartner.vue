@@ -18,7 +18,7 @@ export default {
     ]),
     accepting(id) {
       this.accept(id);
-      this.$router.push("/chatroom");
+      this.$router.push("/");
     },
     request(id) {
       this.addPartner(id);
