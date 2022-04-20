@@ -30,7 +30,6 @@ export default defineComponent({
   },
   components: { GoogleMap, Marker, InfoWindow },
   computed: {
-    ...mapWritableState(useHotelStore, ["hotelData"]),
   },
   methods: {
     ...mapActions(useHotelStore, ["booking"]),
@@ -186,7 +185,6 @@ export default defineComponent({
     },
     bookHotelData: async function (data) {
       try {
-        console.log(data);
         this.hotelData = {
           hotel: data.name,
           price: 300000,
@@ -197,11 +195,14 @@ export default defineComponent({
           lat: data.position.lat,
           lng: data.position.lng,
         };
-        console.log(this.hotelData);
         await axios.post('http://localhost:3000/booking', this.hotelData, {
           headers: {
             access_token: localStorage.access_token,
           },
+        });
+        this.$swal.fire({
+          icon: "success",
+          title: 'Success to book the ticket',
         });
       } catch (error) {
         this.$swal.fire({
