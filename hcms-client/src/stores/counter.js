@@ -1,12 +1,14 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
+const BASE_URL = "http://localhost:3000";
 
 export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     counter: 0,
     ailments: [],
+    readDoctors: [],
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -53,6 +55,24 @@ export const useCounterStore = defineStore({
             confirmButtonText: "Ok",
           });
         }
+      }
+    },
+
+    async getDoctors() {
+      console.log("getDoctorsStore");
+      try {
+        const response = await axios({
+          method: "GET",
+          url: `${BASE_URL}/patient/read`,
+        });
+        this.readDoctors = response
+      } catch (err) {
+        Swal.fire({
+          title: "Error!",
+          text: "Sorry, there is problem",
+          icon: "error",
+          confirmButtonText: "Ok",
+        });
       }
     },
   },

@@ -1,7 +1,22 @@
 <script>
+import { mapActions, mapState } from "pinia";
+import { useCounterStore } from "../stores/counter";
+import DynamicCard from "@/components/DynamicCard.vue";
+
 export default {
-    computed
-}
+  methods: {
+    ...mapActions(useCounterStore, ["getDoctors"]),
+  },
+  computed: {
+    ...mapState(useCounterStore, ["readDoctors"]),
+  },
+  components: {
+    DynamicCard,
+  },
+  async created() {
+    await this.getDoctors();
+  },
+};
 </script>
 
 <template>
@@ -15,17 +30,24 @@ export default {
           </div>
         </div>
       </div>
-      <div class="card" style="width: 18rem">
-        <img src="..." class="card-img-top" alt="..." />
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
+      <div class="dynamic-card">
+        <DynamicCard
+          v-for="(element, index) in readDoctors.data"
+          :key="index"
+          :element="element"
+          class="dynamic-component"
+        />
       </div>
     </div>
   </div>
 </template>
+
+<style>
+.dynamic-card {
+  display: flex;
+  justify-content: space-between;
+}
+.dynamic-component {
+  margin-right: 40px;
+}
+</style>
