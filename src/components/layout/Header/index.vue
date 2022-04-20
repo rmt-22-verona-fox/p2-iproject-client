@@ -33,7 +33,7 @@ export default {
               width="200"
             />
           </router-link>
-          <Search />
+          <Search class="hidden" />
         </div>
 
         <div class="flex gap-5">

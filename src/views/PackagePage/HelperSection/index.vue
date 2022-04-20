@@ -24,7 +24,7 @@
           <p class="font-bold text-heading-3">Penginapan</p>
           <p class="text-gray-70 font-medium text-heading-4">
             Seluruh penginapan akan diatur oleh pihak
-            <span class="font-bold text-primary-black">Travelio </span>
+            <span class="font-bold text-primary-black">Travel10 </span>
           </p>
         </div>
       </div>

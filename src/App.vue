@@ -8,7 +8,7 @@ export default {
 
   methods: {
     async payment() {
-      await snap.pay("2108bf19-7c4f-4b52-9359-548d2549056e");
+      await snap.pay("8ed9138b-22fc-4f5d-8107-d5b3dd548da0");
     },
   },
 };

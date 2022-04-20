@@ -80,7 +80,7 @@ export default {
 
     <div class="bg-blue-100 p-3">
       <p class="text-heading-5 text-white font-bold text-center">
-        Diaz Linggaputra &copy; 2022 Travelio. All Rights Reserved.
+        Diaz Linggaputra &copy; 2022 Travel10. All Rights Reserved.
       </p>
     </div>
   </footer>

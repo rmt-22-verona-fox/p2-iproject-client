@@ -11,18 +11,16 @@ export default {
   data() {
     return {
       isModalOpen: false,
-      quantity: 0,
+      quantity: 1,
     };
   },
 
   methods: {
     openModal() {
-      console.log("haloooo");
       this.isModalOpen = true;
     },
 
     closeModal() {
-      console.log("kok dimatiin");
       this.isModalOpen = false;
     },
 
@@ -33,6 +31,28 @@ export default {
     decrementQty() {
       if (this.quantity === 0) return;
       this.quantity--;
+    },
+
+    async payment() {
+      await snap.pay("c23056cb-de11-4b1c-916e-7a3e751c5c6b", {
+        // Optional
+        onSuccess: function (result) {
+          console.log(result);
+
+          this.$router.push("/");
+
+          console.log("pembayaran berhasil");
+          /* You may add your own js here, this is just example */
+        },
+        // Optional
+        onPending: function (result) {
+          /* You may add your own js here, this is just example */
+        },
+        // Optional
+        onError: function (result) {
+          /* You may add your own js here, this is just example */
+        },
+      });
     },
   },
 };
@@ -60,7 +80,7 @@ export default {
       <div
         class="modal-content flex flex-row items-center justify-between py-4 w-full text-left px-6"
       >
-        <!--Title-->
+        <!-- Body -->
         <div class="flex justify-between items-center">
           <p class="text-2xl font-bold text-gray-100">Jumlah Paket</p>
           <div
@@ -75,12 +95,11 @@ export default {
             >
           </div>
         </div>
-        <!-- Body -->
 
         <!--Footer-->
         <div class="flex items-center gap-8">
           <p class="text-heading-3 font-bold">Total Rp 2.000.000</p>
-          <Button class="w-[190px]">Pesan</Button>
+          <Button class="w-[190px]" v-on:click="payment">Bayar</Button>
         </div>
       </div>
     </div>
