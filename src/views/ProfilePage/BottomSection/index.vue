@@ -30,7 +30,6 @@ export default {
       try {
         const response = await this.fetchProfileHistory();
 
-        console.log(response.data);
         if (response.data?.message) {
           this.noHistoryMessage = response.data?.message;
         } else if (!response.data?.message) {

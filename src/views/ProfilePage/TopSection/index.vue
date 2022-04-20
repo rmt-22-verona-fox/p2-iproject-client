@@ -58,7 +58,7 @@ export default {
       </p>
 
       <Button
-        class="w-[160px] font-normal border border-gray-50 bg-white text-gray-50 hover:bg-blue-100 hover:text-white hover:border-blue-100"
+        class="hidden w-[160px] font-normal border border-gray-50 bg-white text-gray-50 hover:bg-blue-100 hover:text-white hover:border-blue-100"
         >Edit Profile</Button
       >
     </div>

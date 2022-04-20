@@ -71,7 +71,6 @@ export default {
           packageQty: this.quantity,
         });
       } catch (err) {
-        console.log(err.response);
         this.toast.error("Pembayaran gagal dilakukan");
       }
     },

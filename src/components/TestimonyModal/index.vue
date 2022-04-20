@@ -20,11 +20,17 @@ export default {
 
   computed: {
     ...mapState(usePackageStore, ["packageDetail"]),
-    ...mapWritableState(usePackageStore, ["testimonyModalState"]),
+    ...mapWritableState(usePackageStore, [
+      "testimonyModalState",
+      "homeTestimonyList",
+    ]),
   },
 
   methods: {
-    ...mapActions(usePackageStore, ["storeUserTestimony"]),
+    ...mapActions(usePackageStore, [
+      "storeUserTestimony",
+      "renderUserTestimonies",
+    ]),
 
     openModal() {
       this.testimonyModalState = true;
@@ -40,6 +46,12 @@ export default {
           review: this.form.review,
           destination: this.packageDetail?.destinationName,
         });
+
+        const response = await this.renderUserTestimonies(
+          this.packageDetail?.destinationName
+        );
+
+        this.homeTestimonyList = response.data;
 
         this.toast.success("Berhasil menambahkan testimoni");
         this.testimonyModalState = false;
