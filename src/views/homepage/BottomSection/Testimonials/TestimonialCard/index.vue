@@ -37,10 +37,9 @@ export default {
       <Rating v-for="i in Math.floor(testimony?.rating)" />
     </div>
 
-    <p class="text-heading-5 text-gray-70 my-4">
+    <p class="text-heading-5 text-gray-70 my-4 min-h-[80px]">
       {{ testimony?.review }}
     </p>
-
     <p class="text-heading-5 text-gray-100 font-bold">
       {{ testimony?.destination }}
     </p>

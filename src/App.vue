@@ -3,6 +3,7 @@ import { mapWritableState } from "pinia";
 import { useAuthStore } from "./stores/auth";
 import VerificationModal from "@/components/VerificationModal/index.vue";
 import CheckoutModal from "@/components/CheckoutModal/index.vue";
+import TestimonyModal from "@/components/TestimonyModal/index.vue";
 import Layout from "@/components/layout/Layout.vue";
 
 export default {
@@ -10,12 +11,7 @@ export default {
     Layout,
     VerificationModal,
     CheckoutModal,
-  },
-
-  methods: {
-    async payment() {
-      await snap.pay("8ed9138b-22fc-4f5d-8107-d5b3dd548da0");
-    },
+    TestimonyModal,
   },
 
   computed: {
@@ -33,7 +29,7 @@ export default {
 <template>
   <VerificationModal />
   <CheckoutModal />
+  <TestimonyModal />
 
   <router-view></router-view>
-  <!-- <button class="text-yellow-70 font-label" v-on:click="payment">Bayar!</button> -->
 </template>

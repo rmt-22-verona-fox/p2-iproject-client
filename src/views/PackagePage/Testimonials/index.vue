@@ -16,10 +16,10 @@ export default {
       Testimonial Pelanggan
     </h3>
 
-    <div class="flex justify-between">
+    <div class="flex flex-row gap-10">
       <TestimonialCard
         v-for="testimony in testimonies"
-        v-bind:key="testimony.fullName"
+        v-bind:key="testimony._id"
         v-bind:testimony="testimony"
       />
     </div>

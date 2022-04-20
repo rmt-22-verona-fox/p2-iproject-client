@@ -11,6 +11,14 @@ export const axiosPackage = () =>
     baseURL: BASE_URL(),
   });
 
+export const axiosTestimony = () =>
+  axios.create({
+    baseURL: BASE_URL(),
+    headers: {
+      access_token: localStorage.getItem("access_token"),
+    },
+  });
+
 export const axiosTransaction = () =>
   axios.create({
     baseURL: BASE_URL(),

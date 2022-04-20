@@ -1,11 +1,11 @@
 <script>
 import { mapActions, mapWritableState } from "pinia";
 import { usePackageStore } from "../../stores/package";
+import Button from "@/components/button/index.vue";
 import Container from "../container/Container.vue";
 import Layout from "@/components/layout/Layout.vue";
 import ImageCard from "@/views/PackagePage/ImageCard/index.vue";
 import Testimonies from "@/views/PackagePage/Testimonials/index.vue";
-import Package from "@/views/PackagePage/Package/index.vue";
 import Arrow from "@/views/PackagePage/Arrow/index.vue";
 import HelperSection from "@/views/PackagePage/HelperSection/index.vue";
 import { useToast } from "vue-toastification";
@@ -17,11 +17,11 @@ export default {
   },
 
   components: {
+    Button,
     Container,
     Layout,
     ImageCard,
     Testimonies,
-    Package,
     Arrow,
     HelperSection,
   },
@@ -30,6 +30,7 @@ export default {
     ...mapWritableState(usePackageStore, [
       "packageDetail",
       "homeTestimonyList",
+      "testimonyModalState",
     ]),
   },
 
@@ -49,20 +50,28 @@ export default {
       }
     },
 
-    async renderTestimoniesOnCreate() {
+    async renderTestimoniesOnCreate(destination) {
       try {
-        const response = await this.renderUserTestimonies();
+        const response = await this.renderUserTestimonies(destination);
 
         this.homeTestimonyList = response.data;
       } catch (err) {
         this.toast.error(err.response?.data?.message);
       }
     },
+
+    addTestimony() {
+      if (!localStorage.getItem("access_token")) {
+        this.$router.push("/masuk");
+      } else {
+        this.testimonyModalState = true;
+      }
+    },
   },
 
   async created() {
     await this.fetchPackageDetail();
-    await this.renderTestimoniesOnCreate();
+    await this.renderTestimoniesOnCreate(this.packageDetail?.destinationName);
   },
 };
 </script>
@@ -135,8 +144,16 @@ export default {
       <HelperSection />
       <hr />
 
-      <Testimonies v-bind:testimonies="homeTestimonyList" />
-      <Package />
+      <Testimonies
+        v-bind:testimonies="homeTestimonyList"
+        v-if="homeTestimonyList.length"
+      />
+
+      <Button
+        class="w-[190px] justify-center my-10 text-heading-5"
+        v-on:click="addTestimony"
+        >Tambah Testimoni</Button
+      >
     </Container>
   </Layout>
 </template>

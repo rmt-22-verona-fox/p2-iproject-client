@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { axiosPackage } from "../axios";
+import { axiosPackage, axiosTestimony } from "../axios";
 
 export const usePackageStore = defineStore({
   id: "package",
@@ -9,6 +9,7 @@ export const usePackageStore = defineStore({
     categoryList: [],
     homeTestimonyList: [],
     packageDetail: {},
+    testimonyModalState: false,
   }),
   getters: {},
   actions: {
@@ -24,12 +25,24 @@ export const usePackageStore = defineStore({
       return axiosPackage().get("/packages/categories");
     },
 
-    renderUserTestimonies() {
-      return axiosPackage().get("/packages/testimonies");
+    renderUserTestimonies(destination) {
+      return axiosPackage().get("/packages/testimonies", {
+        params: {
+          destination,
+        },
+      });
     },
 
     renderPackageDetail(id) {
       return axiosPackage().get(`/packages/${id}`);
+    },
+
+    storeUserTestimony(payload) {
+      return axiosTestimony().post("/packages/testimonies", {
+        review: payload.review,
+        rating: payload.rating,
+        destination: payload.destination,
+      });
     },
   },
 });

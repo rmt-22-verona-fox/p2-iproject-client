@@ -70,7 +70,7 @@ export default {
     >
       {{ noHistoryMessage }}
     </p>
-    <div class="flex justify-between mt-10" v-if="!noHistoryMessage">
+    <div class="flex flex-row gap-10 mt-10" v-if="!noHistoryMessage">
       <HistoryCard
         v-for="(history, i) in profileHistoryList"
         v-bind:key="i"
