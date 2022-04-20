@@ -1,34 +1,55 @@
 <script>
 import axios from "axios";
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useCounterStore } from "./stores/counter";
 import leaflet from "leaflet";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+import GeoErrorModal from "./components/GeoErrorModal.vue";
 
 export default {
+  components: {
+    GeoErrorModal,
+  },
   setup() {
-    let map;
     onMounted(() => {
-      map = leaflet.map("map").setView([28.538336, -81.379234], 10);
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoibXVqaWJyYSIsImEiOiJjbDI3ODI0YTMwbG9mM2pvOHYxdXZnNmJwIn0.ZfSJT23rFmZgo-R6mTvhww";
 
-      // Add tile layer
-      L.tileLayer(
-        `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibXVqaWJyYSIsImEiOiJjbDI3YTRoNzMwNmYwM2RxbHlydzM5eHppIn0.rjQY1Zd4Mnn78rU6HkCjUg`,
-        {
-          attribution:
-            'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          maxZoom: 18,
-          id: "mapbox/streets-v11",
-          tileSize: 512,
-          zoomOffset: -1,
+      navigator.geolocation.getCurrentPosition(successLocation, errorLocation, {
+        enableHighAccuracy: true,
+      });
+
+      function successLocation(coordsCity) {
+        console.log(position);
+        setupMap([position.coords.longitude, position.coords.latitude]);
+      }
+
+      function errorLocation() {}
+
+      function setupMap(center) {
+        const map = new mapboxgl.Map({
+          container: "map", // container ID
+          style: "mapbox://styles/mapbox/streets-v11", // style URL
+          center: [-74.5, 40], // starting position [lng, lat]
+          zoom: 14, // starting zoom
+          center: center,
+        });
+
+        const nav = new mapboxgl.NavigationControl();
+        map.addControl(nav);
+
+        var directions = new MapboxDirections({
           accessToken:
-            "pk.eyJ1IjoibXVqaWJyYSIsImEiOiJjbDI3YTRoNzMwNmYwM2RxbHlydzM5eHppIn0.rjQY1Zd4Mnn78rU6HkCjUg",
-        }
-      ).addTo(map);
+            "pk.eyJ1IjoibXVqaWJyYSIsImEiOiJjbDI3ODI0YTMwbG9mM2pvOHYxdXZnNmJwIn0.ZfSJT23rFmZgo-R6mTvhww",
+        });
+
+        map.addControl(directions, "top-left");
+      }
     });
   },
   data() {
     return {
+      hotels: [],
       cityFound: false,
       visible: false,
       stormy: false,
@@ -37,6 +58,7 @@ export default {
       clearNight: false,
       snowy: false,
 
+      coordsCity: [],
       isDay: true,
       citySearch: "",
       weather: {
@@ -52,8 +74,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useCounterStore, ["getCity"]),
-
     async getWeather() {
       try {
         const key = "08b9af430477a2a0f1a9fdf062be77b0";
@@ -62,8 +82,8 @@ export default {
         );
 
         const data = baseUrl.data;
-        console.log(data);
         this.citySearch = "";
+        this.coordsCity = data.coord;
         this.weather.cityName = data.name;
         this.weather.country = data.sys.country;
         this.weather.temperature = Math.round(data.main.temp);
@@ -136,9 +156,25 @@ export default {
         console.log(error);
       }
     },
-  },
-  created() {
-    this.getCity();
+
+    async getHotel() {
+      try {
+        const response = await axios({
+          method: "GET",
+          url: `https://hotel-price-aggregator.p.rapidapi.com/search`,
+          params: { q: this.citySearch },
+          headers: {
+            "X-RapidAPI-Host": "hotel-price-aggregator.p.rapidapi.com",
+            "X-RapidAPI-Key":
+              "d693f0e4b0mshc42d6ce177e0179p10dcdejsn59499c9fbcae",
+          },
+        });
+        console.log(response);
+        this.hotels = response;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
@@ -199,7 +235,13 @@ export default {
             placeholder="Search"
             aria-label="Search"
           />
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <button
+            @click="getHotel"
+            class="btn btn-outline-success"
+            type="submit"
+          >
+            Search
+          </button>
         </form>
       </div>
     </div>
@@ -209,8 +251,8 @@ export default {
   <div class="container-fluid">
     <div class="row">
       <div class="col-3 actionSide">
-        <div id="main" :class="isDay ? 'day' : 'night'">
-          <div class="container" style="width: 400px; min-width: 360px">
+        <div id="main">
+          <div style="width: 300px">
             <div
               class="card rounded my-3 shadow-lg back-card overflow-hidden"
               v-if="visible"
@@ -218,11 +260,15 @@ export default {
               <!-- weather animation container -->
 
               <!-- Top of card starts here -->
-              <div class="card-top text-center" style="margin-bottom: 15rem">
-                <div class="city-name my-3">
+              <div class="card-top text-center" style="margin-bottom: 6rem">
+                <div class="city-name my-2">
                   <p>{{ weather.cityName }}</p>
                   <span>...</span>
-                  <p class="">{{ weather.country }}</p>
+                  <span
+                    ><p class="" style="margin-top: -10px">
+                      {{ weather.country }}
+                    </p></span
+                  >
                 </div>
               </div>
               <!-- top of card ends here -->
@@ -253,7 +299,7 @@ export default {
                 <!-- card middle ends here -->
 
                 <!-- card bottom starts here -->
-                <div class="card-bottom px-5 py-4 row">
+                <div class="card-bottom px-5 py-2 row">
                   <div class="col text-center">
                     <p>{{ weather.feelsLike }}&deg;C</p>
                     <span>Feels like</span>
@@ -269,9 +315,13 @@ export default {
             </div>
           </div>
         </div>
+        <div>
+          <h6 v-if="visible">{{ hotels }}</h6>
+        </div>
       </div>
       <div class="col-9 mapSide">
-        <div class="contaier" id="map"></div>
+        <GeoErrorModal></GeoErrorModal>
+        <div class="" id="map"></div>
       </div>
     </div>
   </div>
@@ -281,35 +331,18 @@ export default {
 #map {
   height: 100vh;
 }
+#main {
+  padding: 1rem;
+}
 .actionSide {
   padding: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   justify-items: center;
+  top: 0;
 }
 
-.day {
-  background: linear-gradient(to bottom left, #d7d3ac, #ffffff);
-  height: 100vh;
-  width: 100vw;
-}
-.night {
-  background: linear-gradient(to bottom left, #4854a2, #3d3d3d);
-  color: white;
-}
-
-.title {
-  font-size: 30px;
-  font-weight: 500;
-}
-
-.form-rounded {
-  border-radius: 2rem;
-  height: 2rem;
-  width: 15rem;
-}
 .back-card {
   border-radius: 40px !important;
   color: white;
@@ -320,6 +353,7 @@ export default {
 .city-name {
   position: absolute;
   width: 100%;
+  top: 0;
 }
 
 .city-name p {
@@ -329,14 +363,14 @@ export default {
 
 .city-name span {
   position: relative;
-  top: -50px;
+  top: -60px;
   font-size: 40pt;
   font-family: "Times New Roman", Times, serif;
 }
 
 .temp span {
   font-weight: 100;
-  font-size: 5em;
+  font-size: 4em;
   letter-spacing: -5px;
   white-space: nowrap;
 }
@@ -359,7 +393,7 @@ export default {
 }
 
 .card-bottom p {
-  font-size: 50px;
+  font-size: 35px;
   font-weight: 100;
   letter-spacing: -3px;
 }
