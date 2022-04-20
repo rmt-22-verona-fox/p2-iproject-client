@@ -52,7 +52,7 @@ export default {
         >
           Lihat detail
         </Button>
-        <Button class="w-full text-sm">Pesan</Button>
+        <Button class="hidden w-full text-sm">Pesan</Button>
       </div>
     </div>
   </article>

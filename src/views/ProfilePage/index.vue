@@ -18,5 +18,3 @@ export default {
     <BottomSection />
   </Layout>
 </template>
-
-<style scoped></style>

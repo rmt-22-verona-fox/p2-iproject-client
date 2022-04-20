@@ -25,20 +25,26 @@ export default {
 
   methods: {
     ...mapActions(useTransactionStore, ["fetchProfileHistory"]),
+
+    async fetchProfileHistoryOnCreated() {
+      try {
+        const response = await this.fetchProfileHistory();
+
+        console.log(response.data);
+        if (response.data?.message) {
+          this.noHistoryMessage = response.data?.message;
+        } else if (!response.data?.message) {
+          this.noHistoryMessage = "";
+          this.profileHistoryList = response.data;
+        }
+      } catch (err) {
+        this.toast.error(err.response?.data?.message);
+      }
+    },
   },
 
   async created() {
-    try {
-      const response = await this.fetchProfileHistory();
-
-      if (response.data?.message) {
-        this.noHistoryMessage = response.data?.message;
-      } else {
-        this.profileHistoryList = response.data;
-      }
-    } catch (err) {
-      this.toast.error(err.response?.data?.message);
-    }
+    await this.fetchProfileHistoryOnCreated();
   },
 };
 </script>
