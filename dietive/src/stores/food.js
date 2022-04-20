@@ -60,5 +60,14 @@ export const useFoodStore = defineStore({
         console.log(err);
       }
     },
+    async loginAction(payload) {
+      try {
+        const response = await axios.post("http://localhost:3000/login", payload);
+        // localStorage.setItem("access_token", )
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 });
