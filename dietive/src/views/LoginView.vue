@@ -19,7 +19,12 @@ export default {
     ]),
     async loginClick () {
       try {
-        this.loginAction()
+        let payload = {
+          email: this.email,
+          password: this.password
+        }
+        await this.loginAction(payload)
+        this.isLogin = true
         this.$router.push("/")
       } catch (err) {
         console.log(err);

@@ -24,7 +24,8 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    }
+    },
+    
   },
   async created() {
     await this.searchFeature(this.keyword)
@@ -49,7 +50,7 @@ export default {
         </div>
         <div class="header-navigation">
           <nav class="header-navigation-links">
-            <a href="#"> <RouterLink to="/" @click.prevent="toHome">
+            <a href="#"> <RouterLink to="/">
                 Home
               </RouterLink></a>
             <a href="#"> Contact Us </a>
@@ -62,13 +63,13 @@ export default {
             <!-- <a href="#" class="icon-button">
               <i class="ph-sign-out-bold"></i>
             </a> -->
-            <a class="button" style="font-size: 15px">  <i class="ph-sign-out-bold"></i><i>Log out</i></a> 
+            <a class="button" style="font-size: 12px">  <i class="ph-sign-out-bold"></i><i>Log out</i></a> 
           </div>
         </div>
-        <a href="#" class="button">
+        <!-- <a href="#" class="button">
           <i class="ph-list-bold"></i>
           <span>Menu</span>
-        </a>
+        </a> -->
       </div>
     </header>
     
