@@ -1,24 +1,44 @@
 <script>
+import NavBar from "../components/NavBar.vue";
 import CardReusable from "../components/CardReusable.vue";
+import { mapActions, mapState } from "pinia";
+import { useProductsStore } from "@/stores/product";
 export default {
   data() {
     return {
-      searchFilter: "",
-      brandFilter: "",
       sneakers: "",
+      brand: "",
+      name: "",
     };
   },
   components: {
     CardReusable,
+    NavBar,
+  },
+  computed: {
+    ...mapState(useProductsStore, ["brands", "products"]),
   },
   methods: {
+    ...mapActions(useProductsStore, ["fetchBrands", "fetchProducts"]),
     paginationEvent(num) {},
-    filterEvent() {},
+    filterBrandEvent(brand) {
+      this.brand = brand.toLowerCase();
+      this.fetchProducts(0, this.brand);
+      this.$router.push({
+        path: "/",
+        query: { brand: this.brand },
+      });
+    },
+  },
+  created() {
+    this.fetchBrands();
+    this.fetchProducts();
   },
 };
 </script>
 
 <template>
+  <NavBar></NavBar>
   <!-- home-page -->
   <div class="home-page d-flex">
     <!-- container -->
@@ -26,36 +46,19 @@ export default {
       <!-- sidebar -->
       <div class="sidebar col-2">
         <ul class="d-flex flex-column col-sm">
-          <li class="sidebar-menu text-dark">Brands</li>
-          <select
-            class="form-select"
-            v-model="brandFilter"
-            @change="filterEvent"
-          >
-            <option selected value=" ">All</option>
-            <!-- <option
-              v-for="category in categories"
-              :key="category.id"
-              :value="category.id"
-            >
-              {{ category.name }}
-            </option> -->
-          </select>
-          <input
-            @input="filterEvent"
-            v-model="searchFilter"
-            class="sidebar-menu form-control"
-            type="text"
-            name="title"
-            placeholder="search title here..."
-          />
+          <li class="sidebar-menu text-dark">
+            <h1>Brands</h1>
+          </li>
+          <li v-for="brand in brands" :key="brand">
+            <a @click.prevent="filterBrandEvent(brand)">{{ brand }}</a>
+          </li>
         </ul>
       </div>
       <div class="content col-10">
         <div class="jumbotron p-3 p-md-5 text-dark rounded">
           <div class="col-md-6 px-0">
             <h1 class="display-4 font-italic">4 Kicks</h1>
-            <p class="lead my-3 text-white">
+            <p class="lead my-3 text-white text-container">
               Sneakers go back a long way. In the late 18th century, people wore
               rubber soled shoes called plimsolls, but they were pretty
               crude?for one thing, there was no right foot or left foot. Around
@@ -64,26 +67,27 @@ export default {
               began to be mass produced.
             </p>
             <p class="lead mb-0">
-              <a
+              <button
                 href="https://www.factmonster.com/culture-entertainment/fashion/history-sneakers"
-                >Continue reading...</a
+                class="btn btn-outline-info"
               >
+                Continue reading...
+              </button>
             </p>
           </div>
         </div>
         <!-- card -->
-        <h1 v-if="sneakers.length === 0" class="text-center">
+        <h1 v-if="products.length === 0" class="text-center">
           No Sneakers Found
         </h1>
         <div class="row">
           <div class="col col-xl d-flex">
             <hr />
-            <CardReusable></CardReusable>
-            <CardReusable></CardReusable>
-            <CardReusable></CardReusable>
-            <CardReusable></CardReusable>
-            <CardReusable></CardReusable>
-            <CardReusable></CardReusable>
+            <CardReusable
+              v-for="product in products"
+              :key="product.id"
+              :product="product"
+            ></CardReusable>
           </div>
         </div>
         <div class="pagination-bar">
@@ -103,6 +107,9 @@ export default {
 <style>
 /* container */
 
+.text-container {
+  text-shadow: 2px 2px 8px #000000;
+}
 .jumbotron {
   /* background: linear-gradient(
     90deg,
@@ -117,6 +124,21 @@ export default {
   height: 30vw;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #ddd;
+}
+
+ul li {
+  padding: 8px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
 .content {
   padding: 0;
   padding-right: 3%;
@@ -125,9 +147,6 @@ export default {
   width: 80%;
 }
 
-.sidebar-menu {
-  margin-top: 15%;
-}
 .row {
   margin: 0;
   width: 100%;
@@ -145,6 +164,7 @@ export default {
   padding: 0;
   height: 91.1%;
   margin-left: 1%;
+  margin-top: 1%;
   /* background: rgb(223, 238, 252); */
 }
 

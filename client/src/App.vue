@@ -9,8 +9,9 @@ export default {
 </script>
 
 <template>
-  <ThreeComponent />
   <RouterView />
 </template>
 
-<style></style>
+<style>
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+</style>
