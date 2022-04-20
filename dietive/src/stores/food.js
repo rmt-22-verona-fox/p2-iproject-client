@@ -67,8 +67,26 @@ export const useFoodStore = defineStore({
         const response = await axios.post("http://localhost:3000/login", payload);
         localStorage.setItem("access_token", response.data.access_token)
         localStorage.setItem("email", response.data.data.email)
-        localStorage.setItem("dailCalories", response.data.data.dailyCalories)
+        localStorage.setItem("dailyCalories", response.data.data.dailyCalories)
         this.isLogin = true
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async contactUsAction(payload) {
+      try {
+        const response = await axios.post("http://localhost:3000/contactUs", payload);
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async logoutAction() {
+      try {
+        localStorage.removeItem("access_token")
+        localStorage.removeItem("email")
+        localStorage.removeItem("dailyCalories")
+        this.isLogin = false
       } catch (err) {
         console.log(err);
       }
@@ -116,6 +134,20 @@ export const useFoodStore = defineStore({
         console.log(response.data);
       } catch (err) {
         console.log(err);
+      }
+    },
+    async deleteFoodAction(id) {
+      try {
+        const token = localStorage.getItem("access_token")
+        const response = await axios.delete(`http://localhost:3000/food/${id}`, {
+          headers: {
+            access_token: token
+          }
+        });
+
+        console.log(response.data);
+      } catch (err) {
+        console.log(err.response);
       }
     },
   },

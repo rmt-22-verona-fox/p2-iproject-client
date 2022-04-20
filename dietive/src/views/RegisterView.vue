@@ -36,8 +36,9 @@ export default {
           age: this.age,
           weight: this.weight,
           location: this.city_reg,
-        }
+        };
         await this.registerAction(payload);
+        this.$router.push("/login");
       } catch (err) {
         console.log(err);
       }
@@ -77,7 +78,7 @@ export default {
 
       <h2 style="color: forestgreen">Sign Up</h2>
       <br /><br />
- 
+
       <form>
         <input
           type="text"
@@ -89,13 +90,13 @@ export default {
         /><br /><br />
         <input
           type="password"
-           v-model="password"
+          v-model="password"
           id="password"
           class="fadeIn third"
           name="login"
           placeholder="password"
         /><br /><br />
-        <select name="gender"  v-model="gender" >
+        <select name="gender" v-model="gender">
           <option value="" selected disabled>gender</option>
           <option value="female">Female</option>
           <option value="male">Male</option></select
@@ -105,7 +106,7 @@ export default {
           class="fadeIn third"
           name="login"
           v-model="age"
-          placeholder="age"
+          placeholder="age (min 18 year)"
         /><br /><br />
         <input
           type="number"
@@ -117,7 +118,7 @@ export default {
 
         <select name="prov" v-model="prov" v-on:change="cityPick">
           <option value="" selected disabled>province</option>
-          <option :value="prov.id" v-for="prov in province" :key="prov.id" >
+          <option :value="prov.id" v-for="prov in province" :key="prov.id">
             {{ prov.nama }}
           </option></select
         ><br /><br />
@@ -140,7 +141,9 @@ export default {
       <div id="formFooter">
         <p>
           Already have an account ?
-          <RouterLink to="/login" class="underlineHover" href="#"> Log In</RouterLink>
+          <RouterLink to="/login" class="underlineHover" href="#">
+            Log In</RouterLink
+          >
         </p>
       </div>
     </div>
@@ -210,7 +213,7 @@ h2 {
   background: #fff;
   padding: 30px;
   width: 90%;
-  max-width: 450px;
+  max-width: 550px;
   position: relative;
   padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
@@ -425,7 +428,7 @@ select:focus {
   border-bottom: 2px solid #3ad135;
 }
 
-select:placeholder {
+select:disabled {
   color: #cccccc;
 }
 

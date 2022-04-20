@@ -1,36 +1,46 @@
 <script>
-
 import { useFoodStore } from "@/stores/food";
 import { mapActions, mapWritableState } from "pinia";
 
 export default {
   data() {
     return {
-      email: "",
-      password: "",
+      emailUser: "",
+      subject: "",
+      message: "",
     };
   },
   computed: {
     ...mapWritableState(useFoodStore, ["isLogin"]),
   },
   methods: {
-    ...mapActions(useFoodStore, [
-      "loginAction",
-    ]),
-    async loginClick () {
+    ...mapActions(useFoodStore, ["contactUsAction"]),
+    async contactUsClick() {
       try {
         let payload = {
-          email: this.email,
-          password: this.password
-        }
-        await this.loginAction(payload)
-        this.isLogin = true
-        this.$router.push("/")
+          emailUser: this.emailUser,
+          subject: this.subject,
+          message: this.message,
+        };
+        await this.contactUsAction(payload);
+        this.$router.push("/");
       } catch (err) {
         console.log(err);
       }
+    },
+  },
+  async created() {
+    try {
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        this.isLogin = true;
+      } else {
+        this.isLogin = false;
+      }
+    } catch (err) {
+      console.log(err);
     }
-  }
+  },
 };
 </script>
 
@@ -53,7 +63,7 @@ export default {
       <br />
       <hr style="height: 1px; background-color: #ccc; border: none" />
 
-      <h2 style="color: forestgreen">Sign In</h2>
+      <h2 style="color: forestgreen">CONTACT US</h2>
       <br /><br />
 
       <!-- Login Form -->
@@ -63,26 +73,41 @@ export default {
           id="login"
           class="fadeIn second"
           name="login"
-          v-model="email"
-          placeholder="email"
+          v-model="emailUser"
+          placeholder="email / name"
         /><br /><br />
         <input
-          type="password"
+          type="text"
           id="password"
           class="fadeIn third"
           name="login"
-          v-model="password"
-          placeholder="password"
+          v-model="subject"
+          placeholder="subject"
         /><br /><br />
-        <input @click.prevent="loginClick" type="submit" class="fadeIn fourth" value="Log In" />
+        <textarea
+          type="text"
+          id="password"
+          class="fadeIn third"
+          name="login"
+          cols="50"
+          rows="10"
+          v-model="message"
+          placeholder="type your message..."
+        /><br /><br />
+        <input
+          @click.prevent="contactUsClick"
+          type="submit"
+          class="fadeIn fourth"
+          value="SEND EMAIL"
+        />
       </form>
 
-      <div id="formFooter">
+      <!-- <div id="formFooter">
         <p>
           Don't have any account ?
           <RouterLink to="/register" class="underlineHover" href="#"> Sign Up</RouterLink>
         </p>
-      </div>
+      </div> -->
     </div>
     <br />
   </div>
@@ -149,7 +174,7 @@ h2 {
   background: #fff;
   padding: 30px;
   width: 90%;
-  max-width: 550px;
+  max-width: 800px;
   position: relative;
   padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
@@ -224,7 +249,7 @@ input[type="text"] {
   border: none;
   color: #0d0d0d;
   padding: 15px 32px;
-  text-align: center;
+  text-align: left;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
@@ -277,6 +302,38 @@ input[type="password"]:focus {
 
 input[type="password"]:placeholder {
   color: #cccccc;
+}
+
+textarea {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  font-family: Arial, Helvetica, sans-serif;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+textarea:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #3ad135;
+}
+
+textarea:placeholder {
+  color: #cccccc;
+  font-family: "Poppins", sans-serif;
 }
 
 /* ANIMATIONS */
