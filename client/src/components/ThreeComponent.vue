@@ -7,10 +7,14 @@
   >
     <Camera :position="{ x: 0, y: 0, z: 10 }" />
     <Scene background="#ffffff">
-      <Box ref="mesh" :size="5" :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }">
-        <ShaderMaterial>
-          <Texture src="./logo.png" uniform="myCustomTexture" />
-        </ShaderMaterial>
+      <Box ref="mesh" :size="3" :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }">
+        <BasicMaterial>
+          <Texture
+            src="https://image.goat.com/750/attachments/product_template_pictures/images/067/561/185/original/887470_00.png.png"
+            refraction
+            :refraction-ratio="0.95"
+          />
+        </BasicMaterial>
       </Box>
     </Scene>
   </Renderer>
@@ -28,6 +32,8 @@ import {
   MatcapMaterial,
   LambertMaterial,
   ShaderMaterial,
+  BasicMaterial,
+  CubeTexture,
 } from "troisjs";
 export default {
   components: {
@@ -41,6 +47,8 @@ export default {
     MatcapMaterial,
     LambertMaterial,
     ShaderMaterial,
+    BasicMaterial,
+    CubeTexture,
   },
 };
 </script>
