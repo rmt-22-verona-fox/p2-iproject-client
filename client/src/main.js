@@ -3,6 +3,7 @@ import { createPinia } from "pinia";
 import { markRaw } from "vue";
 import App from "./App.vue";
 import router from "./router/index.js";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 const pinia = createPinia();
 

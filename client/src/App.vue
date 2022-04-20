@@ -13,13 +13,21 @@ export default {
     NavBar,
   },
   methods: {
-    ...mapActions(useLoginStore, ["prayerTime", "getGeolocation", 'randomSurahLogin']),
+    ...mapActions(useLoginStore, [
+      "prayerTime",
+      "getGeolocation",
+      "randomSurahLogin",
+    ]),
   },
-  created() {
-    if (localStorage.access_token) {
-      this.isLogin = true;
-      this.randomSurahLogin()
-
+  async created() {
+    try {
+      await this.getGeolocation();
+      if (localStorage.access_token) {
+        this.isLogin = true;
+        this.randomSurahLogin();
+      }
+    } catch (err) {
+      console.log(err);
     }
   },
 };

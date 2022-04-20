@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.26.1",
     "pinia": "^2.0.13",
+    "sweetalert2": "^11.4.8",
     "vue": "^3.2.31",
     "vue-browser-geolocation": "^1.8.0",
     "vue-router": "^4.0.14"

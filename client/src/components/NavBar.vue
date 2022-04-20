@@ -2,14 +2,14 @@
 import { mapActions, mapWritableState } from "pinia";
 import { useLoginStore } from "../stores/LoginStore";
 
-export default{
-    methods:{
-        ...mapActions(useLoginStore, ['getGeolocation']),
-        triggerGeo(){
-            this.getGeolocation()
-        }
-    }
-}
+export default {
+  methods: {
+    ...mapActions(useLoginStore, ["getGeolocation"]),
+    triggerGeo() {
+      this.getGeolocation();
+    },
+  },
+};
 </script>
 
 <template>
@@ -31,22 +31,15 @@ export default{
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-           
-          </li>
+          <li class="nav-item"></li>
           <li class="nav-item">
             <router-link class="nav-link active" to="/login"
               >Logout</router-link
             >
           </li>
           <li class="nav-item">
-            <a
-            @click.prevent="this.triggerGeo"
-              class="nav-link active"
-              aria-current="page"
-              href="#"
-              id="btn-logout"
-              >Bookmark</a
+            <router-link class="nav-link active" to="/bookmarks"
+              >Bookmarks</router-link
             >
           </li>
         </ul>
