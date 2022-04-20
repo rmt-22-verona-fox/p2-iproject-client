@@ -33,6 +33,21 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: "/trade",
+      name: "trade",
+      component: () => import("../views/TradeView.vue"),
+      children: [
+        {
+          path: "",
+          component: () => import("../components/TradeRoomList.vue"),
+        },
+        {
+          path: "room/:number",
+          component: () => import("../components/TradeRoom.vue"),
+        },
+      ],
+    },
   ],
 });
 

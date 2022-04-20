@@ -1,6 +1,6 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
-import { mapState, mapWritableState } from "pinia";
+import { mapWritableState } from "pinia";
 import { useAuthenStore } from "./stores/authentication";
 import NavigationBar from "@/components/NavigationBar.vue";
 
@@ -8,12 +8,13 @@ export default {
   components: { RouterLink, RouterView, NavigationBar },
   computed: {
     ...mapWritableState(useAuthenStore, ["isLoggedIn"]),
-    ...mapState(useAuthenStore, ["trainer"]),
+    ...mapWritableState(useAuthenStore, ["trainer"]),
   },
   async created() {
     try {
       if (localStorage.access_token) {
         this.isLoggedIn = true;
+        this.trainer.username = localStorage.username;
       } else {
         if (this.trainer.account === "google") {
           await this.$gAuth.signOut();

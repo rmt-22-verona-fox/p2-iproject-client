@@ -9,7 +9,7 @@ export default {
     ...mapState(useMyPokemonStore, ["myPokemons"]),
   },
   methods: {
-    ...mapActions(usePokemonStore, ["getTypeColor"]),
+    ...mapActions(usePokemonStore, ["getTypeColor", "getCurrentPokemon"]),
     blurredPokemon() {
       const myPokemonIds = this.myPokemons.map((el) => el.detail.id);
       const foundPokemon = myPokemonIds.some((id) => id == this.pokemon.id);
@@ -18,6 +18,18 @@ export default {
       }
       return "opacity-100";
     },
+    async pokemonDetailHandler(id) {
+      try {
+        this.getCurrentPokemon(id);
+        this.$router.push(`/pokedex/${id}`);
+      } catch (err) {
+        this.$swal({
+          title: "Error",
+          text: err,
+          icon: "error",
+        });
+      }
+    },
   },
 };
 </script>
@@ -25,7 +37,7 @@ export default {
 <template>
   <div class="group" :class="blurredPokemon()">
     <div
-      @click="$router.push(`/pokedex/${pokemon.id}`)"
+      @click="pokemonDetailHandler(pokemon.id)"
       class="mx-2 flex cursor-pointer flex-col overflow-hidden rounded-lg shadow-lg duration-300 hover:scale-105 hover:shadow-2xl"
     >
       <p class="bg-gray-100 px-2 py-1 text-sm font-medium text-gray-400">
