@@ -1,36 +1,54 @@
 <script>
 import { RouterLink, RouterView } from "vue-router";
 import { useFoodStore } from "./stores/food";
-import { mapActions, mapState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 
 export default {
-  data () {
+  data() {
     return {
-      keyword: ""
-    }
+      keyword: "",
+    };
   },
   components: {
     RouterLink,
-    RouterView
+    RouterView,
   },
   computed: {
-    ...mapState(useFoodStore, ['allFoodData'])
+    ...mapState(useFoodStore, ["allFoodData"]),
+    ...mapWritableState(useFoodStore, ["isLogin"]),
   },
   methods: {
-    ...mapActions(useFoodStore, ['searchFeature']),
-    async searchFood () {
+    ...mapActions(useFoodStore, ["searchFeature", "logoutAction"]),
+    async searchFood() {
       try {
-        await this.searchFeature(this.keyword)
+        await this.searchFeature(this.keyword);
       } catch (err) {
         console.log(err);
       }
     },
-    
+    async logout() {
+      try {
+        await this.logoutAction();
+        this.$router.push("/login")
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
   async created() {
-    await this.searchFeature(this.keyword)
-  }
-}
+    try {
+      await this.searchFeature(this.keyword);
+      const token = localStorage.getItem("access_token");
+      if (token) {
+        this.isLogin = true;
+      } else {
+        this.isLogin = false;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  },
+};
 </script>
 
 <template>
@@ -38,22 +56,18 @@ export default {
     <header class="header">
       <div class="header-content responsive-wrapper">
         <div class="header-logo">
-          <a href="#" style="color: green; text-decoration: none ;">
+          <a href="#" style="color: green; text-decoration: none">
             <div>
-              <img style="height: 50px"
-                src="./assets/DietLogo.jpg"
-              />
+              <img style="height: 50px" src="./assets/DietLogo.jpg" />
             </div>
             <!-- <img src="https://assets.codepen.io/285131/untitled-ui.svg" /> -->
-            <h5 style="color:black ; text-decoration: none ;">Dietiv</h5>
+            <h5 style="color: black; text-decoration: none">Dietiv</h5>
           </a>
         </div>
         <div class="header-navigation">
           <nav class="header-navigation-links">
-            <a href="#"> <RouterLink to="/">
-                Home
-              </RouterLink></a>
-            <a href="#"> Contact Us </a>
+          <RouterLink v-if="isLogin === true" to="/"> Home </RouterLink>
+            <RouterLink to="/contact-us"> Contact Us </RouterLink>
           </nav>
           <div class="header-navigation-actions">
             <!-- <a href="#" class="button">
@@ -63,7 +77,12 @@ export default {
             <!-- <a href="#" class="icon-button">
               <i class="ph-sign-out-bold"></i>
             </a> -->
-            <a class="button" style="font-size: 12px">  <i class="ph-sign-out-bold"></i><i>Log out</i></a> 
+            <a v-if="isLogin === true" class="button" @click.prevent="logout" style="font-size: 12px">
+              <i class="ph-sign-out-bold"></i><i>Log out</i></a
+            >
+            <RouterLink to="/login" v-if="isLogin === false" class="button" style="font-size: 12px">
+              <i class="ph-sign-in-bold"></i><i>Log in</i></RouterLink
+            >
           </div>
         </div>
         <!-- <a href="#" class="button">
@@ -72,12 +91,11 @@ export default {
         </a> -->
       </div>
     </header>
-    
-   <RouterView />
+
+    <RouterView />
   </div>
 </template>
 
 <style>
 @import "@/assets/base.css";
-
 </style>

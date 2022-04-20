@@ -13,7 +13,7 @@ export default {
     ...mapWritableState(useFoodStore, ['isLogin'])
   },
   methods: {
-    ...mapActions(useFoodStore, ['getUserFood', 'resetFoodAction']),
+    ...mapActions(useFoodStore, ['getUserFood', 'resetFoodAction', 'deleteFoodAction']),
     async resetFood () {
       try {
         await this.resetFoodAction()
@@ -22,12 +22,21 @@ export default {
       } catch (err) {
         console.log(err);
       }
-    }
+    },
+    async deleteFood (id) {
+      try {
+        await this.deleteFoodAction(id)
+        await this.getUserFood()
+        this.$router.push("/food")
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
  watch: {
     userInfo: {
       handler(val) {
-        if (val.caloriesIntake === "0") {
+        if (val.caloriesIntake === "0" || val.caloriesIntake === "0.00") {
           this.message = `⚠️ Your have not added any food. Your daily need is ${val.dailyCalories} kcal. ${(val.dailyCalories)} kcal calories left.`
         } else if (val.status === 'lack') {
           this.message = `🟢 Your calories intake is still lack. Your daily need is ${val.dailyCalories} kcal and you already ate ${Number(val.caloriesIntake).toFixed(2)} kcal. ${(val.dailyCalories - val.caloriesIntake).toFixed(2)} kcal calories left.`
@@ -136,7 +145,7 @@ export default {
 
                 </div>
                 <div class="card-footer">
-                  <a href="#">Delete Food</a>
+                  <a @click.prevent="deleteFood(data.id)">Delete Food</a>
                 </div>
               </article>
 
