@@ -7,7 +7,7 @@
   >
     <Camera :position="{ x: 0, y: 0, z: 10 }" />
     <Scene background="#ffffff">
-      <Box ref="mesh" :size="3" :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }">
+      <Box ref="mesh" :size="5" :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }">
         <BasicMaterial>
           <Texture :src="imageUrl" refraction :refraction-ratio="0.95" />
         </BasicMaterial>
@@ -54,6 +54,11 @@ export default {
   },
   props: {
     title: String,
+  },
+  created() {
+    // if (title) {
+    //   this.imageUrl = title;
+    // }
   },
 };
 </script>

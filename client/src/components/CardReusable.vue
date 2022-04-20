@@ -28,7 +28,7 @@ export default {
       <p style="text-align: right">{{ idrPrice }}</p>
     </div>
     <div class="text-center my-4">
-      <button class="btn btn-primary">Buy</button>
+      <button class="btn btn-dark">Buy</button>
     </div>
   </div>
 </template>
