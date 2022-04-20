@@ -7,7 +7,7 @@ export const useDatingStore = defineStore({
     ProfilesList: [],
     List: [],
     status: [],
-    Partner: {},
+    Partner: [],
   }),
   getters: {
     phtotofilter: (state) =>
@@ -146,6 +146,7 @@ export const useDatingStore = defineStore({
           }
         );
         this.Partner = data;
+        this.List = false
       } catch (error) {
         console.log(error.response.data.message);
       }

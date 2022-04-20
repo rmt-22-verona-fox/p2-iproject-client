@@ -55,12 +55,6 @@ export default {
           ><i class="far fa-comment"></i
         ></a>
         <form action="#" class="searchform order-lg-last">
-          <div class="form-group d-flex">
-            <input type="text" class="form-control pl-3" placeholder="Search" />
-            <button type="submit" placeholder="" class="form-control search">
-              <span class="fa fa-search"></span>
-            </button>
-          </div>
         </form>
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav mr-auto">
@@ -73,7 +67,6 @@ export default {
         </div>
       </div>
     </nav>
-    <!-- END nav -->
   </section>
 </template>
 

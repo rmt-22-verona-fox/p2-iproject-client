@@ -59,10 +59,10 @@ export default {
   <div>
     <PartnerProfile v-if="Partner.length > 0" />
   </div>
-  <div v-if="List.length > 0 && Partner.length < 0">
+  <div v-if="List.length > 0">
     <PendingCard />
   </div>
-  <div v-if="List.length === 0 && Partner.length < 0">
+  <div v-if="List.length === 0">
     <ListPartner
       v-for="(profile, index) in phtotofilter"
       :key="index"
