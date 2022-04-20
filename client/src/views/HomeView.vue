@@ -54,10 +54,18 @@ export default {
       <div class="content col-10">
         <div class="jumbotron p-3 p-md-5 text-dark rounded">
           <div class="col-md-6 px-0">
-            <h1 class="display-4 font-italic">text</h1>
-            <p class="lead my-3">text</p>
+            <h1 class="display-4 font-italic">4 Kicks</h1>
+            <p class="lead my-3 text-white">
+              Sneakers go back a long way. In the late 18th century, people wore
+              rubber soled shoes called plimsolls, but they were pretty
+              crude?for one thing, there was no right foot or left foot. Around
+              1892, the U.S. Rubber Company came up with more comfortable rubber
+              sneakers with canvas tops, called Keds. By 1917, these sneakers
+              began to be mass produced.
+            </p>
             <p class="lead mb-0">
-              <a href="#" class="text-white font-weight-bold"
+              <a
+                href="https://www.factmonster.com/culture-entertainment/fashion/history-sneakers"
                 >Continue reading...</a
               >
             </p>
@@ -70,6 +78,8 @@ export default {
         <div class="row">
           <div class="col col-xl d-flex">
             <hr />
+            <CardReusable></CardReusable>
+            <CardReusable></CardReusable>
             <CardReusable></CardReusable>
             <CardReusable></CardReusable>
             <CardReusable></CardReusable>
