@@ -5,7 +5,8 @@ export const useProductsStore = defineStore({
     id: 'products',
     state: () => ({
         brands: [],
-        products: []
+        products: [],
+        productDetail: ''
     }),
     getters: {
 
@@ -32,6 +33,14 @@ export const useProductsStore = defineStore({
                 this.products = data
             } catch (err) {
                 console.log(err)
+            }
+        },
+        async fetchProductDetail(id) {
+            try {
+                const { data } = await axios.get(baseUrl + `products/sneakers/${id}`)
+                this.productDetail = data
+            } catch (err) {
+
             }
         }
     }

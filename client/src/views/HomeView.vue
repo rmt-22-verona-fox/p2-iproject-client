@@ -29,6 +29,12 @@ export default {
         query: { brand: this.brand },
       });
     },
+    productDetailEvent(id) {
+      localStorage.setItem("detail_id", id);
+      this.$router.push({
+        path: "/products/detail/" + id,
+      });
+    },
   },
   created() {
     this.fetchBrands();
@@ -87,6 +93,7 @@ export default {
               v-for="product in products"
               :key="product.id"
               :product="product"
+              @click="productDetailEvent(product.id)"
             ></CardReusable>
           </div>
         </div>
