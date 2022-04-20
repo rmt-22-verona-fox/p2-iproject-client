@@ -1,5 +1,5 @@
 body {
-    background: rgb(99, 39, 120)
+    background: rgba(216, 53, 61, 0.541)
 }
 
 .form-control:focus {
@@ -49,5 +49,4 @@ body {
 
 .gender{
     margin-top: 10px;
-    margin-left: 10px;
 }

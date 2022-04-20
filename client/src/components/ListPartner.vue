@@ -8,33 +8,27 @@ export default {
   computed: {
     ...mapState(useDatingStore, ["dataUser"]),
   },
-  methods: {
-    async signInbtn() {
-      try {
-        const { data } = await this.logIn(this.formlogin);
-        localStorage.setItem("access_token", data.access_token);
-        this.$swal({
-          icon: "success",
-          text: "Success to Register",
-        });
-        this.$router.push("/");
-      } catch (error) {
-        this.$swal({
-          icon: "error",
-          title: "Oops...",
-          text: error.response.data.message,
-        });
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 
 <template>
-  <div class="container">
-    <div v-if="!dataUser.biodatum">
-      <a href="">Add profile</a>
+<div class="container">
+   <div class="container__info">
+    <span><i class="fas fa-eye"></i>2350</span>
+    <span><i class="fas fa-comment-alt"></i>624</span>
+    <span><i class="fas fa-download"></i>1470</span>
+   </div>
+   <div class="container__profile">
+    <img
+     src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
+     alt="people"
+    />
+    <div class="container__profile__text">
+     <h2>White Mountains</h2>
+     <p>by <b>Joseph Therrien</b></p>
     </div>
+   </div>
   </div>
 </template>
 
