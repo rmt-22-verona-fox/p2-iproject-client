@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/LoginView.vue";
 import Home from "../views/HomeView.vue";
 import addProfile from "../views/AddProfileView.vue";
+import chatRoom from "../components/ChatRoom.vue";
+
 import Register from "../components/RegistrasiForm.vue";
 
 const router = createRouter({
@@ -26,6 +28,12 @@ const router = createRouter({
       path: "/addProfile",
       name: "addProfile",
       component: addProfile,
+    },
+
+    {
+      path: "/chatroom",
+      name: "chatroom",
+      component: chatRoom,
     },
   ],
 });

@@ -1,5 +1,10 @@
 <script>
+import { mapState, mapActions } from "pinia";
+import { useDatingStore } from "@/stores/dating";
 export default {
+  computed: {
+    ...mapState(useDatingStore, ["List", "status"]),
+  },
   methods: {
     logout() {
       localStorage.clear();
@@ -60,28 +65,10 @@ export default {
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a href="#" class="nav-link">Home</a>
+              <router-link to="/" class="nav-link">Home</router-link>
             </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="dropdown04"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                >Page</a
-              >
-              <div class="dropdown-menu" aria-labelledby="dropdown04">
-                <a class="dropdown-item" href="#">Page 1</a>
-                <a class="dropdown-item" href="#">Page 2</a>
-                <a class="dropdown-item" href="#">Page 3</a>
-                <a class="dropdown-item" href="#">Page 4</a>
-              </div>
-            </li>
-            <li class="nav-item"><a href="#" class="nav-link">Catalog</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Blog</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+
+        
           </ul>
         </div>
       </div>
