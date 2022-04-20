@@ -16,6 +16,15 @@
           />
         </BasicMaterial>
       </Box>
+      <!-- <Box ref="mesh" :size="3" :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }">
+        <BasicMaterial>
+          <Texture
+            src="../assets/logo.png"
+            refraction
+            :refraction-ratio="0.95"
+          />
+        </BasicMaterial>
+      </Box> -->
     </Scene>
   </Renderer>
 </template>
@@ -49,6 +58,9 @@ export default {
     ShaderMaterial,
     BasicMaterial,
     CubeTexture,
+  },
+  props: {
+    title: String,
   },
 };
 </script>
