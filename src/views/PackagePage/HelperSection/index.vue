@@ -1,5 +1,7 @@
 <template>
-  <section class="px-6 flex flex-row justify-between items-center h-[254px]">
+  <section
+    class="px-6 flex flex-row justify-between items-center h-[254px] select-none"
+  >
     <div>
       <div class="flex flex-row items-center gap-3">
         <img
