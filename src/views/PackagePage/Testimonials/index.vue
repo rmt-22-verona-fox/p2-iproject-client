@@ -5,6 +5,8 @@ export default {
   components: {
     TestimonialCard,
   },
+
+  props: ["testimonies"],
 };
 </script>
 
@@ -15,7 +17,11 @@ export default {
     </h3>
 
     <div class="flex justify-between">
-      <TestimonialCard v-for="(el, i) in 4" v-bind:key="i" />
+      <TestimonialCard
+        v-for="testimony in testimonies"
+        v-bind:key="testimony.fullName"
+        v-bind:testimony="testimony"
+      />
     </div>
   </div>
 </template>

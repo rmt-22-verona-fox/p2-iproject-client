@@ -2,6 +2,8 @@
 import Rating from "./Rating/index.vue";
 
 export default {
+  props: ["testimony"],
+
   components: {
     Rating,
   },
@@ -15,28 +17,35 @@ export default {
     <div class="flex mb-4">
       <figure class="relative rounded-full overflow-hidden h-16 w-16 mr-3">
         <img
-          src="@/assets/home/profile.png"
-          alt="Profile dummy"
-          class="h-full object-cover"
+          v-bind:src="testimony?.imageUrl"
+          v-bind:alt="testimony?.fullName"
+          class="h-full object-cover w-full"
         />
       </figure>
 
       <div class="flex flex-col">
         <p class="text-heading-4 text-gray-100 font-label font-bold mb-1">
-          Afrilian Frily
+          {{ testimony?.fullName }}
         </p>
-        <p class="text-heading-5 text-gray-50 font-bold">Bandung, Jawa Barat</p>
+        <p class="text-heading-5 text-gray-50 font-bold">
+          {{ testimony?.city }}
+        </p>
       </div>
     </div>
 
-    <Rating />
+    <div class="flex gap-1 align-center flex-row">
+      <Rating v-for="i in Math.floor(testimony?.rating)" />
+    </div>
 
     <p class="text-heading-5 text-gray-70 my-4">
-      Nyari makanan halal gampang banget udah ada tour guidenya. tour guidenya
-      juga ramah enak diajak ngobrol, dan penginapannya pun nyaman
+      {{ testimony?.review }}
     </p>
 
-    <p class="text-heading-5 text-gray-100 font-bold">Nusa Penida, Bali</p>
-    <p class="text-heading-6 text-gray-50">17-10-2020</p>
+    <p class="text-heading-5 text-gray-100 font-bold">
+      {{ testimony?.destination }}
+    </p>
+    <p class="text-heading-6 text-gray-50">
+      {{ new Date(testimony?.checkoutDate).toLocaleDateString("id-ID") }}
+    </p>
   </article>
 </template>

@@ -1,4 +1,6 @@
 <script>
+import { mapActions, mapWritableState } from "pinia";
+import { usePackageStore } from "../../stores/package";
 import Container from "../container/Container.vue";
 import Layout from "@/components/layout/Layout.vue";
 import ImageCard from "@/views/PackagePage/ImageCard/index.vue";
@@ -6,8 +8,14 @@ import Testimonies from "@/views/PackagePage/Testimonials/index.vue";
 import Package from "@/views/PackagePage/Package/index.vue";
 import Arrow from "@/views/PackagePage/Arrow/index.vue";
 import HelperSection from "@/views/PackagePage/HelperSection/index.vue";
+import { useToast } from "vue-toastification";
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
+
   components: {
     Container,
     Layout,
@@ -17,48 +25,99 @@ export default {
     Arrow,
     HelperSection,
   },
+
+  computed: {
+    ...mapWritableState(usePackageStore, [
+      "packageDetail",
+      "homeTestimonyList",
+    ]),
+  },
+
+  methods: {
+    ...mapActions(usePackageStore, [
+      "renderPackageDetail",
+      "renderUserTestimonies",
+    ]),
+
+    async fetchPackageDetail() {
+      try {
+        const response = await this.renderPackageDetail(this.$route.params.id);
+
+        this.packageDetail = response.data;
+      } catch (err) {
+        this.toast.error(err.response?.data?.message);
+      }
+    },
+
+    async renderTestimoniesOnCreate() {
+      try {
+        const response = await this.renderUserTestimonies();
+
+        this.homeTestimonyList = response.data;
+        console.log(response.data);
+      } catch (err) {
+        this.toast.error(err.response?.data?.message);
+      }
+    },
+  },
+
+  created() {
+    this.fetchPackageDetail();
+    this.renderTestimoniesOnCreate();
+  },
 };
 </script>
 
 <template>
   <Layout>
     <Container>
-      <section
-        class="py-6 pl-6 flex flex-row items-center select-none cursor-pointer"
-      >
+      <section class="py-6 pl-6 flex flex-row items-center select-none">
         <div>Beranda</div>
         <Arrow />
         <div>Paket</div>
         <Arrow />
-        <div>Indonesia</div>
+        <div>{{ packageDetail?.destinationCountry }}</div>
         <Arrow />
-        <div>Bali</div>
+        <div>{{ packageDetail?.destinationName?.split(", ")[1] }}</div>
         <Arrow />
-        <div>Nusa Penida</div>
+        <div class="underline text-blue-100 font-bold">
+          {{ packageDetail?.destinationName?.split(", ")[0] }}
+        </div>
       </section>
 
       <section class="flex flex-nowrap w-full px-2">
         <div class="md:w-1/2 px-4 mb-8 md:mb-8">
           <img
             class="rounded-xl shadow-md w-full h-full"
-            src="@/assets/detail/detail-1.jpg"
-            alt=""
+            v-bind:src="packageDetail?.imageThumbnail"
+            v-bind:alt="packageDetail?.destinationName"
           />
         </div>
         <div class="flex flex-wrap flex-row md:w-1/2 items-center">
-          <ImageCard v-for="(el, i) in 4" v-bind:key="i" v-bind:test="i" />
+          <ImageCard
+            v-for="(image, i) in packageDetail?.imageUrls"
+            v-bind:key="i"
+            v-bind:image="image"
+          />
         </div>
       </section>
 
       <section class="flex flex-row px-6 justify-between font-label mb-24">
         <div>
-          <p class="font-bold text-heading-3">Nusa Penida, Bali</p>
-          <p class="text-gray-70 font-medium text-heading-4">Indonesia</p>
+          <p class="font-bold text-heading-3">
+            {{ packageDetail?.destinationName }}
+          </p>
+          <p class="text-gray-70 font-medium text-heading-4">
+            {{ packageDetail?.destinationCountry }}
+          </p>
         </div>
         <div>
           <div class="flex gap-3 align-center flex-row mb-8">
             <img src="@/assets/icons/yellow-star.svg" height="20" width="20" />
-            <p class="font-bold text-heading-4">4.9 (1527 Review)</p>
+            <p class="font-bold text-heading-4">
+              {{ packageDetail?.rating }} ({{ packageDetail?.reviewers }}
+              Review)
+            </p>
           </div>
           <div class="flex gap-3 align-center flex-row">
             <img src="@/assets/icons/share.svg" height="20" width="20" />
@@ -77,7 +136,7 @@ export default {
       <HelperSection />
       <hr />
 
-      <Testimonies />
+      <Testimonies v-bind:testimonies="homeTestimonyList" />
       <Package />
     </Container>
   </Layout>

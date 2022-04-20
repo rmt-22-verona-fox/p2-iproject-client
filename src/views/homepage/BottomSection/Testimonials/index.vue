@@ -1,9 +1,39 @@
 <script>
+import { mapWritableState, mapActions } from "pinia";
+import { usePackageStore } from "../../../../stores/package";
 import TestimonialCard from "./TestimonialCard/index.vue";
+import { useToast } from "vue-toastification";
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
+
   components: {
     TestimonialCard,
+  },
+
+  computed: {
+    ...mapWritableState(usePackageStore, ["homeTestimonyList"]),
+  },
+
+  methods: {
+    ...mapActions(usePackageStore, ["renderUserTestimonies"]),
+
+    async renderTestimoniesOnCreate() {
+      try {
+        const response = await this.renderUserTestimonies();
+
+        this.homeTestimonyList = response.data;
+      } catch (err) {
+        this.toast.error(err.response?.data?.message);
+      }
+    },
+  },
+
+  created() {
+    this.renderTestimoniesOnCreate();
   },
 };
 </script>
@@ -16,7 +46,11 @@ export default {
     <p class="text-heading-4 mb-4">Pendapat pelanggan tentang kami</p>
 
     <div class="flex justify-between">
-      <TestimonialCard v-for="(el, i) in 4" v-bind:key="i" />
+      <TestimonialCard
+        v-for="testimony in homeTestimonyList"
+        v-bind:key="testimony.fullName"
+        v-bind:testimony="testimony"
+      />
     </div>
   </div>
 </template>

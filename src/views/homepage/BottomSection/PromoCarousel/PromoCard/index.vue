@@ -5,6 +5,8 @@ export default {
   components: {
     Button,
   },
+
+  props: ["promoPackage"],
 };
 </script>
 
@@ -15,30 +17,49 @@ export default {
     <div class="flex h-full">
       <figure class="w-[212px] h-full">
         <img
-          src="@/assets/home/borobudur.png"
-          alt="carousel-img"
+          v-bind:src="promoPackage?.imageThumbnail"
+          v-bind:alt="promoPackage?.destinationName"
           class="h-full object-cover"
         />
       </figure>
       <div class="flex flex-1 flex-col justify-center p-4">
         <p class="text-heading-4 text-gray-100 font-label font-bold">
-          Borobudur, Yogyakarta
+          {{ promoPackage?.destinationName }}
         </p>
-        <p class="text-heading-4 text-gray-70 mb-4">Indonesia</p>
+        <p class="text-heading-4 text-gray-70 mb-4">
+          {{ promoPackage?.destinationCountry }}
+        </p>
 
         <div class="flex gap-1">
-          <p class="text-heading-5 text-gray-70 line-through">Rp 7.700.000</p>
+          <p class="text-heading-5 text-gray-70 line-through">
+            Rp {{ promoPackage?.price?.toLocaleString("id-ID") }}
+          </p>
           <p class="text-heading-5 text-red-100 font-bold">10%</p>
         </div>
 
-        <p class="text-[16px] font-bold text-gray-100 mb-4">Rp 6.930.000</p>
-
-        <p class="text-heading-5 text-gray-70 mb-4">
-          Untuk 2 orang, tiket pesawat, tempat penginapan 5 malam, tour guide,
-          mak...
+        <p class="text-[16px] font-bold text-gray-100 mb-4">
+          Rp
+          {{
+            (promoPackage?.price - promoPackage.price * 0.1)?.toLocaleString(
+              "id-ID"
+            )
+          }}
         </p>
 
-        <p class="text-heading-5 text-gray-50 mb-4">Berangkat: 27-11-2020</p>
+        <p class="text-heading-5 text-gray-70 mb-4">
+          {{
+            promoPackage?.description <= 75
+              ? promoPackage?.description
+              : `${promoPackage?.description.slice(0, 78)}...`
+          }}
+        </p>
+
+        <p class="text-heading-5 text-gray-50 mb-4">
+          Berangkat:
+          {{
+            new Date(promoPackage?.departureDate).toLocaleDateString("id-ID")
+          }}
+        </p>
 
         <div class="flex justify-between gap-3">
           <Button
