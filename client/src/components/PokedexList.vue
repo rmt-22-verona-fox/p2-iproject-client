@@ -17,7 +17,7 @@ export default {
       "fetchPokemons",
       "fetchPokemonDetails",
       "fetchNextPagination",
-      "getTypeColor"
+      "getTypeColor",
     ]),
     getPokemonImage(pokemon) {
       return pokemon.sprites.other["official-artwork"].front_default;
@@ -53,7 +53,11 @@ export default {
         this.getPaginationData(data);
         this.getPokemonDetails(data);
       } catch (err) {
-        console.log(err);
+        this.$swal({
+          title: "Error",
+          text: err,
+          icon: "error",
+        });
       }
     },
   },
@@ -63,7 +67,11 @@ export default {
       this.getPaginationData(data);
       this.getPokemonDetails(data);
     } catch (err) {
-      console.log(err);
+      this.$swal({
+        title: "Error",
+        text: err,
+        icon: "error",
+      });
     }
   },
 };

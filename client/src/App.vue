@@ -36,9 +36,14 @@ export default {
 </script>
 
 <template>
-  <NavigationBar></NavigationBar>
-  <RouterView class="min-h-[calc(100vh_-_168px)]"></RouterView>
-  <div class="mt-10 bg-black py-8"></div>
+  <NavigationBar v-if="isLoggedIn"></NavigationBar>
+  <RouterView
+    :class="{
+      'min-h-screen': !isLoggedIn,
+      'min-h-[calc(100vh_-_168px)]': isLoggedIn,
+    }"
+  ></RouterView>
+  <div v-if="isLoggedIn" class="mt-10 bg-black py-8"></div>
 </template>
 
 <style></style>

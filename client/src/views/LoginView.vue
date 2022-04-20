@@ -22,7 +22,7 @@ export default {
         localStorage.setItem("access_token", response.access_token);
         this.trainer.username = response.username;
         this.isLoggedIn = true;
-        this.$router.push("/pokedex");
+        this.$router.push("/");
       } catch (err) {
         this.$swal({
           title: "Error",
@@ -53,8 +53,8 @@ export default {
 </script>
 
 <template>
-  <section class="flex min-h-[calc(100vh_-_168px)] items-center justify-center">
-    <div class="w-[1024px]">
+  <section class="flex items-center justify-center">
+    <div class="hidden w-[1024px] lg:block">
       <img
         class="h-full w-full object-contain"
         src="https://assets.pokemon.com/assets//cms2/img/watch-pokemon-tv/_downloads/movie14_wallpaper2_1920.jpg"

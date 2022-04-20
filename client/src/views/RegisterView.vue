@@ -59,11 +59,9 @@ export default {
 </script>
 
 <template>
-  <section
-    class="flex min-h-[calc(100vh_-_168px)] items-center justify-center bg-transparent"
-  >
+  <section class="flex items-center justify-center">
     <div
-      class="flex w-full max-w-sm flex-col items-center justify-center gap-y-16 rounded bg-white md:max-w-lg lg:max-w-2xl"
+      class="mt-2 flex w-full max-w-sm flex-col items-center justify-center gap-y-16 rounded bg-white md:max-w-lg lg:max-w-2xl"
     >
       <h1 class="mt-10 text-center text-3xl font-medium">
         Be A Pokemon Trainer.
@@ -142,7 +140,7 @@ export default {
         </div>
       </form>
     </div>
-    <div class="w-[1024px]">
+    <div class="hidden w-[1024px] lg:block">
       <img
         class="h-full w-full object-contain"
         src="https://assets.pokemon.com/assets//cms2/img/watch-pokemon-tv/_downloads/movie14_wallpaper1_1920.jpg"

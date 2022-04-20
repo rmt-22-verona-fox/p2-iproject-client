@@ -49,10 +49,7 @@ export default {
           </div>
         </div>
         <!-- Primary Navbar items -->
-        <div
-          v-if="$route.name !== 'register' || $route.name !== 'login'"
-          class="hidden items-center space-x-1 md:flex"
-        >
+        <div v-if="isLoggedIn" class="hidden items-center space-x-1 md:flex">
           <router-link
             to="/"
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
@@ -79,18 +76,21 @@ export default {
         <!-- Secondary Navbar items -->
         <div class="hidden items-center space-x-3 md:flex">
           <router-link
+            v-if="!isLoggedIn"
             to="/login"
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
           >
             Log In
           </router-link>
           <router-link
+            v-if="!isLoggedIn"
             to="/register"
             class="rounded-3xl bg-gray-800 py-2 px-4 text-sm font-medium uppercase text-white transition duration-300 hover:bg-black"
           >
             Sign Up
           </router-link>
           <a
+            v-if="isLoggedIn"
             @click.prevent="logoutAction"
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
           >
