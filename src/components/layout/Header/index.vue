@@ -1,4 +1,6 @@
 <script>
+import { mapWritableState } from "pinia";
+import { useAuthStore } from "../../../stores/auth";
 import Container from "@/views/container/Container.vue";
 import Button from "@/components/button/index.vue";
 import Search from "../Header/Search/index.vue";
@@ -12,10 +14,30 @@ export default {
     Navigation,
   },
 
+  data() {
+    return {
+      picture: "",
+    };
+  },
+
+  computed: {
+    ...mapWritableState(useAuthStore, ["isLoggedIn"]),
+  },
+
   methods: {
     loginButtonHandler() {
       this.$router.push("/masuk");
     },
+
+    logoutButtonHandler() {
+      localStorage.clear();
+      this.isLoggedIn = false;
+      this.$router.push("/masuk");
+    },
+  },
+
+  created() {
+    this.picture = localStorage.getItem("picture");
   },
 };
 </script>
@@ -38,18 +60,21 @@ export default {
 
         <div class="flex gap-5">
           <Navigation />
-          <!-- <Button v-on:click="loginButtonHandler" class="w-[190px]"
+          <Button
+            v-on:click="loginButtonHandler"
+            class="w-[190px]"
+            v-if="!isLoggedIn"
             >Masuk</Button
-          > -->
+          >
 
-          <div class="group inline-block">
+          <div class="group inline-block" v-if="isLoggedIn">
             <figure
               class="relative rounded-full overflow-hidden h-11 w-11 mr-3 cursor-pointer select-none group inline-block"
             >
               <img
-                src="@/assets/home/profile.png"
+                v-bind:src="picture"
                 alt="Profile dummy"
-                class="h-full object-cover"
+                class="h-full object-cover w-full"
               />
             </figure>
             <ul
@@ -79,6 +104,7 @@ export default {
               </router-link>
               <li
                 class="flex flex-row rounded-sm px-5 py-1 hover:bg-blue-100 hover:text-white"
+                v-on:click="logoutButtonHandler"
               >
                 <div class="mr-3 text-red-600">
                   <svg

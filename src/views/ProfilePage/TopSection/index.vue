@@ -5,6 +5,26 @@ export default {
   components: {
     Button,
   },
+
+  data() {
+    return {
+      profile: {
+        name: "",
+        bio: "",
+        city: "",
+        profilePicture: "",
+      },
+    };
+  },
+
+  created() {
+    this.profile = {
+      name: localStorage.getItem("name"),
+      bio: localStorage.getItem("bio"),
+      city: localStorage.getItem("city"),
+      profilePicture: localStorage.getItem("picture"),
+    };
+  },
 };
 </script>
 
@@ -19,7 +39,7 @@ export default {
           class="focus:outline-none h-28 w-28 mb-4 lg:mb-0 mr-4"
         >
           <img
-            src="@/assets/home/profile.png"
+            v-bind:src="profile.profilePicture"
             alt="profile"
             class="h-full w-full rounded-full overflow-hidden shadow object-center object-cover"
           />
@@ -30,12 +50,11 @@ export default {
       class="flex font-sans items-center justify-center text-center weight mt-24 flex-col"
     >
       <h1 class="select-none font-bold text-3xl text-primary-black">
-        Afrilian Frily
+        {{ profile.name }}
       </h1>
-      <p class="mt-4 text-gray-70 font-bold">Bandung, Jawa Barat</p>
+      <p class="mt-4 text-gray-70 font-bold">{{ profile.city }}</p>
       <p class="mt-4 text-gray-70 font-medium w-[405px] mb-6">
-        Saya sangat senang sekali traveling ke berbagai tempat apa lagi dengan
-        tempat seperti pegunungan
+        {{ profile.bio }}
       </p>
 
       <Button

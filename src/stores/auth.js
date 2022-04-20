@@ -15,5 +15,12 @@ export const useAuthStore = defineStore({
         password: credentials.password,
       });
     },
+
+    formLoginHandler(credentials) {
+      return axiosAuth.post("/user/login", {
+        email: credentials.email,
+        password: credentials.password,
+      });
+    },
   },
 });

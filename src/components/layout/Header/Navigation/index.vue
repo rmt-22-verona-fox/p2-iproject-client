@@ -13,6 +13,6 @@ export default {
     <NavItem link="/" label="Beranda" />
     <NavItem link="/" label="Kontak" />
     <NavItem link="/detil-paket/1" label="Paket" />
-    <NavItem link="/masuk" label="Testimonial" />
+    <NavItem link="/" label="Testimonial" />
   </nav>
 </template>

@@ -40,7 +40,7 @@ export default {
         await this.formRegisterHandler(this.form);
 
         this.$router.push("/masuk");
-        this.toast.success("Berhasil mendaftar");
+        this.toast.success("Kamu berhasil mendaftar");
       } catch (err) {
         err.response.data.errors.forEach((error) => {
           this.errors[error.type] = error.message;
