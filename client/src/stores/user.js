@@ -13,5 +13,8 @@ export const useUserStore = defineStore({
         loginAction(userData) {
             return axios.post(baseUrl + 'users/login', userData, {})
         },
+        registerAction(userData) {
+            return axios.post(baseUrl + 'users/register', userData, {})
+        }
     }
 })
