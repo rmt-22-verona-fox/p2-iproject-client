@@ -1,35 +1,69 @@
 <script>
-import { mapState } from "pinia";
+import { mapActions, mapWritableState } from "pinia";
 import { useDatingStore } from "@/stores/dating";
 export default {
   data() {
     return {};
   },
   computed: {
-    ...mapState(useDatingStore, ["dataUser"]),
+    ...mapWritableState(useDatingStore, ["ProfilesList"]),
   },
-  methods: {},
+  props: ["profile", "gender"],
+  methods: {
+    ...mapActions(useDatingStore, [
+      "addPartner",
+      "listProfile",
+      "listRequest",
+      "accept",
+    ]),
+    accepting(id) {
+      this.accept(id);
+      this.$router.push("/chatroom");
+    },
+    request(id) {
+      this.addPartner(id);
+      this.listRequest();
+      this.listProfile();
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
 <template>
-<div class="container">
-   <div class="container__info">
-    <span><i class="fas fa-eye"></i>2350</span>
-    <span><i class="fas fa-comment-alt"></i>624</span>
-    <span><i class="fas fa-download"></i>1470</span>
-   </div>
-   <div class="container__profile">
+  <div class="card marginlist" style="width: 30rem">
     <img
-     src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-     alt="people"
+      :src="profile.photoProfile"
+      class="card-img-top"
+      alt="..."
+      width="400"
+      height="300"
     />
-    <div class="container__profile__text">
-     <h2>White Mountains</h2>
-     <p>by <b>Joseph Therrien</b></p>
+    <div class="card-body">
+      <h5 class="card-title">{{ profile.name }}</h5>
+      <p class="card-text">Gender : {{ profile.gender }}</p>
+      <p class="card-text">Age : {{ profile.age }}</p>
+      <a
+        v-if="gender === 'male'"
+        href=""
+        class="btn btn-primary"
+        @click.prevent="request(profile.id)"
+        >Request</a
+      >
+      <a
+        v-if="gender === 'female'"
+        href=""
+        class="btn btn-primary"
+        @click.prevent="accepting(profile.UserId)"
+        >accept</a
+      >
     </div>
-   </div>
   </div>
 </template>
 
-<style></style>
+<style>
+.marginlist {
+  margin-top: 100px;
+  margin-left: 430px;
+}
+</style>
