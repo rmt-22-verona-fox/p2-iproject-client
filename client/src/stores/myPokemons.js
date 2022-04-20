@@ -8,7 +8,10 @@ export const useMyPokemonStore = defineStore({
   }),
   actions: {
     fetchMyPokemons() {
-      return axios.get("http:localhost:3000/mypokemons");
-    }
+      return axios({
+        url: "http:localhost:3000/mypokemons",
+        headers: localStorage.access_token,
+      });
+    },
   },
 });
