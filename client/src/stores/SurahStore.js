@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-const baseUrl = `http://localhost:3000`;
+const baseUrl = `https://i-quran.herokuapp.com`;
 import Swal from "sweetalert2";
 export const useSurahStore = defineStore({
   id: "surah",
@@ -17,7 +17,6 @@ export const useSurahStore = defineStore({
         const { data } = await axios.get(`${baseUrl}/surah`);
         this.surahs = data;
       } catch (err) {
-        console.log(err);
         Swal.fire({
           title: err.response.statusText,
           text: err.response.data.message,
@@ -30,10 +29,7 @@ export const useSurahStore = defineStore({
       try {
         const { data } = await axios.get(`${baseUrl}/randomSurah`);
         this.randomSurahData = data;
-        console.log(this.randomSurahData);
-        console.log(data);
       } catch (err) {
-        console.log(err);
         Swal.fire({
           title: err.response.statusText,
           text: err.response.data.error.message,
@@ -45,10 +41,9 @@ export const useSurahStore = defineStore({
     async detailSurah(id) {
       try {
         const { data } = await axios.get(`${baseUrl}/surah/${id}`);
-        console.log(data);
+
         this.oneSurah = data;
       } catch (err) {
-        console.log(err);
         Swal.fire({
           title: err.response.statusText,
           text: err.response.data.error.message,
@@ -65,9 +60,7 @@ export const useSurahStore = defineStore({
           },
         });
         this.dataBookmarks = data;
-        console.log(data);
       } catch (err) {
-        console.log(err.response);
         Swal.fire({
           title: err.response.statusText,
           text: err.response.data.error.message,
@@ -78,7 +71,6 @@ export const useSurahStore = defineStore({
     },
     async addBoomark(id) {
       try {
-        console.log(id);
         const { data } = await axios.post(
           `${baseUrl}/bookmarks/${id}`,
           {},
@@ -88,10 +80,9 @@ export const useSurahStore = defineStore({
             },
           }
         );
-        console.log(data);
+
         Swal.fire("Good job!", "Success Add To Bookmark", "success");
       } catch (err) {
-        console.log(err.response);
         Swal.fire({
           title: err.response.statusText,
           text: err.response.data.error.message,
@@ -102,7 +93,6 @@ export const useSurahStore = defineStore({
     },
     async deleteBookmark(id) {
       try {
-        console.log(id);
         const { data } = await axios.delete(`${baseUrl}/bookmarks/${id}`, {
           headers: {
             access_token: localStorage.access_token,
@@ -111,7 +101,6 @@ export const useSurahStore = defineStore({
         this.getBookmarks();
         Swal.fire("Good job!", "Success Delete Bookmark", "success");
       } catch (err) {
-        console.log(err.response);
         Swal.fire({
           title: err.response.statusText,
           text: err.response.data.error.message,

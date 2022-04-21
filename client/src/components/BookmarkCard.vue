@@ -1,5 +1,5 @@
 <script>
-import { mapActions, mapState } from "pinia";
+import { mapActions } from "pinia";
 import { useSurahStore } from "../stores/SurahStore";
 export default {
   props: ["bookmark"],

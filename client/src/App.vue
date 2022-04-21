@@ -25,8 +25,7 @@ export default {
       if (localStorage.access_token) {
         this.isLogin = true;
       }
-        this.randomSurahLogin();
-
+      this.randomSurahLogin();
     } catch (err) {
       console.log(err);
     }
