@@ -20,7 +20,7 @@ export const useDatingStore = defineStore({
           age: e.age,
           phoneNumber: e.phoneNumber,
           address: e.address,
-          photoProfile: `http://localhost:3000/images/${e.photoProfile}`,
+          photoProfile: `https://dating-kacau.herokuapp.com/images/${e.photoProfile}`,
           UserId: e.UserId,
         };
         return obj;
@@ -28,27 +28,28 @@ export const useDatingStore = defineStore({
   },
   actions: {
     logIn(data) {
-      return axios.post("http://localhost:3000/users/login", {
+      console.log(data);
+      return axios.post("https://dating-kacau.herokuapp.com/users/login", {
         email: data.email,
         password: data.password,
       });
     },
     register(data) {
       console.log(data);
-      return axios.post("http://localhost:3000/users/register", {
+      return axios.post("https://dating-kacau.herokuapp.com/users/register", {
         email: data.email,
         password: data.password,
       });
     },
     profile() {
-      return axios.get("http://localhost:3000/users/profile", {
+      return axios.get("https://dating-kacau.herokuapp.com/users/profile", {
         headers: {
           access_token: localStorage.getItem("access_token"),
         },
       });
     },
     updateProfile(data) {
-      return axios.post("http://localhost:3000/users/addprofile", data, {
+      return axios.post("https://dating-kacau.herokuapp.com/users/addprofile", data, {
         headers: {
           access_token: localStorage.getItem("access_token"),
         },
@@ -57,7 +58,7 @@ export const useDatingStore = defineStore({
     async listProfile() {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/users/listprofile",
+          "https://dating-kacau.herokuapp.com/users/listprofile",
           {
             headers: {
               access_token: localStorage.getItem("access_token"),
@@ -72,7 +73,7 @@ export const useDatingStore = defineStore({
     async addPartner(id) {
       try {
         await axios.post(
-          "http://localhost:3000/users/addPartner",
+          "https://dating-kacau.herokuapp.com/users/addPartner",
           { ProfileId: id },
           {
             headers: {
@@ -87,7 +88,7 @@ export const useDatingStore = defineStore({
     async listRequest() {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/users/listpartner",
+          "https://dating-kacau.herokuapp.com/users/listpartner",
           {
             headers: {
               access_token: localStorage.getItem("access_token"),
@@ -104,7 +105,7 @@ export const useDatingStore = defineStore({
       try {
         console.log(id);
         await axios.post(
-          "http://localhost:3000/users/cencel",
+          "https://dating-kacau.herokuapp.com/users/cencel",
           {
             id,
           },
@@ -122,7 +123,7 @@ export const useDatingStore = defineStore({
     async accept(id) {
       try {
         await axios.patch(
-          "http://localhost:3000/users/accept",
+          "https://dating-kacau.herokuapp.com/users/accept",
           {
             id,
           },
@@ -139,7 +140,7 @@ export const useDatingStore = defineStore({
     async yourPartner() {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/users/partner",
+          "https://dating-kacau.herokuapp.com/users/partner",
           {
             headers: {
               access_token: localStorage.getItem("access_token"),
@@ -169,13 +170,13 @@ export const useDatingStore = defineStore({
       } catch (error) {}
     },
     sendEmail(data) {
-      return axios.post("http://localhost:3000/users/forgorpassword", {
+      return axios.post("https://dating-kacau.herokuapp.com/users/forgorpassword", {
         email: data,
       });
     },
     reset(data) {
       console.log(data);
-      return axios.patch("http://localhost:3000/users/reserpassword", data);
+      return axios.patch("https://dating-kacau.herokuapp.com/users/reserpassword", data);
     },
   },
 });
