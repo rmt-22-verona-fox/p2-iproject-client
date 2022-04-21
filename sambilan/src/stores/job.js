@@ -17,7 +17,7 @@ export const useJobStore = defineStore({
     async getLocations() {
       try {
         const response = await axios.get(
-          "http://dev.farizdotid.com/api/daerahindonesia/provinsi"
+          "https://dev.farizdotid.com/api/daerahindonesia/provinsi"
         );
         const data = response.data.provinsi;
         this.provinces = data;
