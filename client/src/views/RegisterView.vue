@@ -95,18 +95,6 @@ export default {
             Minimum 5 characters, you can make it as long as you'd like
           </p>
         </div>
-        <!-- <div class="mb-4">
-          <label class="block text-sm font-semibold" for="username">
-            Username
-          </label>
-          <input
-            v-model="registerData.username"
-            class="w-full appearance-none border-b-2 border-black py-2 leading-tight outline-none placeholder:text-sm"
-            name="username"
-            type="text"
-            placeholder="username"
-          />
-        </div> -->
         <div class="mb-4 flex items-center justify-between border-b-2 pb-4">
           <button
             class="rounded-3xl bg-gray-900 px-4 py-2 font-semibold text-white hover:bg-black"
