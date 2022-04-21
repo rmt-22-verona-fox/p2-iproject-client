@@ -72,7 +72,7 @@ export default {
         </tr>
       </tbody>
     </table>
-    <h6>User : {{ bookData[0].User.email }}</h6>
+    <h6>User : {{ sum }}</h6>
     <h6>Total :</h6>
   </div>
 </template>
