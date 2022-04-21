@@ -1,11 +1,22 @@
 <script>
+import { mapWritableState } from "pinia";
+import { useCounterStore } from "../stores/counter";
+
 export default {
+  computed: {
+    ...mapWritableState(useCounterStore, ["access_token1"]),
+  },
   methods: {
     home() {
       this.$router.push("/");
     },
     login() {
       this.$router.push("/login");
+    },
+    logout() {
+      localStorage.clear();
+      this.access_token1 = "";
+      this.$router.push("/");
     },
   },
 };
@@ -44,8 +55,19 @@ export default {
             <li><a class="nav-link" href="#services">Services</a></li>
             <li><a class="nav-link" href="#appointment">Appointment</a></li>
             <li>
-              <a @click.prevent="login()" class="nav-link" href="#contact"
+              <a
+                v-if="!access_token1"
+                @click.prevent="login()"
+                class="nav-link"
+                href="#contact"
                 >Login</a
+              >
+              <a
+                v-if="access_token1"
+                @click.prevent="logout()"
+                class="nav-link"
+                href="#contact"
+                >Logout</a
               >
             </li>
           </ul>

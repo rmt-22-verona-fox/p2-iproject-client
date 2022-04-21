@@ -1,4 +1,6 @@
 <script>
+import { mapActions } from "pinia";
+import { useCounterStore } from "../stores/counter";
 
 export default {
   data() {
@@ -13,9 +15,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions(useCounterStore, ["register"]),
     async registerSubmit(payload) {
       console.log("registerSubmit");
       console.log(payload, "<<<< payload");
+      await this.register(payload)
       this.$router.push("/login");
     },
   },

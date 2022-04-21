@@ -5,7 +5,7 @@ import DynamicCard from "@/components/DynamicCard.vue";
 
 export default {
   methods: {
-    ...mapActions(useCounterStore, ["getDoctors"]),
+    ...mapActions(useCounterStore, ["getDoctors", "assignToken"]),
   },
   computed: {
     ...mapState(useCounterStore, ["readDoctors"]),
@@ -14,6 +14,7 @@ export default {
     DynamicCard,
   },
   async created() {
+    this.assignToken();
     await this.getDoctors();
   },
 };

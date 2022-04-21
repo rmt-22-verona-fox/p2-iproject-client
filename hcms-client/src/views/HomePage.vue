@@ -16,6 +16,7 @@ export default {
       console.log("appointment click");
     },
   },
+  created() {},
 };
 </script>
 <template>
@@ -55,17 +56,9 @@ export default {
                 <a href="#" class="new-btn-d br-2">Read More</a>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="about-m">
-                  <ul id="banner">
-                    <li>
-                      <img src="../assets/images/about-img-01.jpg" alt="" />
-                    </li>
-                    <li>
-                      <img src="../assets/images/about-img-02.jpg" alt="" />
-                    </li>
-                    <li>
-                      <img src="../assets/images/about-img-03.jpg" alt="" />
-                    </li>
+                <div>
+                  <ul>
+                    <img src="../assets/images/about-img-02.jpg" alt="" />
                   </ul>
                 </div>
               </div>
@@ -89,95 +82,55 @@ export default {
 
       <div class="row">
         <div class="col-lg-12">
-          <div class="owl-carousel owl-theme">
-            <div class="item">
-              <div class="serviceBox">
-                <div class="service-icon">
-                  <i class="fa fa-h-square" aria-hidden="true"></i>
-                </div>
-                <h3 class="title">Diagnose Service</h3>
-                <p class="description">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Accusantium consequuntur.
+          <div class="flex-container">
+            <div class="card" style="width: 18rem">
+              <img
+                src="https://thumbs.dreamstime.com/b/doctor-pharmacy-medical-health-care-hospital-clinic-diagnosis-logo-symbols-doctor-plus-stethoscope-health-care-medical-logo-208104745.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h3 class="card-title">Ailment symptomps diagnostics</h3>
+                <p class="card-text">
+                  By using NLP, we can show you the ailment based on your
+                  symptomp
                 </p>
                 <a
                   href="#"
                   @click.prevent="diagnoseClick()"
-                  class="new-btn-d br-2"
-                  >Read More</a
+                  class="btn btn-primary"
+                  >Diagnose</a
                 >
               </div>
             </div>
-            <div class="item">
-              <div class="serviceBox">
-                <div class="service-icon">
-                  <i class="fa fa-heart" aria-hidden="true"></i>
-                </div>
-                <h3 class="title">Lorem ipsum dolor</h3>
-                <p class="description">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Accusantium consequuntur.
+            <div class="card" style="width: 18rem">
+              <img
+                src="https://thumbs.dreamstime.com/b/doctor-pharmacy-medical-health-care-hospital-clinic-diagnosis-logo-symbols-doctor-plus-stethoscope-health-care-medical-logo-208104745.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h3 class="card-title">Ailment symptomps diagnostics</h3>
+                <p class="card-text">
+                  By using NLP, we can show you the ailment based on your
+                  symptomp
                 </p>
-                <a
-                  href="#"
-                  @click.prevent="monitoringClick()"
-                  class="new-btn-d br-2"
-                  >Start Monitoring Service</a
-                >
+                <a href="#" class="btn btn-primary">Diagnose</a>
               </div>
             </div>
-            <div class="item">
-              <div class="serviceBox">
-                <div class="service-icon">
-                  <i class="fa fa-hospital-o" aria-hidden="true"></i>
-                </div>
-                <h3 class="title">Lorem ipsum dolor</h3>
-                <p class="description">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Accusantium consequuntur.
+            <div class="card" style="width: 18rem">
+              <img
+                src="https://thumbs.dreamstime.com/b/doctor-pharmacy-medical-health-care-hospital-clinic-diagnosis-logo-symbols-doctor-plus-stethoscope-health-care-medical-logo-208104745.jpg"
+                class="card-img-top"
+                alt="..."
+              />
+              <div class="card-body">
+                <h3 class="card-title">Ailment symptomps diagnostics</h3>
+                <p class="card-text">
+                  By using NLP, we can show you the ailment based on your
+                  symptomp
                 </p>
-                <a
-                  href="#"
-                  @click.prevent="hospitalClick()"
-                  class="new-btn-d br-2"
-                  >See Available Beds</a
-                >
-              </div>
-            </div>
-            <div class="item">
-              <div class="serviceBox">
-                <div class="service-icon">
-                  <i class="fa fa-stethoscope" aria-hidden="true"></i>
-                </div>
-                <h3 class="title">Lorem ipsum dolor</h3>
-                <p class="description">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Accusantium consequuntur.
-                </p>
-                <a
-                  href="#"
-                  @click.prevent="appointmentClick()"
-                  class="new-btn-d br-2"
-                  >Seek Professional Help</a
-                >
-              </div>
-            </div>
-            <div class="item">
-              <div class="serviceBox">
-                <div class="service-icon">
-                  <i class="fa fa-h-square" aria-hidden="true"></i>
-                </div>
-                <h3 class="title">Lorem ipsum dolor</h3>
-                <p class="description">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Accusantium consequuntur.
-                </p>
-                <a
-                  href="#"
-                  @click.prevent="appointmentClick()"
-                  class="new-btn-d br-2"
-                  >Read More</a
-                >
+                <a href="#" class="btn btn-primary">Diagnose</a>
               </div>
             </div>
           </div>
@@ -187,3 +140,9 @@ export default {
   </div>
   <!-- End Services -->
 </template>
+<style>
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+</style>

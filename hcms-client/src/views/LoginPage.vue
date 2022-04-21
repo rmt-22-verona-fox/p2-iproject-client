@@ -5,7 +5,7 @@ export default {
   data() {
     return {
       input: {
-        username: "",
+        email: "",
         password: "",
       },
     };
@@ -14,10 +14,12 @@ export default {
     ...mapWritableState(useCounterStore, ["access_token1"]),
   },
   methods: {
-    ...mapActions(useCounterStore, ["loginGoogle"]),
+    ...mapActions(useCounterStore, ["loginGoogle", "loginP"]),
     async loginSubmit(payload) {
       console.log("loginSubmit");
       console.log(payload, "<<<< payload");
+      this.loginP(payload);
+      this.$router.push("/");
     },
     async googleOAuth() {
       console.log("google oauth yow");
@@ -47,12 +49,12 @@ export default {
     <div class="form-group">
       <label for="exampleInputEmail1">email</label>
       <input
-        type="text"
+        type="email"
         class="form-control"
         id="exampleInputEmail1"
         aria-describedby="emailHelp"
         placeholder="Enter email"
-        v-model="input.username"
+        v-model="input.email"
       />
       <small id="username" class="form-text text-muted"
         >We'll never share your information with anyone else.</small

@@ -2,13 +2,15 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
 const BASE_URL = "http://localhost:3000";
-
+// import "dotenv/config";
+// import express from "express";
 export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
     counter: 0,
     ailments: [],
     readDoctors: [],
+    access_token1: "",
   }),
   getters: {
     doubleCount: (state) => state.counter * 2,
@@ -38,8 +40,7 @@ export const useCounterStore = defineStore({
           },
           headers: {
             "X-RapidAPI-Host": "priaid-symptom-checker-v1.p.rapidapi.com",
-            "X-RapidAPI-Key":
-              "bb088dc3c4msh1af0d175453527ep16d716jsn8b8330b43a1b",
+            "X-RapidAPI-Key": import.meta.env.VITE_API_SECRET,
           },
         };
         try {
@@ -72,6 +73,9 @@ export const useCounterStore = defineStore({
         const response = await axios({
           method: "GET",
           url: `${BASE_URL}/patient/read`,
+          headers: {
+            access_token: this.access_token1,
+          },
         });
         this.readDoctors = response;
       } catch (err) {
@@ -87,9 +91,9 @@ export const useCounterStore = defineStore({
     async register(payload) {
       await axios({
         method: "POST",
-        url: "/patient/register",
+        url: `${BASE_URL}/patient/register`,
         data: {
-          username: payload.username,
+          name: payload.username,
           password: payload.password,
           email: payload.email,
           phoneNumber: payload.phoneNumber,
@@ -101,21 +105,44 @@ export const useCounterStore = defineStore({
     async loginP(payload) {
       const response = await axios({
         method: "POST",
-        url: "/customer/login",
+        url: `${BASE_URL}/patient/login`,
         data: {
-          username: payload.username,
+          email: payload.email,
           password: payload.password,
         },
       });
       console.log(response, "<<< response pada saat login");
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("customer_id", response.data.customer_id);
-      localStorage.setItem(
-        "customer_username",
-        response.data.customer_username
-      );
+      localStorage.setItem("customer_email", response.data.customer_email);
       this.access_token1 = response.data.access_token;
-      this.$router.push("/");
+    },
+
+    async appointStore(doctor_id, patient_id) {
+      console.log("appoint <<<<<");
+      console.log(doctor_id, patient_id);
+      try {
+        const response = await axios({
+          method: "POST",
+          url: `${BASE_URL}/patient/request`,
+          data: {
+            PatientId: patient_id,
+            DoctorId: doctor_id,
+          },
+          headers: {
+            access_token: this.access_token1,
+          },
+        });
+        console.log(response, "<<<< response");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    assignToken() {
+      console.log("assign token");
+      this.access_token1 = localStorage.getItem("access_token");
+      console.log(this.access_token1, "<<<<<<");
     },
   },
 });
