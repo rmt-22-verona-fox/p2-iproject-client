@@ -14,7 +14,7 @@ export default {
       const myPokemonIds = this.myPokemons.map((el) => el.detail.id);
       const foundPokemon = myPokemonIds.some((id) => id == this.pokemon.id);
       if (!foundPokemon) {
-        return ["opacity-10"];
+        return ["opacity-50"];
       }
       return "opacity-100";
     },

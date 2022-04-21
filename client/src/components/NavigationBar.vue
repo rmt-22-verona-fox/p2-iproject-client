@@ -58,18 +58,10 @@ export default {
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
             >Pokédex</router-link
           >
-          <a
-            class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
-            >Friends</a
-          >
           <router-link
             to="/trade"
             class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
             >Trade</router-link
-          >
-          <a
-            class="cursor-pointer py-4 px-2 text-sm font-semibold uppercase text-gray-500 transition duration-300 hover:border-b hover:border-black hover:text-black"
-            >Shop</a
           >
         </div>
         <!-- Secondary Navbar items -->
