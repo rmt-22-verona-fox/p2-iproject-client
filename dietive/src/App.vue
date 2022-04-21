@@ -23,7 +23,8 @@ export default {
       try {
         await this.searchFeature(this.keyword);
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
     async logout() {
@@ -31,7 +32,8 @@ export default {
         await this.logoutAction();
         this.$router.push("/login");
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
   },
@@ -45,7 +47,16 @@ export default {
         this.isLogin = false;
       }
     } catch (err) {
-      console.log(err);
+       if (err.response.status === 401) {
+        this.isLogin = false;
+        await this.logoutAction();
+        this.$router.push("/login");
+        const error = err.response.data.message;
+        swal("Error", error, "error");
+      } else {
+        const error = err.response.statusText;
+        swal("Error", error, "error");
+      }
     }
   },
 };
@@ -73,10 +84,6 @@ export default {
             </RouterLink>
           </nav>
           <div class="header-navigation-actions">
-            <!-- <a href="#" class="button">
-              <i class="ph-lightning-bold"></i>
-              <span>Upgrade now</span>
-            </a> -->
             <a
               v-if="isLogin === true"
               class="button"

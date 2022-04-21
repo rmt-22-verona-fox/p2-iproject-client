@@ -27,7 +27,8 @@ export default {
         this.isLogin = true
         this.$router.push("/")
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     }
   }

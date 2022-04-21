@@ -17,19 +17,21 @@ export default {
     ...mapWritableState(useFoodStore, ['isLogin'])
   },
   methods: {
-    ...mapActions(useFoodStore, ['searchFeature', 'addFoodAction']),
+    ...mapActions(useFoodStore, ['searchFeature', 'addFoodAction', 'logoutAction']),
     async searchFood () {
       try {
         await this.searchFeature(this.keyword)
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
     async addClick (payload) {
       try {
         await this.addFoodAction(payload)
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     }
   },
@@ -43,7 +45,16 @@ export default {
         this.isLogin = false
       }
     } catch (err) {
-      console.log(err);
+        if (err.response.status === 401) {
+        this.isLogin = false;
+        await this.logoutAction();
+        this.$router.push("/login");
+        const error = err.response.data.message;
+        swal("Error", error, "error");
+      } else {
+        const error = err.response.statusText;
+        swal("Error", error, "error");
+      }
     }
 
   }

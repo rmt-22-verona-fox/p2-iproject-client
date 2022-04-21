@@ -25,7 +25,8 @@ export default {
         await this.contactUsAction(payload);
         this.$router.push("/");
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
   },
@@ -38,7 +39,8 @@ export default {
         this.isLogin = false;
       }
     } catch (err) {
-      console.log(err);
+      const error = err.response.statusText;
+      swal("Error", error, "error");
     }
   },
 };

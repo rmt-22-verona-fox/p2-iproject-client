@@ -2,10 +2,12 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import dummy from '../../dummy.json'
 import articles from '../../articles.json'
+import swal from 'sweetalert';
 
 export const useFoodStore = defineStore({
   id: "food",
   state: () => ({
+    baseUrl: "http://localhost:3000",
     allFoodData: [],
     province: [],
     city: [],
@@ -20,22 +22,21 @@ export const useFoodStore = defineStore({
   actions: {
     async searchFeature(keyword) {
       try {
-        //  const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch", {
-        //    params: {
-        //     apiKey: "87331fcef85c482ebf4e26e8cceaefc1",
-        //     minCalories: 0,
-        //     number: 6,
-        //     minFat: 0,
-        //     sort: "calories",
-        //     query: keyword
-        //    }
-        //  })
+         const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch", {
+           params: {
+            apiKey: "87331fcef85c482ebf4e26e8cceaefc1",
+            minCalories: 0,
+            number: 6,
+            minFat: 0,
+            sort: "calories",
+            query: keyword
+           }
+         })
 
-        const data = dummy;
-
-        this.allFoodData = data.results;
+        this.allFoodData = response.data.results;
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
     async getAllProvince() {
@@ -45,7 +46,8 @@ export const useFoodStore = defineStore({
         );
         this.province = response.data.provinsi;
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
     async getAllCities(id) {
@@ -55,34 +57,38 @@ export const useFoodStore = defineStore({
         );
         this.city = response.data.kota_kabupaten;
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
     async registerAction(payload) {
       try {
-        const response = await axios.post("http://localhost:3000/register", payload);
-        console.log(response);
+        const response = await axios.post(`${this.baseUrl}/register`, payload);
+        swal("Success", `Success registrating user with email ${response.data.data.email}`, "success");
       } catch (err) {
-        console.log(err);
+        const error = err.response.data.error.message.join("\n");
+        swal("Error!", error, "error");
       }
     },
     async loginAction(payload) {
       try {
-        const response = await axios.post("http://localhost:3000/login", payload);
+        const response = await axios.post(`${this.baseUrl}/login`, payload);
         localStorage.setItem("access_token", response.data.access_token)
         localStorage.setItem("email", response.data.data.email)
         localStorage.setItem("dailyCalories", response.data.data.dailyCalories)
         this.isLogin = true
       } catch (err) {
-        console.log(err);
+        const error = err.response.data.error.message;
+        swal("Error!", error, "error");
       }
     },
     async contactUsAction(payload) {
       try {
-        const response = await axios.post("http://localhost:3000/contactUs", payload);
-        console.log(response);
+        await axios.post(`${this.baseUrl}/contactUs`, payload);
+        swal("Success", `Success sent email to us. Thank you!`, "success");
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
     async logoutAction() {
@@ -92,107 +98,153 @@ export const useFoodStore = defineStore({
         localStorage.removeItem("dailyCalories")
         this.isLogin = false
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
     async getUserFood() {
       try {
-  
         const token =  localStorage.getItem("access_token")
-        const response = await axios.get("http://localhost:3000/food", {
+        const response = await axios.get(`${this.baseUrl}/food`, {
           headers: {
             access_token: token
           }
         });
-
-        console.log(response.data);
         this.userFood = response.data.data
         this.userInfo= response.data.user
       } catch (err) {
-        console.log(err);
+        if (err.response.status === 401) {
+          this.isLogin = false;
+          await this.logoutAction();
+          const error = err.response.data.message;
+          swal("Error", error, "error");
+        } else {
+          const error = err.response.statusText;
+          swal("Error", error, "error");
+        }
       }
     },
     async addFoodAction(payload) {
       try {
         const token =  localStorage.getItem("access_token")
-        const response = await axios.post("http://localhost:3000/food", payload, {
+        await axios.post(`${this.baseUrl}/food`, payload, {
           headers: {
             access_token: token
           }
         });
 
-        console.log(response.data);
+        swal("Success", `Success add food to your food list!`, "success");
+
       } catch (err) {
-        console.log(err);
+        if (err.response.status === 401) {
+          this.isLogin = false;
+          await this.logoutAction();
+          const error = err.response.data.message;
+          swal("Error", error, "error");
+        } else {
+          const error = err.response.statusText;
+          swal("Error", error, "error");
+        }
       }
     },
     async resetFoodAction() {
       try {
         const token = localStorage.getItem("access_token")
-        const response = await axios.delete("http://localhost:3000/food", {
+        await axios.delete(`${this.baseUrl}/food`, {
           headers: {
             access_token: token
           }
         });
 
-        console.log(response.data);
+        swal("Success", `Success reset food list!`, "success");
+
       } catch (err) {
-        console.log(err);
+        if (err.response.status === 401) {
+          this.isLogin = false;
+          await this.logoutAction();
+          const error = err.response.data.message;
+          swal("Error", error, "error");
+        } else {
+          const error = err.response.statusText;
+          swal("Error", error, "error");
+        }
       }
     },
     async deleteFoodAction(id) {
       try {
         const token = localStorage.getItem("access_token")
-        const response = await axios.delete(`http://localhost:3000/food/${id}`, {
+        await axios.delete(`${this.baseUrl}/food/${id}`, {
           headers: {
             access_token: token
           }
         });
+        swal("Success", `Success delete food from your food list!`, "success");
 
-        console.log(response.data);
       } catch (err) {
-        console.log(err.response);
+        if (err.response.status === 401) {
+          this.isLogin = false;
+          await this.logoutAction();
+          const error = err.response.data.message;
+          swal("Error", error, "error");
+        } else {
+          const error = err.response.statusText;
+          swal("Error", error, "error");
+        }
       }
     },
     async premiumArticle() {
       try {
         const data = articles;
-
         this.allArticles = data;
       } catch (err) {
-        console.log(err);
+        if (err.response.status === 401) {
+          this.isLogin = false;
+          await this.logoutAction();
+          const error = err.response.data.message;
+          swal("Error", error, "error");
+        } else {
+          const error = err.response.statusText;
+          swal("Error", error, "error");
+        }
       }
     },
     async getUserData() {
       try {
         const token = localStorage.getItem("access_token")
-        const response = await axios.get(`http://localhost:3000/users`, {
+        const response = await axios.get(`${this.baseUrl}/users`, {
           headers: {
             access_token: token
           }
         });
         this.userDetail = response.data.user;
-        console.log(this.userDetail);
       } catch (err) {
-        console.log(err);
+        if (err.response.status === 401) {
+          this.isLogin = false;
+          await this.logoutAction();
+          const error = err.response.data.message;
+          swal("Error", error, "error");
+        } else {
+          const error = err.response.statusText;
+          swal("Error", error, "error");
+        }
       }
     },
     async premiumPay() {
       try {
         const token = localStorage.getItem("access_token")
-        const response = await axios.post(`http://localhost:3000/payment`, {}, {
+        const response = await axios.post(`${this.baseUrl}/payment`, {}, {
           headers: {
             access_token: token
           }
         });
         const tokenToPay = response.data.token
-        
-        console.log(tokenToPay);
 
         await snap.pay(tokenToPay, {
   
           onSuccess: function(result) {
             this.status = 'success'
+            swal("Success", `Payment success, happy reading!`, "success");
+
           },
         })
 
@@ -200,22 +252,37 @@ export const useFoodStore = defineStore({
         await this.premiumArticle()
 
       } catch (err) {
-        console.log(err.response.data);
+        if (err.response.status === 401) {
+          this.isLogin = false;
+          await this.logoutAction();
+          const error = err.response.data.message;
+          swal("Error", error, "error");
+        } else {
+          const error = err.response.statusText;
+          swal("Error", error, "error");
+        }
       }
     },
     async updateUser() {
       try {
         const token = localStorage.getItem("access_token")
-        console.log('masukkk');
-        const response = await axios.patch(`http://localhost:3000/users`, {}, {
+     
+        await axios.patch(`${this.baseUrl}/users`, {}, {
           headers: {
             access_token: token
           }
         });
-      
         
       } catch (err) {
-        console.log(err.response);
+        if (err.response.status === 401) {
+          this.isLogin = false;
+          await this.logoutAction();
+          const error = err.response.data.message;
+          swal("Error", error, "error");
+        } else {
+          const error = err.response.statusText;
+          swal("Error", error, "error");
+        }
       }
     },
   },
