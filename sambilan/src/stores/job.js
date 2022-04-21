@@ -6,7 +6,7 @@ import router from '@/router'
 export const useJobStore = defineStore({
   id: "job",
   state: () => ({
-    serverUrl: "https://sambi-lan.herokuapp.com/myapplications",
+    serverUrl: "https://sambi-lan.herokuapp.com",
     provinces: [],
     jobs: [],
     isLogin: false,
