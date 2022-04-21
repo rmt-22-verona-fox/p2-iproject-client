@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-const BASE_URL = "ur-basketball-site.herokuapp.com";
+const BASE_URL = "https://ur-basketball-site.herokuapp.com";
 export const useNbaStore = defineStore({
   id: "nba",
   state: () => ({}),
