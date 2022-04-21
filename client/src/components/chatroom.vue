@@ -1,7 +1,7 @@
 <script>
 import { mapActions, mapWritableState } from "pinia";
 import { useDatingStore } from "@/stores/dating";
-import NavBar from "./NavBar.vue";
+import NavBar from "../components/NavBar.vue";
 export default {
   data() {
     return {};

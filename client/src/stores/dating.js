@@ -154,9 +154,13 @@ export const useDatingStore = defineStore({
     },
     async Imdb(data) {
       try {
+        console.log(data);
+        console.log("mantap");
         const movie = await axios.get(
           `https://imdb-api.com/en/API/SearchMovie/k_z1dtmxor/${data}`
         );
+        console.log(movie);
+
         const trailer = await axios.get(
           `https://imdb-api.com/en/API/Trailer/k_z1dtmxor/${movie.data.results[0].id}`
         );
