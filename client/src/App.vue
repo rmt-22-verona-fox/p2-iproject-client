@@ -1,14 +1,14 @@
 <script>
-import sidebar from '@/components/SideBar.vue'
+import sidebar from "@/components/SideBar.vue";
 
 export default {
   components: {
-    sidebar
+    sidebar,
   },
   data() {
     return {
       minimized: true,
-    }
+    };
   },
   methods: {
     sidebarHandler: function () {
@@ -33,7 +33,7 @@ export default {
       >
     </template>
     <template #right>
-      <va-navbar-item>Back to Menu</va-navbar-item>
+      <va-button icon-right="home" to="/">Home</va-button>
     </template>
   </va-navbar>
 

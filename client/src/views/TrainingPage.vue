@@ -7,9 +7,9 @@ export default {
 <template>
   <div class="selector row my-4">
     <div class="flex">
-      <va-card class="mr-3" style="width: 12rem">
+      <va-card color="dark" gradient class="mr-3" style="width: 12rem">
         <img src="@/assets/dribble.png" alt="" style="height: 12rem;">
-        <va-card-title class="justify--center" style="font-size: 1.5rem"
+        <va-card-title class="justify--center" style="font-size: 1.5rem; color: white"
           ><b>Dribble</b></va-card-title
         >
         <va-card-actions align="stretch" vertical>
@@ -18,9 +18,9 @@ export default {
       </va-card>
     </div>
     <div class="flex">
-      <va-card class="mx-3" style="width: 12rem">
+      <va-card color="dark" gradient class="mx-3" style="width: 12rem">
         <img src="@/assets/passing.png" alt="" style="height: 12rem;">
-        <va-card-title class="justify--center" style="font-size: 1.5rem"
+        <va-card-title class="justify--center" style="font-size: 1.5rem;color: white"
           >Passing</va-card-title
         >
         <va-card-actions align="stretch" vertical>
@@ -29,9 +29,9 @@ export default {
       </va-card>
     </div>
     <div class="flex">
-      <va-card class="mx-3" style="width: 12rem">
+      <va-card color="dark" gradient class="mx-3" style="width: 12rem">
         <img src="@/assets/finishing.png" alt="" style="height: 12rem;">
-        <va-card-title class="justify--center" style="font-size: 1.5rem"
+        <va-card-title class="justify--center" style="font-size: 1.5rem; color: white"
           >Finishing</va-card-title
         >
         <va-card-actions align="stretch" vertical>
@@ -40,9 +40,9 @@ export default {
       </va-card>
     </div>
     <div class="flex">
-      <va-card class="ml-3" style="width: 12rem">
+      <va-card color="dark" gradient class="ml-3" style="width: 12rem">
         <img src="@/assets/shooting.png" alt="" style="height: 12rem;">
-        <va-card-title class="justify--center" style="font-size: 1.5rem"
+        <va-card-title class="justify--center" style="font-size: 1.5rem; color: white"
           >Shooting</va-card-title
         >
         <va-card-actions align="stretch" vertical>
@@ -51,9 +51,9 @@ export default {
       </va-card>
     </div>
     <div class="flex">
-      <va-card class="ml-3" style="width: 12rem">
+      <va-card color="dark" gradient class="ml-3" style="width: 12rem">
         <img src="@/assets/footwork.png" alt="" style="height: 12rem;">
-        <va-card-title class="justify--center" style="font-size: 1.5rem"
+        <va-card-title class="justify--center" style="font-size: 1.5rem; color: white"
           >Footwork</va-card-title
         >
         <va-card-actions align="stretch" vertical>
