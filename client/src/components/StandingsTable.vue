@@ -119,11 +119,11 @@ export default {
         case "Loss Away":
           if (this.sortingOrder === "asc") {
             this.items = this.items.sort((a, b) => {
-              return a.lose.away - b.lose.away;
+              return a.loss.away - b.loss.away;
             });
           } else {
             this.items = this.items.sort((a, b) => {
-              return b.lose.away - a.lose.away;
+              return b.loss.away - a.loss.away;
             });
           }
           break;
