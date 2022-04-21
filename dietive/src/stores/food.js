@@ -7,7 +7,7 @@ import swal from 'sweetalert';
 export const useFoodStore = defineStore({
   id: "food",
   state: () => ({
-    baseUrl: "http://localhost:3000",
+    baseUrl: "https://dietive.herokuapp.com",
     allFoodData: [],
     province: [],
     city: [],
