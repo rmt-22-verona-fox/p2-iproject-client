@@ -25,7 +25,7 @@ app.use(GAuth, gAuthOptions);
 
 app.use(VueSweetalert2);
 
-const socket = io("http://localhost:3001");
+const socket = io("https://pokenomo.herokuapp.com", {});
 app.use(VueSocketIOExt, socket);
 
 const pinia = createPinia();
