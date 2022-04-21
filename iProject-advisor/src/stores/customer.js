@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-const url = "http://localhost:3000/";
+const url = "https://iprojectstayathotel.herokuapp.com/";
 
 export const useCustomerStore = defineStore({
   id: "counter",

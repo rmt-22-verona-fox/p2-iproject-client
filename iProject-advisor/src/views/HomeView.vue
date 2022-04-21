@@ -195,7 +195,7 @@ export default defineComponent({
           lat: data.position.lat,
           lng: data.position.lng,
         };
-        await axios.post("http://localhost:3000/booking", this.hotelData, {
+        await axios.post("https://iprojectstayathotel.herokuapp.com/booking", this.hotelData, {
           headers: {
             access_token: localStorage.access_token,
           },
@@ -225,7 +225,7 @@ export default defineComponent({
           lng: data.position.lng,
         };
         const response = await axios.post(
-          "http://localhost:3000/payment",
+          "https://iprojectstayathotel.herokuapp.com/payment",
           this.hotelData,
           {
             headers: {

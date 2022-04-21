@@ -16,7 +16,7 @@ export const useHotelStore = defineStore({
   getters: {},
   actions: {
     booking: function (data) {
-      return axios.post("http://localhost:3000/booking", data, {
+      return axios.post("https://iprojectstayathotel.herokuapp.com/booking", data, {
         headers: {
           access_token: localStorage.access_token,
         },
