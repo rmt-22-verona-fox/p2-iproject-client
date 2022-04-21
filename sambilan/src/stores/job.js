@@ -125,7 +125,7 @@ export const useJobStore = defineStore({
         const result = response.data
         new Swal(
           "Success",
-          `Job ${result.myApplication.jobId} successfully applied, please check your email for more information`,
+          `Job ${result.jobId} successfully applied, please check your email for more information`,
           "success"
         );
       } catch (error) {
