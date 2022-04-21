@@ -24,8 +24,14 @@ export const useInventoryStore = defineStore({
     });
     },
   addPostAction(payload) {
-      console.log("payload: ", payload);
-    return axios.post("/post/add", 
+    console.log(payload);
+    // let formData = new FormData()
+    // formData.append("location",payload.location)
+    // formData.append("description",payload.description)
+    // formData.append("price",payload.price)
+    // formData.append("categoryId",payload.categoryId)
+    // formData.append("imageUrl",payload.imageUrl)
+    return axios.post("/post", 
         {
           location: payload.location,
           category: payload.category,

@@ -34,7 +34,7 @@ export default {
   ...mapActions(useInventoryStore, ["isloginAction"]),
   logout() {
       localStorage.removeItem("access_token");
-      this.isLoginAction(false);
+      this.isloginAction(false);
       this.$router.push("/home");
     },
  },
