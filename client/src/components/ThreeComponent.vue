@@ -7,9 +7,13 @@
   >
     <Camera :position="{ x: 0, y: 0, z: 10 }" />
     <Scene background="#ffffff">
-      <Box ref="mesh" :size="5" :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }">
+      <Box ref="mesh" :size="4" :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }">
         <BasicMaterial>
-          <Texture :src="imageUrl" refraction :refraction-ratio="0.95" />
+          <Texture
+            :src="imageBox ? imageBox : imageUrl"
+            refraction
+            :refraction-ratio="0.95"
+          />
         </BasicMaterial>
       </Box>
     </Scene>
@@ -17,6 +21,8 @@
 </template>
 
 <script>
+import { mapState } from "pinia";
+import { useProductsStore } from "../stores/product";
 import {
   Box,
   Camera,
@@ -56,9 +62,12 @@ export default {
     title: String,
   },
   created() {
-    if (this.title) {
-      this.imageUrl = this.title;
-    }
+    // if (this.title) {
+    //   this.imageUrl = this.title;
+    // }
+  },
+  computed: {
+    ...mapState(useProductsStore, ["imageBox"]),
   },
 };
 </script>

@@ -44,16 +44,18 @@ export default {
   props: {},
   created() {
     this.fetchProductDetail(localStorage.getItem("detail_id"));
+    // console.log(this.productDetail);
   },
 };
 </script>
 
 <template>
   <NavBar></NavBar>
-  <div class="container-fluid mx-0 px-0 d-flex">
+  <p>{{ productDetail }}</p>
+  <div class="container-fluid mx-0 px-0 d-flex justify-content-center">
     <div class="product-img">
-      <ThreeComponent :title="productDetail?.image?.original" />
-      <img :src="productDetail?.image?.original" />
+      <ThreeComponent />
+      <!-- <img :src="productDetail?.image?.original" /> -->
     </div>
     <div class="product-desc col-7">
       <h1>{{ productDetail.name }}</h1>
@@ -93,6 +95,7 @@ export default {
   margin-left: 10%;
   margin-right: 10%;
   padding: 5%;
+  height: 45vw;
 }
 
 .product-img {

@@ -20,9 +20,15 @@ export default {
   },
   methods: {
     ...mapActions(useProductsStore, ["fetchBrands", "fetchProducts"]),
-    paginationEvent(num) {},
-    filterBrandEvent(brand) {
-      this.brand = brand.toLowerCase();
+    paginationEvent(num) {
+      this.fetchProducts(num, this.brand);
+      this.$router.push({
+        path: "/",
+        query: { page: num, brand: this.brand },
+      });
+    },
+    filterBrandEvent(string) {
+      this.brand = string.toLowerCase();
       this.fetchProducts(0, this.brand);
       this.$router.push({
         path: "/",
@@ -32,11 +38,9 @@ export default {
     productDetailEvent(id) {
       localStorage.setItem("detail_id", id);
 
-      this.$router
-        .push({
-          path: "/products/detail/" + id,
-        })
-        .setTimeout(10000);
+      this.$router.push({
+        path: "/products/detail/" + id,
+      });
     },
   },
   created() {
@@ -102,11 +106,11 @@ export default {
         </div>
         <div class="pagination-bar">
           <ul class="pagination pagination-lg justify-content-center">
-            <!-- <li class="page-item" v-for="i in totalPages" :key="i">
+            <li class="page-item" v-for="i in 10" :key="i">
               <a class="page-link" @click.prevent="paginationEvent(i)">{{
                 i
               }}</a>
-            </li> -->
+            </li>
           </ul>
         </div>
       </div>
@@ -182,5 +186,9 @@ ul li:last-child {
 .pagination-bar {
   margin-top: 5%;
   margin-bottom: 5%;
+}
+
+.page-item {
+  padding: 0;
 }
 </style>
