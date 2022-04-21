@@ -7,6 +7,11 @@ import router from "./router";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
+
+import VueFlicking from "@egjs/vue3-flicking";
+=======
+
+
 import "./assets/base.css";
 
 export function BASE_URL() {
