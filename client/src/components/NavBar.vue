@@ -51,18 +51,22 @@ export default {
         >
           <span class="fa fa-bars"></span> Menu
         </button>
-        <a href="#" class="order-lg-last chat"
+        <router-link to="/chatroom" href="#" class="order-lg-last chat"
           ><i class="far fa-comment"></i
-        ></a>
-        <form action="#" class="searchform order-lg-last">
-        </form>
+        ></router-link>
+        <form action="#" class="searchform order-lg-last"></form>
         <div class="collapse navbar-collapse" id="ftco-nav">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <router-link to="/" class="nav-link">Home</router-link>
+              <router-link to="/" class="nav-link"
+                >Home</router-link
+              >
             </li>
-
-        
+            <li class="nav-item">
+              <router-link to="/movie" class="nav-link"
+                >Movie Search</router-link
+              >
+            </li>
           </ul>
         </div>
       </div>

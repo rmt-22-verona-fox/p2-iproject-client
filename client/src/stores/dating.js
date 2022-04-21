@@ -8,6 +8,7 @@ export const useDatingStore = defineStore({
     List: [],
     status: [],
     Partner: [],
+    trailer: [],
   }),
   getters: {
     phtotofilter: (state) =>
@@ -146,10 +147,31 @@ export const useDatingStore = defineStore({
           }
         );
         this.Partner = data;
-        this.List = false
+        this.List = false;
       } catch (error) {
         console.log(error.response.data.message);
       }
+    },
+    async Imdb(data) {
+      try {
+        const movie = await axios.get(
+          `https://imdb-api.com/en/API/SearchMovie/k_z1dtmxor/${data}`
+        );
+        const trailer = await axios.get(
+          `https://imdb-api.com/en/API/Trailer/k_z1dtmxor/${movie.data.results[0].id}`
+        );
+        this.trailer = trailer.data;
+        console.log(trailer.data);
+      } catch (error) {}
+    },
+    sendEmail(data) {
+      return axios.post("http://localhost:3000/users/forgorpassword", {
+        email: data,
+      });
+    },
+    reset(data) {
+      console.log(data);
+      return axios.patch("http://localhost:3000/users/reserpassword", data);
     },
   },
 });

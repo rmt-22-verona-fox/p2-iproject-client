@@ -13,6 +13,7 @@ export default {
 </script>
 
 <template>
+  <NavBar />
   <div class="page-content page-container" id="page-content">
     <div class="padding">
       <div class="row container d-flex justify-content-center">
