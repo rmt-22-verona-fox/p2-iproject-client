@@ -4,6 +4,7 @@ import { GoogleMap, Marker, InfoWindow } from "vue3-google-map";
 import { useHotelStore } from "../stores/hotel.js";
 import { mapActions, mapWritableState } from "pinia";
 import axios from "axios";
+import HotelCard from "../components/HotelCard.vue";
 
 export default defineComponent({
   data() {
@@ -28,9 +29,8 @@ export default defineComponent({
       },
     };
   },
-  components: { GoogleMap, Marker, InfoWindow },
-  computed: {
-  },
+  components: { GoogleMap, Marker, InfoWindow, HotelCard },
+  computed: {},
   methods: {
     ...mapActions(useHotelStore, ["booking"]),
     getCoordinates: function () {
@@ -195,14 +195,62 @@ export default defineComponent({
           lat: data.position.lat,
           lng: data.position.lng,
         };
-        await axios.post('http://localhost:3000/booking', this.hotelData, {
+        await axios.post("http://localhost:3000/booking", this.hotelData, {
           headers: {
             access_token: localStorage.access_token,
           },
         });
         this.$swal.fire({
           icon: "success",
-          title: 'Success to book the ticket',
+          title: "Success to book the ticket",
+        });
+      } catch (error) {
+        this.$swal.fire({
+          icon: "error",
+          title: error.response.data.message,
+          text: "Something went wrong!",
+        });
+      }
+    },
+    payment: async function (data) {
+      try {
+         this.hotelData = {
+          hotel: data.name,
+          price: 300000,
+          roomType: "Suites",
+          checkIn: new Date(),
+          checkOut: new Date(),
+          hotelClass: +data.hotelClass,
+          lat: data.position.lat,
+          lng: data.position.lng,
+        };
+        const response = await axios.post(
+          "http://localhost:3000/payment",
+          this.hotelData,
+          {
+            headers: {
+              access_token: localStorage.access_token,
+            },
+          }
+        );
+        snap.pay(response.data.token, {
+          onSuccess: function (result) {
+            console.log("success");
+            console.log(result);
+          },
+          onPending: function (result) {
+            console.log("pending");
+            console.log(result);
+          },
+          onError: function (result) {
+            console.log("error");
+            console.log(result);
+          },
+          onClose: function () {
+            console.log(
+              "customer closed the popup without finishing the payment"
+            );
+          },
         });
       } catch (error) {
         this.$swal.fire({
@@ -229,7 +277,7 @@ export default defineComponent({
       class="hotelCard"
       style="
         height: calc(100vh - 80px);
-        background: #222;
+        background: #fff;
         width: 40%;
         display: flex;
         flex-wrap: wrap;
@@ -270,62 +318,21 @@ export default defineComponent({
       </div>
 
       <br />
-      <div
-        style="
-          width: 100%;
-          height: 420px;
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          margin-top: 80px;
-          margin-bottom: 0px;
-        "
+      <HotelCard
         v-for="(hotel, index) in marks"
         :key="index"
+        :hotel="hotel"
+        @showPoint="showPoint"
+        @bookHotelData="bookHotelData"
+        @payment="payment"
+      ></HotelCard>
+      <h2
+        style="text-align: center; margin: 0px 50px"
+        v-if="marks.length === 0"
       >
-        <div
-          style="
-            width: 90%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            background: white;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            box-shadow: 5px 5px 10px grey;
-            align-items: center;
-          "
-        >
-          <p
-            style="
-              color: black;
-              text-align: center;
-              height: 50px;
-              width: 90%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            "
-            @click="showPoint(hotel.position)"
-          >
-            {{ hotel.name }} ({{ hotel.hotelClass }})
-          </p>
-          <a
-            style="
-              width: 10%;
-              align-items: center;
-              color: red;
-              font-weight: bold;
-            "
-            @click.prevent="bookHotelData(hotel)"
-            >Book</a
-          >
-          <img
-            :src="hotel.photo"
-            style="width: 100%; height: 400px; object-fit: cover"
-          />
-        </div>
-      </div>
+        To Start, Press "Click to Start" Button 1x, then drag your map and push
+        "Get Hotels" Button
+      </h2>
     </div>
     <GoogleMap
       id="map"

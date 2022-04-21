@@ -16,7 +16,6 @@ export const useHotelStore = defineStore({
   getters: {},
   actions: {
     booking: function (data) {
-      console.log(data)
       return axios.post("http://localhost:3000/booking", data, {
         headers: {
           access_token: localStorage.access_token,
