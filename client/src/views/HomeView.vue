@@ -31,9 +31,12 @@ export default {
     },
     productDetailEvent(id) {
       localStorage.setItem("detail_id", id);
-      this.$router.push({
-        path: "/products/detail/" + id,
-      });
+
+      this.$router
+        .push({
+          path: "/products/detail/" + id,
+        })
+        .setTimeout(10000);
     },
   },
   created() {

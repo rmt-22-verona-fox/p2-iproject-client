@@ -41,4 +41,10 @@ const router = createRouter({
     ]
 })
 
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = localStorage.getItem("access_token")
+    if ((to.name === 'invoice' || to.name === 'invoice/add') && !isAuthenticated) next({ name: 'login' })
+    else if ((to.name === 'login' || to.name === 'register') && isAuthenticated) next({ name: 'home' })
+    else next()
+})
 export default router

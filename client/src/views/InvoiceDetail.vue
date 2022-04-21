@@ -10,4 +10,10 @@ export default {
 };
 </script>
 
-<template></template>
+<template>
+  <div class="container-fluid">
+    <div class="card">
+      <p>test</p>
+    </div>
+  </div>
+</template>

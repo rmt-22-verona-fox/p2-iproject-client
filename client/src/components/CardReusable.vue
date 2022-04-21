@@ -24,7 +24,12 @@ export default {
       :alt="product.name"
     />
     <div class="card-body">
-      <h5 class="card-title text-center profile-name">{{ product.name }}</h5>
+      <h5
+        class="card-title text-center profile-name"
+        style="text-align: center"
+      >
+        {{ product.name }}
+      </h5>
       <p style="text-align: right">{{ idrPrice }}</p>
     </div>
     <div class="text-center my-4">
