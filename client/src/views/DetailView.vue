@@ -5,24 +5,20 @@
     <div class="apadah">
       <div class="cover">
         <img
-          src="https://upload.wikimedia.org/wikipedia/en/4/4d/Avengers_Infinity_War_poster.jpg"
+          :src="movieDetails.imageUrl"
           alt=""
         />
       </div>
       <div class="content">
         <div class="content-body">
           <div class="black-label">
-            <span class="title"><b>Avengers: Age of Ultron</b></span>
+            <span class="title"><b>{{movieDetails.title}}</b></span>
             <div class="prix">
               <span><b>Rating: 8</b></span>
-              <span><b> Genre : Action </b></span>
+              <span><b> Genre : {{movieDetails.genre}} </b></span>
             </div>
             <p>
-              Avengers: Age of Ultron is a 2015 American superhero film based on
-              the Marvel Comics superhero team the Avengers. Produced by Marvel
-              Studios and distributed by Walt Disney Studios Motion Pictures, it
-              is the sequel to The Avengers (2012) and the 11th film in the
-              Marvel Cinematic Universe (MCU).
+       {{movieDetails.synopsis}}
             </p>
             <div class="price">
               <span><b>Price: Rp.35.000,00</b></span>
@@ -36,11 +32,15 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "pinia";
+import { useMovieStore } from "@/stores/movie";
     export default {
-        
+         computed: {
+    ...mapState(useMovieStore, ["movieDetails"]),
+  },
     }
 </script>
 
-<style lang="scss" scoped>
+<style>
 
 </style>

@@ -32,7 +32,7 @@
         <PopularCard
           v-for="popularMovie in popularMovies"
           :key="popularMovie.id"
-          :popularMovie="popularMovie"
+          :popularMovie="popularMovie" 
         ></PopularCard>
       </div>
     </div>
@@ -47,6 +47,7 @@
           class="row_poster row_posterLarge"
           v-for="nowPlayingMovie in nowPlayingMovies"
           :key="nowPlayingMovie.id"
+          @click="getDetailsHandler(nowPlayingMovie.movieId)"
         />
       </div>
     </div>
@@ -61,6 +62,7 @@
           class="row_poster row_posterLarge"
           v-for="upcomingMovie in upcomingMovies"
           :key="upcomingMovie.id"
+          @click="getDetailsHandler(upcomingMovie.movieId)"
         />
       </div>
     </div>
@@ -83,7 +85,12 @@ export default {
       "fetchMovie",
       "fetchUpcomingMovies",
       "fetchNowPlayingMovies",
+      "getDetails"
     ]),
+    getDetailsHandler(movieId){
+      this.getDetails(movieId);
+      this.$router.push('/details')
+    }
   },
   created() {
     this.fetchMovie();
