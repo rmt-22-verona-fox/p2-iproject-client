@@ -24,7 +24,8 @@ export default {
       try {
         await this.getAllCities(this.prov);
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
     async registerClick() {
@@ -40,7 +41,8 @@ export default {
         await this.registerAction(payload);
         this.$router.push("/login");
       } catch (err) {
-        console.log(err);
+        const error = err.response.statusText;
+        swal("Error", error, "error");
       }
     },
   },
@@ -51,7 +53,8 @@ export default {
     try {
       await this.getAllProvince();
     } catch (err) {
-      console.log(err);
+      const error = err.response.statusText;
+        swal("Error", error, "error");
     }
   },
 };
