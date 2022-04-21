@@ -10,6 +10,7 @@ const LoginView = () => import("@/views/LoginPage/index.vue");
 const RegisterView = () => import("@/views/RegisterPage/index.vue");
 const ProfileView = () => import("@/views/ProfilePage/index.vue");
 const PackageView = () => import("@/views/PackagePage/index.vue");
+const NoView = () => import("@/views/NoPage/index.vue");
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,7 @@ const router = createRouter({
       name: "detail-page",
       component: PackageView,
     },
+    { path: "/:pathMatch(.*)*", name: "NotFound", component: NoView },
   ],
   scrollBehavior(to, from, savedPosition) {
     // always scroll to top
