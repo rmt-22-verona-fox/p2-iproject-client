@@ -12,10 +12,13 @@ export const useCounterStore = defineStore({
   actions: {
     async loginAction(payload) {
       try {
-        const { data } = await axios.post(`http://localhost:8080/login`, {
-          email: payload.email,
-          password: payload.password,
-        });
+        const { data } = await axios.post(
+          `https://step-inn-i-project.herokuapp.com/login`,
+          {
+            email: payload.email,
+            password: payload.password,
+          }
+        );
         localStorage.setItem("email", data.email);
         this.isLogin = true;
         this.router.push("/");

@@ -51,7 +51,7 @@ export default {
             />
           </div>
           <button type="submit" class="btn btn-success loginField mb-2">
-            Success
+            Login
           </button>
         </div>
       </form>

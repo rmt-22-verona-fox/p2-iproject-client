@@ -10,7 +10,9 @@ export default {
   methods: {
     async FeetchBooking() {
       try {
-        const data = await axios.get("http://localhost:8080/booking");
+        const data = await axios.get(
+          "https://step-inn-i-project.herokuapp.com/booking"
+        );
         this.bookData = data.data;
         console.log(this.bookData);
       } catch (error) {

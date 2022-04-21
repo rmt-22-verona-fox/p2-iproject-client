@@ -201,7 +201,7 @@ export default {
       const harga = Math.round(payload.ratesSummary.minPrice);
       console.log(harga);
       try {
-        await axios.post("http://localhost:8080/booking", {
+        await axios.post("https://step-inn-i-project.herokuapp.com/booking", {
           hotelName: payload.name,
           price: harga * 14000,
         });
@@ -333,11 +333,11 @@ export default {
                   <div class="row">
                     <div class="col d-flex justify-content-between px-5 mx-5">
                       <p>
-                        <img src="./assets/down.svg" alt="" />
+                        <img src="../assets/up.svg" alt="" />
                         {{ weather.lowTemp }}&deg;C
                       </p>
                       <p>
-                        <img src="./assets/up.svg" alt="" />
+                        <img src="../assets/up.svg" alt="" />
                         {{ weather.highTemp }}&deg;C
                       </p>
                     </div>
