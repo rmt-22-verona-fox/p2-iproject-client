@@ -45,6 +45,14 @@ export const useCounterStore = defineStore({
         try {
           const response = await axios.request(options);
           console.log(response, "<<<< response store");
+          if (response.data.length === 0) {
+            Swal.fire({
+              title: "Error!",
+              text: "Sorry, we cannot find your ailments",
+              icon: "error",
+              confirmButtonText: "Ok",
+            });
+          }
           this.ailments = response;
         } catch (err) {
           console.log(err);
@@ -65,7 +73,7 @@ export const useCounterStore = defineStore({
           method: "GET",
           url: `${BASE_URL}/patient/read`,
         });
-        this.readDoctors = response
+        this.readDoctors = response;
       } catch (err) {
         Swal.fire({
           title: "Error!",
@@ -74,6 +82,40 @@ export const useCounterStore = defineStore({
           confirmButtonText: "Ok",
         });
       }
+    },
+
+    async register(payload) {
+      await axios({
+        method: "POST",
+        url: "/patient/register",
+        data: {
+          username: payload.username,
+          password: payload.password,
+          email: payload.email,
+          phoneNumber: payload.phoneNumber,
+          address: payload.address,
+        },
+      });
+    },
+
+    async loginP(payload) {
+      const response = await axios({
+        method: "POST",
+        url: "/customer/login",
+        data: {
+          username: payload.username,
+          password: payload.password,
+        },
+      });
+      console.log(response, "<<< response pada saat login");
+      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("customer_id", response.data.customer_id);
+      localStorage.setItem(
+        "customer_username",
+        response.data.customer_username
+      );
+      this.access_token1 = response.data.access_token;
+      this.$router.push("/");
     },
   },
 });

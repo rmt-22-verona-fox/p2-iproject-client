@@ -150,7 +150,7 @@ export default {
                       </option>
                       <option
                         v-if="
-                          input.symptomp1 !== '15' || input.symptomp2 !== '15'
+                          input.symptomp1 !== '15' && input.symptomp2 !== '15'
                         "
                         value="15"
                       >
@@ -158,7 +158,7 @@ export default {
                       </option>
                       <option
                         v-if="
-                          input.symptomp1 !== '207' || input.symptomp2 !== '207'
+                          input.symptomp1 !== '207' && input.symptomp2 !== '207'
                         "
                         value="207"
                       >
@@ -166,7 +166,7 @@ export default {
                       </option>
                       <option
                         v-if="
-                          input.symptomp1 !== '244' || input.symptomp2 !== '244'
+                          input.symptomp1 !== '244' && input.symptomp2 !== '244'
                         "
                         value="244"
                       >
@@ -174,7 +174,7 @@ export default {
                       </option>
                       <option
                         v-if="
-                          input.symptomp1 !== '11' || input.symptomp2 !== '11'
+                          input.symptomp1 !== '11' && input.symptomp2 !== '11'
                         "
                         value="11"
                       >
@@ -182,7 +182,7 @@ export default {
                       </option>
                       <option
                         v-if="
-                          input.symptomp1 !== '33' || input.symptomp2 !== '33'
+                          input.symptomp1 !== '33' && input.symptomp2 !== '33'
                         "
                         value="33"
                       >
@@ -190,7 +190,7 @@ export default {
                       </option>
                       <option
                         v-if="
-                          input.symptomp1 !== '45' || input.symptomp2 !== '45'
+                          input.symptomp1 !== '45' && input.symptomp2 !== '45'
                         "
                         value="45"
                       >
@@ -198,7 +198,7 @@ export default {
                       </option>
                       <option
                         v-if="
-                          input.symptomp1 !== '73' || input.symptomp2 !== '73'
+                          input.symptomp1 !== '73' && input.symptomp2 !== '73'
                         "
                         value="73"
                       >
@@ -206,7 +206,7 @@ export default {
                       </option>
                       <option
                         v-if="
-                          input.symptomp1 !== '44' || input.symptomp2 !== '44'
+                          input.symptomp1 !== '44' && input.symptomp2 !== '44'
                         "
                         value="44"
                       >
@@ -214,7 +214,7 @@ export default {
                       </option>
                       <option
                         v-if="
-                          input.symptomp1 !== '12' || input.symptomp2 !== '12'
+                          input.symptomp1 !== '12' && input.symptomp2 !== '12'
                         "
                         value="12"
                       >
