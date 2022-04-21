@@ -13,7 +13,9 @@ export default {
       selectedPokemon: -1,
       selectedPokemonDetail: {},
       showPokemonList: false,
+      showConfirmTrade: false,
       confirmTradeCount: 0,
+      tradeSuccess: false,
     };
   },
   computed: {
@@ -28,6 +30,18 @@ export default {
         );
       }
     },
+    chats(val) {
+      if (val.length >= 2) {
+        const lastTwoChats = val.slice(-2);
+        if (
+          lastTwoChats[0].UserId != lastTwoChats[1].UserId &&
+          lastTwoChats[0].PokemonId &&
+          lastTwoChats[1].PokemonId
+        ) {
+          this.showConfirmTrade = true;
+        }
+      }
+    },
   },
   sockets: {
     connect() {
@@ -36,11 +50,19 @@ export default {
     disconnect() {
       console.log("disconnected", this.$socket);
     },
-    customEventFromServer(payload) {
-      console.log("customEventFromServer", payload);
-    },
     receivedMessageFromServer(chats) {
       this.chats = chats;
+    },
+    incrementConfirmCountServer() {
+      this.confirmTradeCount++;
+    },
+    completeTradeServer() {
+      this.showConfirmTrade = false;
+      this.tradeSuccess = true;
+      this.$swal({
+        title: "Success trade pokemon",
+        icon: "success",
+      });
     },
   },
   methods: {
@@ -72,17 +94,26 @@ export default {
     async confirmTradeHandler() {
       try {
         if (this.confirmTradeCount < 1) {
-          this.confirmTradeCount++;
+          this.$socket.client.emit("incrementConfirmCount");
         } else if (this.confirmTradeCount == 1) {
-          this.confirmTradeCount++;
+          this.$socket.client.emit("incrementConfirmCount");
           const tradeData = this.chats.slice(-2);
-          // firstUserId, firstPokemonId, secondUserId, secondPokemonId
-          const { data } = await tradeRequest();
+          const { data } = await this.tradeRequest({
+            firstUserId: tradeData[0].UserId,
+            firstPokemonId: tradeData[0].PokemonId,
+            secondUserId: tradeData[1].UserId,
+            secondPokemonId: tradeData[1].PokemonId,
+          });
+          this.tradeSuccess = true;
+          this.confirmTradeCount = 0;
+
+          this.$socket.client.emit("completeTrade");
+          this.showConfirmTrade = false;
         }
       } catch (err) {
         this.$swal({
           title: "Error",
-          text: err.response.data.message,
+          text: err,
           icon: "error",
         });
       }
@@ -149,6 +180,7 @@ export default {
               </li>
               <li>
                 <button
+                  v-if="showConfirmTrade"
                   @click="confirmTradeHandler"
                   class="w-full bg-green-500 py-2 font-semibold uppercase text-white hover:bg-green-700"
                 >
