@@ -73,7 +73,9 @@ export default {
             <div class="contact100-form-checkbox"></div>
 
             <div>
-              <a href="#" class="txt1"> Forgot Password? </a>
+              <router-link to="/forgot" class="txt1">
+                Forgot Password?
+              </router-link>
             </div>
           </div>
 
