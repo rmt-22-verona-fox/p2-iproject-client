@@ -1,9 +1,11 @@
 <script>
 import { mapWritableState, mapActions } from "pinia";
 import { usePackageStore } from "../../../../stores/package";
-import Flicking from "@egjs/vue3-flicking";
 import PromoCard from "./PromoCard/index.vue";
 import { useToast } from "vue-toastification";
+
+import { Carousel, Navigation, Slide } from "vue3-carousel";
+import "vue3-carousel/dist/carousel.css";
 
 export default {
   setup() {
@@ -12,8 +14,10 @@ export default {
   },
 
   components: {
-    Flicking: Flicking,
     PromoCard,
+    Carousel,
+    Slide,
+    Navigation,
   },
 
   computed: {
@@ -45,20 +49,26 @@ export default {
     <h3 class="text-heading-3 text-white font-label font-bold pt-14 mb-4">
       Promo Liburan
     </h3>
-    <Flicking
-      v-bind:options="{
-        moveType: 'freeScroll',
-        bound: true,
-        align: 'center',
-      }"
-      class="py-5 flicking-panel"
-    >
-      <PromoCard
-        v-for="promoPackage in promoPackageList"
-        v-bind:key="promoPackage?.id"
-        v-bind:promoPackage="promoPackage"
-        class="mx-5"
-      />
-    </Flicking>
+    <Carousel v-bind:items-to-show="2.5" v-bind:wrap-around="false">
+      <Slide v-for="slide in promoPackageList" v-bind:key="slide">
+        <PromoCard
+          v-bind:promoPackage="slide"
+          class="carousel__item text-left w-full"
+        />
+      </Slide>
+
+      <template #addons>
+        <Navigation />
+      </template>
+    </Carousel>
   </div>
 </template>
+
+<style>
+.carousel__prev,
+.carousel__next {
+  opacity: 0.7;
+  background-color: #1053b7;
+  /* display: none; */
+}
+</style>
