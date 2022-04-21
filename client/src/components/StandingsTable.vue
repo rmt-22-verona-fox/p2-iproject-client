@@ -5,7 +5,7 @@ import { useNbaStore } from "@/stores/nbaStore";
 export default {
   data() {
     return {
-      seasons: [2015, 2016, 2017, 2018, 2019, 2020, 2021],
+      seasons: [],
       items: [],
       columns: [
         { key: "Rank" },
@@ -68,7 +68,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useNbaStore, ["axiosStandings"]),
+    ...mapActions(useNbaStore, ["axiosStandings", "axiosSeasons"]),
 
     sortRank(sortBy) {
       switch (sortBy) {
@@ -150,8 +150,16 @@ export default {
           this.conference
         );
 
-        console.log(response.data);
         this.items = response.data;
+      } catch (err) {
+        console.log(err.response);
+      }
+    },
+
+    async getSeasons() {
+      try {
+        const response = await this.axiosSeasons();
+        this.seasons = response.data;
       } catch (err) {
         console.log(err.response);
       }
@@ -160,7 +168,7 @@ export default {
   async created() {
     try {
       await this.getData();
-
+      await this.getSeasons();
       this.sortRank(this.sortBy);
     } catch (err) {
       console.log(err.response);
@@ -170,7 +178,7 @@ export default {
 </script>
 
 <template>
-  <h1 class="mt-3 ml-2" style="font-size: 2rem;">NBA STANDINGS</h1>
+  <h1 class="mt-3 ml-2" style="font-size: 2rem">NBA STANDINGS</h1>
 
   <div class="my-3">
     <va-divider />

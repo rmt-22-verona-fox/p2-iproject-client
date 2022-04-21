@@ -11,7 +11,9 @@ export const useNbaStore = defineStore({
       return axios.post(`${BASE_URL}/nba/standings`, { season, conference });
     },
 
-    axiosSeasons() {},
+    axiosSeasons() {
+      return axios.get(`${BASE_URL}/nba/seasons`)
+    },
 
     axiosGames(season, date) {},
   },
