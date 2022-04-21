@@ -4,6 +4,7 @@ import MyFoodView from '../views/MyFoodView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import ContactView from '../views/ContactView.vue'
+import PremiumArticleView from '../views/PremiumArticleView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/contact-us',
       name: 'contact-us',
       component: ContactView
+    },
+    {
+      path: '/premium',
+      name: 'premium',
+      component: PremiumArticleView
     },
   ]
 })

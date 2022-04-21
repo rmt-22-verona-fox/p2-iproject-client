@@ -38,10 +38,9 @@ export default {
   <div class="wrapper fadeInDown">
     <br />
     <div id="formContent">
-      <!-- Tabs Titles -->
 
       <br /><br />
-      <!-- Icon -->
+
       <div class="fadeIn first logo">
         <img
           style="width: 110px"
@@ -149,7 +148,7 @@ h2 {
   background: #fff;
   padding: 30px;
   width: 90%;
-  max-width: 550px;
+  max-width: 500px;
   position: relative;
   padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);

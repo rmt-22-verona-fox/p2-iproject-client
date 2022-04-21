@@ -59,18 +59,6 @@ export default {
         </div>
         <br>
        
-        <!-- <div class="horizontal-tabs">
-          <a href="#">My details</a>
-          <a href="#">Profile</a>
-          <a href="#">Password</a>
-          <a href="#">Team</a>
-          <a href="#">Plan</a>
-          <a href="#">Billing</a>
-          <a href="#">Email</a>
-          <a href="#">Notifications</a>
-          <a href="#" class="active">Integrations</a>
-          <a href="#">API</a>
-        </div> -->
         <div class="content-header">
 
            
@@ -82,10 +70,7 @@ export default {
             </p>
           </div>
           <div class="content-header-actions">
-            <!-- <a href="#" class="button">
-              <i class="ph-faders-bold"></i>
-              <span>Filters</span>
-            </a> -->
+
             <div class="search" style="width: 450px;">
             <input type="text" v-model="keyword" placeholder="e.g. Cake" />
             <button @click.prevent="searchFood" type="submit">
@@ -101,9 +86,8 @@ export default {
               <RouterLink class="active" to="/">
                 All Food
               </RouterLink>
-              <RouterLink to="/food" href="#">My Food</RouterLink>
-              <a href="#">Article For You</a>
-              <a href="#">Chat Room</a>
+              <RouterLink to="/food" >My Food</RouterLink>
+              <RouterLink to="/premium" >Premium Article</RouterLink>
             </div>
           </div>
           <div class="content-main">
@@ -128,13 +112,13 @@ export default {
                    <br>
                  
                   <p style="  padding-bottom: 10px;"> 🔥 Calories: {{data.nutrition.nutrients[0].amount.toFixed(2)}} kcal</p>
-                  <p style="  padding-bottom: 10px;"> 🔥 Fat: {{data.nutrition.nutrients[1].amount.toFixed(2)}} g</p>
+                  <p style="  padding-bottom: 10px;"> ♨️ Fat: {{data.nutrition.nutrients[1].amount.toFixed(2)}} g</p>
                 </div>
                 <div>
 
                 </div>
                 <div class="card-footer">
-                  <a @click.prevent="addClick({
+                  <a href="" class="action" @click.prevent="addClick({
                     title: data.title,
                     seriesNumber: data.id,
                     image: data.image,
@@ -142,8 +126,6 @@ export default {
                   })">+ Add to My Food</a>
                 </div>
               </article>
-
-            
             </div>
           </div>
         </div>
@@ -154,5 +136,9 @@ export default {
 
 <style>
 @import "@/assets/base.css";
+
+.action:hover {
+  color: rgb(138, 141, 140);
+}
 
 </style>

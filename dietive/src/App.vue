@@ -29,7 +29,7 @@ export default {
     async logout() {
       try {
         await this.logoutAction();
-        this.$router.push("/login")
+        this.$router.push("/login");
       } catch (err) {
         console.log(err);
       }
@@ -56,39 +56,45 @@ export default {
     <header class="header">
       <div class="header-content responsive-wrapper">
         <div class="header-logo">
-          <a href="#" style="color: green; text-decoration: none">
+          <RouterLink to="/" href="" style="color: green; text-decoration: none">
             <div>
               <img style="height: 50px" src="./assets/DietLogo.jpg" />
             </div>
-            <!-- <img src="https://assets.codepen.io/285131/untitled-ui.svg" /> -->
             <h5 style="color: black; text-decoration: none">Dietiv</h5>
-          </a>
+          </RouterLink>
         </div>
         <div class="header-navigation">
           <nav class="header-navigation-links">
-          <RouterLink v-if="isLogin === true" to="/"> Home </RouterLink>
-            <RouterLink to="/contact-us"> Contact Us </RouterLink>
+            <RouterLink href="" class="action" v-if="isLogin === true" to="/">
+              Home
+            </RouterLink>
+            <RouterLink href="" class="action" to="/contact-us">
+              Contact Us
+            </RouterLink>
           </nav>
           <div class="header-navigation-actions">
             <!-- <a href="#" class="button">
               <i class="ph-lightning-bold"></i>
               <span>Upgrade now</span>
             </a> -->
-            <!-- <a href="#" class="icon-button">
-              <i class="ph-sign-out-bold"></i>
-            </a> -->
-            <a v-if="isLogin === true" class="button" @click.prevent="logout" style="font-size: 12px">
+            <a
+              v-if="isLogin === true"
+              class="button"
+              @click.prevent="logout"
+              style="font-size: 12px"
+            >
               <i class="ph-sign-out-bold"></i><i>Log out</i></a
             >
-            <RouterLink to="/login" v-if="isLogin === false" class="button" style="font-size: 12px">
+            <RouterLink
+              to="/login"
+              v-if="isLogin === false"
+              class="button"
+              style="font-size: 12px"
+            >
               <i class="ph-sign-in-bold"></i><i>Log in</i></RouterLink
             >
           </div>
         </div>
-        <!-- <a href="#" class="button">
-          <i class="ph-list-bold"></i>
-          <span>Menu</span>
-        </a> -->
       </div>
     </header>
 
@@ -98,4 +104,7 @@ export default {
 
 <style>
 @import "@/assets/base.css";
+.action:hover {
+  color: rgb(138, 141, 140);
+}
 </style>
