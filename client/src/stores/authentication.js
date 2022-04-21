@@ -8,7 +8,7 @@ export const useAuthenStore = defineStore({
   state: () => ({
     isLoggedIn: false,
     trainer: {
-      id: 0,
+      id: undefined,
       username: "",
       account: "",
     },

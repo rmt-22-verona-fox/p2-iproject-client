@@ -29,7 +29,9 @@ export default {
 <template>
   <main class="mx-auto max-w-6xl px-4">
     <section class="mx-auto flex h-96 items-center justify-center">
-      <div class="mx-auto font-pkmnsolid text-5xl">Profile</div>
+      <div class="">
+        <img src="../assets/trainer-avatar.png" alt="" />
+      </div>
     </section>
     <MyPokemons></MyPokemons>
   </main>
