@@ -42,7 +42,7 @@ export default {
                 alt="Logo"
                 class="mr-2 h-8 w-8 object-contain"
               />
-              <span class="font-pkmnsolid">Twittemon</span>
+              <span class="font-pkmnsolid">Pokenomo</span>
             </router-link>
           </div>
         </div>

@@ -42,7 +42,6 @@ export default {
       this.video.thumbnail = data.items[0].snippet.thumbnails.medium.url;
       this.video.title = data.items[0].snippet.title;
     } catch (err) {
-      console.log(err);
       this.$swal({
         title: "Error",
         text: err,
@@ -54,7 +53,7 @@ export default {
 </script>
 
 <template>
-  <div class="flex pt-10">
+  <div class="mt-10 flex px-5 py-4 shadow-lg">
     <div class="flex basis-1/4 flex-col justify-between">
       <div>
         <p class="font-medium">
@@ -71,15 +70,16 @@ export default {
             currentPokemon.name.toUpperCase()[0] + currentPokemon.name.slice(1)
           }}
         </p>
-        <p>
-          The flame inside its body burns hotter than 3,600 degrees Fahrenheit.
-          When Charizard roars, that temperature climbs even higher. It evolves
-          from Charmeleon starting at level 36. It is the final form of
-          Charmander
+        <p class="my-3 text-justify tracking-wide">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec varius
+          pulvinar nisi, non luctus libero tincidunt non. Sed finibus leo odio,
+          vitae consequat magna fermentum quis. Suspendisse nec nulla in purus
+          aliquet cursus quis vel nibh. Maecenas pulvinar nulla accumsan ligula
+          pellentesque imperdiet.
         </p>
       </div>
       <div>
-        <p>Major appearance</p>
+        <p class="mb-2 text-xl font-medium">Major appearance</p>
         <div class="h-[157.5px] w-full">
           <iframe
             :src="'https://www.youtube.com/embed/' + video.id"
@@ -100,9 +100,9 @@ export default {
         />
       </div>
     </div>
-    <div class="flex basis-1/4 flex-col justify-between">
+    <div class="flex basis-1/4 flex-col justify-start gap-y-10">
       <div>
-        <p>Type</p>
+        <p class="text-xl font-medium">Type</p>
         <span
           v-for="typeName in currentPokemon.types"
           :class="getTypeColor(typeName)"
@@ -111,10 +111,17 @@ export default {
         >
       </div>
       <div>
-        <p>Weaknesses</p>
-        <span>Water</span>
-        <span>Electric</span>
-        <span>Rock</span>
+        <p class="text-xl font-medium">Weaknesses</p>
+        <span
+          :class="getTypeColor('ground')"
+          class="mr-2 rounded-md px-4 text-[11px] font-semibold uppercase"
+          >Ground</span
+        >
+        <span
+          :class="getTypeColor('grass')"
+          class="mr-2 rounded-md px-4 text-[11px] font-semibold uppercase"
+          >Grass</span
+        >
       </div>
       <div class="flex flex-col gap-y-2">
         <div v-for="stat in currentPokemon.stats" class="">

@@ -55,20 +55,22 @@ export default {
 </script>
 
 <template>
-  <div class="flex justify-between">
+  <div class="flex justify-between py-5 pt-10">
     <button
       @click="switchPage('previous')"
       type="button"
-      class="rounded-3xl bg-black px-2 py-1 text-sm text-white"
+      :class="{ 'opacity-0': !previousPage }"
+      class="self-start rounded-3xl px-2 py-1 text-sm uppercase"
     >
-      Previous Page
+      <img src="../assets/icons8-back-arrow-48.png" alt="" />
     </button>
     <button
       @click="switchPage('next')"
       type="button"
-      class="rounded-3xl bg-black px-2 py-1 text-sm text-white"
+      :class="{ 'opacity-0': !nextPage }"
+      class="self-end rounded-3xl px-2 py-1 text-sm uppercase"
     >
-      Next Page
+      <img src="../assets/icons8-circled-right-48.png" alt="" />
     </button>
   </div>
   <div class="flex flex-wrap gap-y-10">

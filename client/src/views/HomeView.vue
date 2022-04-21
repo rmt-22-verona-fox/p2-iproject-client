@@ -20,7 +20,7 @@ export default {
     async addCaughtPokemon(pokemonName) {
       try {
         const { data: apiData } = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${pokemonName}`
+          `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`
         );
         const arrSpeciesUrl = apiData.species.url.split("/");
         const pokemonId = arrSpeciesUrl[arrSpeciesUrl.length - 2];
@@ -33,11 +33,12 @@ export default {
           title: "Successfully catch pokemon",
           icon: "success",
         });
+        this.pokemonName = "";
+        this.catchPokemon = false;
       } catch (err) {
-        console.log(err);
         this.$swal({
           title: "Error",
-          text: err,
+          text: "Pokemon " + err.response.data,
           icon: "error",
         });
       }

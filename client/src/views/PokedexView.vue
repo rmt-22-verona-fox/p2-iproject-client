@@ -38,7 +38,6 @@ export default {
 
 <template>
   <section class="mx-auto max-w-6xl px-4">
-    <FilterBar v-if="$route.path === '/pokedex'"></FilterBar>
     <RouterView></RouterView>
   </section>
 </template>
