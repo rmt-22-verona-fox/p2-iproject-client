@@ -4,7 +4,7 @@ import { useDatingStore } from "@/stores/dating";
 export default {
   data() {
     return {
-      local: "http://localhost:3000/images/",
+      local: "https://dating-kacau.herokuapp.com/images/",
     };
   },
   computed: {
