@@ -122,8 +122,7 @@ export const useJobStore = defineStore({
               access_token: localStorage.access_token,
             }
         })
-        const data = response.data
-        // console.log(data)
+        const result = response.data
         new Swal(
           "Success",
           `Job ${result.myApplication.jobId} successfully applied, please check your email for more information`,
@@ -143,11 +142,10 @@ export const useJobStore = defineStore({
               access_token: localStorage.access_token,
             }
         })
-        const data = response.data
-        // console.log(data)
+        const result = response.data
         new Swal(
           "Success",
-          `Job ${result.myApplication.jobId} successfully applied, please check your email for more information`,
+          `Successfully deleted application`,
           "success"
         );
       } catch (error) {
