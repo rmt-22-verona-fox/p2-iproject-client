@@ -209,6 +209,11 @@ export default {
         console.log(error);
       }
     },
+
+    logoutEvent() {
+      localStorage.clear();
+      this.$router.push("/login");
+    },
   },
   computed: {
     ...mapWritableState(useCounterStore, ["isLogin"]),
@@ -243,6 +248,15 @@ export default {
             <router-link class="nav-link active" aria-current="page" to="/"
               >Home</router-link
             >
+          </li>
+          <li class="nav-item">
+            <button
+              class="btn bg-light nav-link active"
+              aria-current="page"
+              @click="logoutEvent"
+            >
+              Logout
+            </button>
           </li>
           <li class="nav-item"></li>
         </ul>
