@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import dummy from '../../dummy.json'
+import articles from '../../articles.json'
 
 export const useFoodStore = defineStore({
   id: "food",
@@ -10,7 +11,10 @@ export const useFoodStore = defineStore({
     city: [],
     isLogin: false,
     userFood: [],
-    userInfo: []
+    userInfo: [],
+    allArticles: [],
+    userDetail: [],
+    status: ""
   }),
 
   actions: {
@@ -146,6 +150,70 @@ export const useFoodStore = defineStore({
         });
 
         console.log(response.data);
+      } catch (err) {
+        console.log(err.response);
+      }
+    },
+    async premiumArticle() {
+      try {
+        const data = articles;
+
+        this.allArticles = data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getUserData() {
+      try {
+        const token = localStorage.getItem("access_token")
+        const response = await axios.get(`http://localhost:3000/users`, {
+          headers: {
+            access_token: token
+          }
+        });
+        this.userDetail = response.data.user;
+        console.log(this.userDetail);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async premiumPay() {
+      try {
+        const token = localStorage.getItem("access_token")
+        const response = await axios.post(`http://localhost:3000/payment`, {}, {
+          headers: {
+            access_token: token
+          }
+        });
+        const tokenToPay = response.data.token
+        
+        console.log(tokenToPay);
+
+        await snap.pay(tokenToPay, {
+  
+          onSuccess: function(result) {
+            this.status = 'success'
+          },
+        })
+
+        await this.updateUser()
+        await this.premiumArticle()
+
+      } catch (err) {
+        console.log(err.response.data);
+      }
+    },
+    async updateUser() {
+      try {
+        const token = localStorage.getItem("access_token")
+        console.log('masukkk');
+        const response = await axios.patch(`http://localhost:3000/users`, {}, {
+          headers: {
+            access_token: token
+          }
+        });
+      
+        
       } catch (err) {
         console.log(err.response);
       }
