@@ -23,6 +23,16 @@ const router = createRouter({
       path: "/training/:drills",
       name: "trainingDrills",
       component: () => import("@/components/TrainingVideo.vue"),
+    },
+    {
+      path: "/nba/games",
+      name: "nbaGames",
+      component: () => import("@/views/NbaGames.vue"),
+    },
+    {
+      path: "/nba/games/:detail",
+      name: "nbaGamesDetail",
+      component: () => import("@/components/GameDetails.vue"),
     }
   ],
 });
