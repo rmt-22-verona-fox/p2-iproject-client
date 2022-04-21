@@ -12,5 +12,8 @@ export const useAuthStore = defineStore({
     loginHandler(payload) {
       return axios.post("http://localhost:3000/login", payload);
     },
+    registerHandler(payload) {
+      return axios.post("http://localhost:3000/register", payload);
+    },
   }
 })

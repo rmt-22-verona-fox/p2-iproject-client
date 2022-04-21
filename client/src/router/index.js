@@ -35,7 +35,7 @@ const router = createRouter({
   ]
 })
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'login' && !localStorage.getItem('access_token')) next({ name: 'login' })
+  if (to.name === 'home' && !localStorage.getItem('access_token')) next({ name: 'login' })
   else if (to.name === 'login' && localStorage.getItem('access_token')) next({ name: 'home' })
   else next()
 })
