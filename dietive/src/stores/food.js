@@ -24,7 +24,7 @@ export const useFoodStore = defineStore({
       try {
          const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch", {
            params: {
-            apiKey: "87331fcef85c482ebf4e26e8cceaefc1",
+            apiKey: "abce0ccd9f8c4d4ab2bc324e01d96e2b",
             minCalories: 0,
             number: 6,
             minFat: 0,
