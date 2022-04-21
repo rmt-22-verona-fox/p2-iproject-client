@@ -6,14 +6,15 @@ export const useMovieStore = defineStore({
     popularMovies: [],
     upcomingMovies: [],
     nowPlayingMovies: [],
-    movieDetails:[]
+    movieDetails: [],
+    paymentData:[]
   }),
   getters: {},
   actions: {
     async fetchMovie() {
       try {
         const response = await axios({
-          url: "http://localhost:3000/populars",
+          url: "https://iproject-kevinwiranata.herokuapp.com/populars",
           method: "GET",
           headers: {
             access_token: localStorage.getItem("access_token"),
@@ -29,7 +30,7 @@ export const useMovieStore = defineStore({
     async fetchUpcomingMovies() {
       try {
         const response = await axios({
-          url: "http://localhost:3000/upcoming",
+          url: "https://iproject-kevinwiranata.herokuapp.com/upcoming",
           method: "GET",
           headers: {
             access_token: localStorage.getItem("access_token"),
@@ -45,7 +46,7 @@ export const useMovieStore = defineStore({
     async fetchNowPlayingMovies() {
       try {
         const response = await axios({
-          url: "http://localhost:3000/nowPlaying",
+          url: "https://iproject-kevinwiranata.herokuapp.com/nowPlaying",
           method: "GET",
           headers: {
             access_token: localStorage.getItem("access_token"),
@@ -61,14 +62,30 @@ export const useMovieStore = defineStore({
     async getDetails(movieId) {
       try {
         const response = await axios({
-          url: `http://localhost:3000/movies/${movieId}`,
+          url: `https://iproject-kevinwiranata.herokuapp.com/movies/${movieId}`,
           method: "GET",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
         });
         this.movieDetails = response.data;
+        this.payment()
         console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async payment() {
+      try {
+        const response = await axios({
+          url: "http://localhost:3000/payment",
+          method: "POST",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+    
+        });
+        this.paymentData = response.data
       } catch (error) {
         console.log(error);
       }

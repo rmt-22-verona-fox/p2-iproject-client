@@ -23,7 +23,7 @@
             <div class="price">
               <span><b>Price: Rp.35.000,00</b></span>
             </div>
-            <button type="button" class="buttonDetail">Buy this movie</button>
+            <button type="button" class="buttonDetail" @click.prevent="paymentHandler">Buy this movie</button>
           </div>
         </div>
       </div>
@@ -36,8 +36,18 @@ import { mapActions, mapState } from "pinia";
 import { useMovieStore } from "@/stores/movie";
     export default {
          computed: {
-    ...mapState(useMovieStore, ["movieDetails"]),
+    ...mapState(useMovieStore, ["movieDetails", 'paymentData']),
   },
+  methods: {
+    ...mapActions(useMovieStore,['payment']),
+    paymentHandler(){
+      this.payment()
+       window.location.href = this.paymentData.redirect_url
+    }
+  },
+  created(){
+    this.payment()
+  }
     }
 </script>
 

@@ -10,10 +10,10 @@ export const useAuthStore = defineStore({
   },
   actions: {
     loginHandler(payload) {
-      return axios.post("http://localhost:3000/login", payload);
+      return axios.post("https://iproject-kevinwiranata.herokuapp.com/login", payload);
     },
     registerHandler(payload) {
-      return axios.post("http://localhost:3000/register", payload);
+      return axios.post("https://iproject-kevinwiranata.herokuapp.com/register", payload);
     },
   }
 })
