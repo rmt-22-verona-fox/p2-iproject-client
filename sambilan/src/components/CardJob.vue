@@ -1,7 +1,14 @@
 <script>
+import ModalJob from "./ModalJob.vue";
 export default {
+  data() {
+    return {
+      state: 'myapp'
+    }
+  }, 
   props: ["application"],
   emits: ["applyJob", "deleteJob"],
+  components: { ModalJob }
 };
 </script>
 
@@ -19,6 +26,7 @@ export default {
           <br />
           Status remote: {{ application.remote }}
         </p>
+        <ModalJob :application='application' :state="state" />
         <button
           v-if="application.status === 'not applied'"
           @click.prevent="this.$emit('applyJob', application.id)"

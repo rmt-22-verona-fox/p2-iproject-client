@@ -12,8 +12,10 @@ export default {
       "getMyApplications",
       "updateStatusMyApplication",
       "deleteMyApplication",
+      'paymentMyApplication'
     ]),
     async applyJob(id) {
+      await this.paymentMyApplication()
       await this.updateStatusMyApplication(id);
       await this.getMyApplications()
     },

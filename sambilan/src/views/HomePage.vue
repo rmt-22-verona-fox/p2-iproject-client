@@ -2,6 +2,7 @@
 import { mapActions, mapWritableState } from "pinia";
 import { useJobStore } from "../stores/job";
 import SideBar from "../components/SideBar.vue";
+import ModalJob from "../components/ModalJob.vue";
 
 export default {
   data() {
@@ -10,7 +11,8 @@ export default {
         title: "",
         source: "",
         remote: "",
-      }
+      },
+      state: 'home'
     };
   },
   computed: {
@@ -28,7 +30,7 @@ export default {
       await this.getJobs(this.dataFilter);
     }
   },
-  components: { SideBar },
+  components: { SideBar, ModalJob },
 };
 </script>
 
@@ -48,6 +50,7 @@ export default {
               <br />
               Status remote: {{ job.remote }}
             </p>
+            <ModalJob :job='job' :state='state'/>
             <button
               @click.prevent="
                 addApplication({
