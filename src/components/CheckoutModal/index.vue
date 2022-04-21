@@ -65,11 +65,22 @@ export default {
           onSuccess: (result) => {
             this.checkoutModalState = false;
             this.toast.success("Pembayaran berhasil dilakukan");
+            this.checkoutHandler({
+              packageQty: this.quantity,
+            });
+          },
+          onPending: function (result) {
+            /* You may add your own js here, this is just example */
+          },
+          // Optional
+          onError: function (result) {
+            /* You may add your own js here, this is just example */
           },
         });
-        await this.checkoutHandler({
-          packageQty: this.quantity,
-        });
+
+        // await this.checkoutHandler({
+        //   packageQty: this.quantity,
+        // });
       } catch (err) {
         this.toast.error("Pembayaran gagal dilakukan");
       }
