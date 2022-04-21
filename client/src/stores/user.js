@@ -3,7 +3,9 @@ import axios from 'axios'
 const baseUrl = 'http://localhost:3000/'
 export const useUserStore = defineStore({
     id: 'user',
-    state: () => ({
+    state: (
+        isLogin = false
+    ) => ({
 
     }),
     getters: {

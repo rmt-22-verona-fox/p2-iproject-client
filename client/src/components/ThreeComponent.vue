@@ -56,9 +56,9 @@ export default {
     title: String,
   },
   created() {
-    // if (title) {
-    //   this.imageUrl = title;
-    // }
+    if (this.title) {
+      this.imageUrl = this.title;
+    }
   },
 };
 </script>

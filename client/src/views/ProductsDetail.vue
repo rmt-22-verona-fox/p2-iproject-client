@@ -2,6 +2,7 @@
 import NavBar from "../components/NavBar.vue";
 import { mapActions, mapState } from "pinia";
 import { useProductsStore } from "@/stores/product";
+import { useInvoiceStore } from "@/stores/invoice";
 import ThreeComponent from "../components/ThreeComponent.vue";
 export default {
   data() {
@@ -24,6 +25,7 @@ export default {
   },
   methods: {
     ...mapActions(useProductsStore, ["fetchProductDetail"]),
+    ...mapActions(useInvoiceStore, ["createInvoice"]),
     submitInvoiceEvent() {
       let obj = {
         itemName: this.productDetail.name,
@@ -31,7 +33,12 @@ export default {
         size: this.size,
         quantity: this.quantity,
       };
-      console.log(obj);
+      const response = this.createInvoice({
+        itemName: this.productDetail.name,
+        price: +this.productDetail.retailPrice * 14000,
+        size: this.size,
+        quantity: this.quantity,
+      });
     },
   },
   props: {},
@@ -45,13 +52,13 @@ export default {
   <NavBar></NavBar>
   <div class="container-fluid mx-0 px-0 d-flex">
     <div class="product-img">
-      <!-- <ThreeComponent /> -->
-      <img :src="productDetail.image.original" />
+      <ThreeComponent :title="productDetail?.image?.original" />
+      <img :src="productDetail?.image?.original" />
     </div>
     <div class="product-desc col-7">
       <h1>{{ productDetail.name }}</h1>
       <h5>{{ productDetail.colorway }}</h5>
-      <p style="text-align: right">{{ idrPrice }}</p>
+      <h4 style="text-align: right">{{ idrPrice }}</h4>
       <form @submit.prevent="submitInvoiceEvent()">
         <select v-model="size" name="size" class="form-control">
           <option disabled selected value>Select Size</option>
@@ -79,11 +86,6 @@ export default {
 </template>
 
 <style scoped>
-@media (min-width: 720px) {
-  .tp-dfwv {
-    margin-left: 16.4rem;
-  }
-}
 .container-fluid {
   margin-top: 0;
   align-content: center;
@@ -91,6 +93,14 @@ export default {
   margin-left: 10%;
   margin-right: 10%;
   padding: 5%;
+}
+
+.product-img {
+  margin-left: 15px;
+}
+.product-desc {
+  margin-left: 10px;
+  margin-right: 15px;
 }
 
 img {

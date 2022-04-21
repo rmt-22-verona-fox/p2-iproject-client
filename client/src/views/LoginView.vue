@@ -1,5 +1,5 @@
 <script>
-import { mapActions } from "pinia";
+import { mapActions, mapWritableState } from "pinia";
 import { useUserStore } from "../stores/user";
 import ThreeComponent from "../components/ThreeComponent.vue";
 import NavBar from "../components/NavBar.vue";
@@ -14,6 +14,9 @@ export default {
     ThreeComponent,
     NavBar,
   },
+  computed: {
+    ...mapWritableState(useUserStore, ["isLogin"]),
+  },
   methods: {
     ...mapActions(useUserStore, ["loginAction"]),
     async loginEvent() {
@@ -25,6 +28,7 @@ export default {
         localStorage.setItem("access_token", login.data.access_token);
         localStorage.setItem("name", login.data.name);
         this.$router.push("/");
+        this.isLogin = true;
         Swal.fire({
           position: "center",
           icon: "success",
