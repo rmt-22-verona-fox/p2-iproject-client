@@ -13,7 +13,7 @@ export default {
 
 <template>
   <section class="mx-auto flex flex-col">
-    <div class="gap-y-10 overflow-x-scroll whitespace-nowrap scrollbar-hide">
+    <div class="gap-y-10 p-4 overflow-x-scroll whitespace-nowrap scrollbar-hide">
       <PokemonCard
         v-if="myPokemons.length"
         v-for="pokemon in myPokemons"
