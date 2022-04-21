@@ -8,21 +8,23 @@ export const useInventoryStore = defineStore({
     posts:[],
     orders:[],
     orderPayment:[],
+    payment:[],
   }),
   getters: {
   
   },
   actions: {
-    isloginAction(payload) {
+  isloginAction(payload) {
       this.isLogin = payload
     },
-    loginAction(payload) {
+  loginAction(payload) {
     return axios.post("/login", {
     email: payload.email,
     password: payload.password,
     });
     },
-    addPostAction(payload) {
+  addPostAction(payload) {
+      console.log("payload: ", payload);
     return axios.post("/post/add", 
         {
           location: payload.location,
@@ -76,6 +78,19 @@ export const useInventoryStore = defineStore({
     try {
     const {data} = await axios.get("/order/pay");
     this.orderPayment = data;
+    } catch (error) {
+      console.log("error: ", error);
+    }
+  },
+  async getpayment(){
+    try {
+      const respon = await axios.post("/order/pay",{},{
+        headers:{
+          access_token: localStorage.getItem("access_token")
+        }
+      })
+      console.log(respon);
+      this.payment = respon.data;
     } catch (error) {
       console.log("error: ", error);
     }

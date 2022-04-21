@@ -29,7 +29,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useInventoryStore, ["orderAction"]),
+    ...mapActions(useInventoryStore, ["orderAction","getpayment"]),
     async submitOrder() {
       try {
         console.log("masuk submit");
@@ -39,7 +39,7 @@ export default {
           location: this.location,
           message: this.message,
         });
-        console.log(data);
+        this.getpayment()
         this.$router.push("/myorder");
       } catch (error) {
         console.log("error: ", error);

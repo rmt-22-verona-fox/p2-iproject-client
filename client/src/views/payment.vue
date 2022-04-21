@@ -27,13 +27,13 @@ import { useInventoryStore } from "@/stores/inventory.js";
 export default {
   name: "payment",
   methods:{
-    ...mapActions(useInventoryStore, ["orderPay"]),
+    ...mapActions(useInventoryStore, ["orderPay","getpayment"]),
     orderPay(){
-      this.$router.push("/")
+      window.location.href = this.payment.redirect_url
     }
   },
   computed:{
-    ...mapState(useInventoryStore, ["posts"])
+    ...mapState(useInventoryStore, ["posts","payment"])
   }
 }
 </script>
