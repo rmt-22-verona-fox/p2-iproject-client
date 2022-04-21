@@ -7,10 +7,15 @@ import { useToast } from "vue-toastification";
 import { Carousel, Navigation, Slide } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 
+import { Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/pagination";
+
 export default {
   setup() {
     const toast = useToast();
-    return { toast };
+    return { toast, modules: [Pagination] };
   },
 
   components: {
@@ -18,6 +23,8 @@ export default {
     Carousel,
     Slide,
     Navigation,
+    Swiper,
+    SwiperSlide,
   },
 
   computed: {
@@ -49,26 +56,44 @@ export default {
     <h3 class="text-heading-3 text-white font-label font-bold pt-14 mb-4">
       Promo Liburan
     </h3>
-    <Carousel v-bind:items-to-show="2.5" v-bind:wrap-around="false">
+    <!-- <Carousel v-bind:itemsToShow="2.5" v-bind:wrap-around="false">
       <Slide v-for="slide in promoPackageList" v-bind:key="slide">
         <PromoCard
           v-bind:promoPackage="slide"
           class="carousel__item text-left w-full"
         />
       </Slide>
+    </Carousel> -->
 
-      <template #addons>
-        <Navigation />
-      </template>
-    </Carousel>
+    <swiper
+      class="swiper"
+      :modules="modules"
+      :space-between="30"
+      :slides-per-view="3"
+      :pagination="{ clickable: true }"
+    >
+      <swiper-slide class="slide">Slide 1</swiper-slide>
+      <swiper-slide class="slide">Slide 2</swiper-slide>
+      <swiper-slide class="slide">Slide 3</swiper-slide>
+      <swiper-slide class="slide">Slide 4</swiper-slide>
+      <swiper-slide class="slide">Slide 5</swiper-slide>
+      <swiper-slide class="slide">Slide 6</swiper-slide>
+      <swiper-slide class="slide">Slide 7</swiper-slide>
+      <swiper-slide class="slide">Slide 8</swiper-slide>
+    </swiper>
   </div>
 </template>
 
-<style>
-.carousel__prev,
-.carousel__next {
-  opacity: 0.7;
-  background-color: #1053b7;
-  /* display: none; */
+<style lang="scss" scoped>
+@import "./scss/_variables.scss";
+// @import "@/styles/init.scss";
+@import "./style.scss";
+
+.swiper {
+  @include swiper-wrapper();
+}
+
+.slide {
+  @include swiper-slide();
 }
 </style>
