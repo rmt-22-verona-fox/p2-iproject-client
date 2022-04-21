@@ -4,10 +4,6 @@
       to="/login"
       >Home</router-link
     >
-    <router-link
-      to="/login"
-      ><i class="fa fa-fw fa-user"></i>Login</router-link
-    >
     <a @click.prevent="logoutHandler"> <i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a>
   </div>
 </template>

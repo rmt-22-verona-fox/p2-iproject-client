@@ -1,5 +1,5 @@
 <template>
-   <!-- HomePage -->
+  <!-- HomePage -->
   <section>
     <div class="banner">
       <div class="banners_contents">
@@ -24,106 +24,73 @@
       <div class="banner--fadeBottom"></div>
     </div>
 
-    <!-- Netflix originials -->
+    <!-- Popular movies -->
     <div class="row">
-      <h2>NETFLIX ORIGINALS</h2>
+      <h2>Popular Movies</h2>
+      <div class="row_posters">
+        <!-- CARD -->
+        <PopularCard
+          v-for="popularMovie in popularMovies"
+          :key="popularMovie.id"
+          :popularMovie="popularMovie"
+        ></PopularCard>
+      </div>
+    </div>
+
+    <!-- Now Playing -->
+    <div class="row">
+      <h2>Now Playing</h2>
       <div class="row_posters">
         <img
-          src="@/assets/images/large-movie1.jpg"
+          :src="nowPlayingMovie.imageUrl"
           alt=""
           class="row_poster row_posterLarge"
-        />
-        <img
-          src="@/assets/images/large-movie2.jpg"
-          alt=""
-          class="row_poster row_posterLarge"
-        />
-        <img
-          src="@/assets/images/large-movie3.jpg"
-          alt=""
-          class="row_poster row_posterLarge"
-        />
-        <img
-          src="@/assets/images/large-movie4.jpg"
-          alt=""
-          class="row_poster row_posterLarge"
-        />
-        <img
-          src="@/assets/images/large-movie5.jpg"
-          alt=""
-          class="row_poster row_posterLarge"
-        />
-        <img
-          src="@/assets/images/large-movie6.jpg"
-          alt=""
-          class="row_poster row_posterLarge"
-        />
-        <img
-          src="@/assets/images/large-movie7.jpg"
-          alt=""
-          class="row_poster row_posterLarge"
-        />
-        <img
-          src="@/assets/images/large-movie8.jpg"
-          alt=""
-          class="row_poster row_posterLarge"
+          v-for="nowPlayingMovie in nowPlayingMovies"
+          :key="nowPlayingMovie.id"
         />
       </div>
     </div>
 
-    <!-- Trending now -->
+    <!-- Upcoming Movies -->
     <div class="row">
-      <h2>Trending Now</h2>
+      <h2>Upcoming Movies</h2>
       <div class="row_posters">
-        <img src="@/assets/images/small-movie1.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie2.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie3.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie4.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie5.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie6.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie7.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie8.jpg" alt="" class="row_poster" />
-      </div>
-    </div>
-
-    <!-- Top rated -->
-    <div class="row">
-      <h2>Top Rated</h2>
-      <div class="row_posters">
-        <img src="@/assets/images/small-movie1.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie2.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie3.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie4.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie5.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie6.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie7.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie8.jpg" alt="" class="row_poster" />
-      </div>
-    </div>
-
-    <!-- Action movies -->
-    <div class="row">
-      <h2>Action movies</h2>
-      <div class="row_posters">
-        <img src="@/assets/images/small-movie1.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie2.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie3.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie4.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie5.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie6.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie7.jpg" alt="" class="row_poster" />
-        <img src="@/assets/images/small-movie8.jpg" alt="" class="row_poster" />
+        <img
+          :src="upcomingMovie.imageUrl"
+          alt=""
+          class="row_poster row_posterLarge"
+          v-for="upcomingMovie in upcomingMovies"
+          :key="upcomingMovie.id"
+        />
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import PopularCard from "../components/PopularMovieCard.vue";
+import { mapActions, mapState } from "pinia";
+import { useMovieStore } from "@/stores/movie";
 export default {
-
-}
+  components: {
+    PopularCard,
+  },
+  computed: {
+    ...mapState(useMovieStore, ["popularMovies", "upcomingMovies","nowPlayingMovies"]),
+  },
+  methods: {
+    ...mapActions(useMovieStore, [
+      "fetchMovie",
+      "fetchUpcomingMovies",
+      "fetchNowPlayingMovies",
+    ]),
+  },
+  created() {
+    this.fetchMovie();
+    this.fetchUpcomingMovies();
+    this.fetchNowPlayingMovies();
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

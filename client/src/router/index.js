@@ -31,16 +31,13 @@ const router = createRouter({
       path: '/payment',
       name: 'payment',
       component: PaymentView
-    },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue')
-    // }
+    }
   ]
+})
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'login' && !localStorage.getItem('access_token')) next({ name: 'login' })
+  else if (to.name === 'login' && localStorage.getItem('access_token')) next({ name: 'home' })
+  else next()
 })
 
 export default router
