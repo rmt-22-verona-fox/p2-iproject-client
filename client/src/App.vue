@@ -37,16 +37,16 @@ export default {
     </template>
   </va-navbar>
 
-  <div class="main-content row" style="overflow: auto">
+  <div class="main-content row">
     <!-- sidebar -->
     <sidebar :minimized="minimized" />
-    <div class="ml-5">
+    <div class="ml-3">
       <router-view></router-view>
     </div>
   </div>
 </template>
 
-<style>
+<style scoped>
 div.main-content {
   min-height: 80vh;
 }

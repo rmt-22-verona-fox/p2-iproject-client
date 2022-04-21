@@ -7,12 +7,22 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: () => import("../views/HomePage.vue"),
+      component: () => import("@/views/HomePage.vue"),
     },
     {
       path: "/nba/standings",
       name: "standings",
-      component: () => import("../components/StandingsTable.vue"),
+      component: () => import("@/components/StandingsTable.vue"),
+    },
+    {
+      path: "/training",
+      name: "training",
+      component: () => import("@/views/TrainingPage.vue"),
+    },
+    {
+      path: "/training/:drills",
+      name: "trainingDrills",
+      component: () => import("@/components/TrainingVideo.vue"),
     }
   ],
 });
