@@ -12,7 +12,7 @@ export default {
         source: "",
         remote: "",
       },
-      state: 'home'
+      state: "home",
     };
   },
   computed: {
@@ -22,6 +22,34 @@ export default {
     ...mapActions(useJobStore, ["getJobs", "addMyApplication"]),
     addApplication(data) {
       this.addMyApplication(data);
+    },
+    formatDate(date) {
+      const newDate = new Date(date);
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      return newDate.toLocaleDateString("en-EN", options);
+    },
+    formatSourceJob(source) {
+      switch (source) {
+        case "Stackoverflow":
+          source = "Stack Overflow";
+          break;
+        case "Remoteok":
+          source = "Remote OK";
+          break;
+        case "Weworkremotely":
+          source = "WeWorkRemotely";
+          break;
+        case "Berlinstartupjobs":
+          source = "Berlin Startup Jobs";
+          break;
+        case "Ycombinator":
+          source = "YCombinator Startups";
+          break;
+        default:
+          source = source;
+          break;
+      }
+      return source;
     },
   },
   async created() {
@@ -35,22 +63,36 @@ export default {
 </script>
 
 <template>
-  <div class="container flex justify-center items-center">
-    <SideBar />
-    <!-- card start -->
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-      <div v-for="job in jobs" :key="job.id" class="col">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">{{ job.role }}</h5>
-            <p class="card-text">
-              Company : {{ job.company_name }}
-              <br />
-              Source : {{ job.source }}
-              <br />
-              Status remote: {{ job.remote }}
-            </p>
-            <ModalJob :job='job' :state='state'/>
+  <div class="container-fluid">
+    <main class="tm-main">
+      <SideBar />
+      <div class="row tm-row">
+        <article
+          v-for="job in jobs"
+          :key="job.id"
+          class="col-12 col-md-6 tm-post"
+        >
+          <hr class="tm-hr-primary" />
+          <h2 class="tm-pt-30 tm-color-primary tm-post-title">
+            {{ job.role }}
+          </h2>
+          <div class="d-flex justify-content-between tm-pt-45">
+            <span class="tm-color-primary"
+              >Status Remote: {{ job.remote }}</span
+            >
+            <span class="tm-color-primary">{{ job.company_name }}</span>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-between">
+            <span>{{ formatDate(job.date_posted) }}</span>
+            <span>Source: {{ formatSourceJob(job.source) }}</span>
+          </div>
+          <div class="tm-pt-45 text-left">
+            <ModalJob
+              :job="job"
+              :state="state"
+              class="position-absolute tm-new-badge"
+            />
             <button
               @click.prevent="
                 addApplication({
@@ -61,20 +103,25 @@ export default {
                   description: job.text,
                   source: job.source,
                   createdDate: job.date_posted,
-                  jobUrl: job.url
+                  jobUrl: job.url,
                 })
               "
-              class="btn btn-success"
+              class="tm-btn tm-btn-primary tm-btn-small"
+              style="margin-left:15px"
             >
               Add to My Application
             </button>
           </div>
-          <div class="card-footer">
-            <small class="text-muted">{{ job.date_posted }}</small>
-          </div>
-        </div>
+        </article>
       </div>
-    </div>
-    <!-- card end -->
+
+      <footer class="row tm-row">
+        <hr class="col-12" />
+        <div class="col-md-6 col-12 tm-color-gray">Design: rickyDefianS</div>
+        <div class="col-md-6 col-12 tm-color-gray tm-copyright">
+          Copyright 2022 iProject Hacktiv8
+        </div>
+      </footer>
+    </main>
   </div>
 </template>
