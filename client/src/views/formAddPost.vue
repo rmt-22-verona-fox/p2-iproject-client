@@ -77,12 +77,14 @@ export default {
           imageUrl: this.imageUrl,
           description: this.description,
         });
+        console.log(data);
         this.$router.push("/home");
       } catch (error) {
         console.log("error: ", error);
       }
     },
     getImage(e) {
+      console.log(e.target.files);
       const file = e.target.files[0];
       this.imageUrl = file;
     },

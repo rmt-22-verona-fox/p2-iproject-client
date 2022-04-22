@@ -9,6 +9,7 @@ export const useInventoryStore = defineStore({
     orders:[],
     orderPayment:[],
     payment:[],
+    myorder:[]
   }),
   getters: {
   
@@ -24,24 +25,19 @@ export const useInventoryStore = defineStore({
     });
     },
   addPostAction(payload) {
-    console.log(payload);
-    // let formData = new FormData()
-    // formData.append("location",payload.location)
-    // formData.append("description",payload.description)
-    // formData.append("price",payload.price)
-    // formData.append("categoryId",payload.categoryId)
-    // formData.append("imageUrl",payload.imageUrl)
+    console.log(payload,"masuk action");
+    let formData = new FormData()
+    formData.append("location",payload.location)
+    formData.append("description",payload.description)
+    formData.append("categoryId",payload.categoryId)
+    formData.append("imageUrl",payload.imageUrl)
     return axios.post("/post", 
+        formData,
         {
-          location: payload.location,
-          category: payload.category,
-          imageUrl: payload.imageUrl,
-          description: payload.description
-        },
-        {
-            headers:{
-              access_token: localStorage.getItem("access_token")
-            }
+        headers:{
+            'Content-Type': 'multipart/form-data',
+          access_token: localStorage.getItem("access_token")
+        }
         }
     );
   },
@@ -67,7 +63,13 @@ export const useInventoryStore = defineStore({
   },
   async getOrderId(id){
     try {
-    await axios.get(`/order/${id}`);
+    const data = await axios.get(`/order`,
+    {
+      headers:{
+        access_token: localStorage.getItem("access_token")
+      }
+    });
+    this.myorder= data
     } catch (error) {
       console.log("error: ", error);
     }
@@ -95,7 +97,6 @@ export const useInventoryStore = defineStore({
           access_token: localStorage.getItem("access_token")
         }
       })
-      console.log(respon);
       this.payment = respon.data;
     } catch (error) {
       console.log("error: ", error);

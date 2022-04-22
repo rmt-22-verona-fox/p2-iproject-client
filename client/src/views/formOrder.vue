@@ -32,7 +32,6 @@ export default {
     ...mapActions(useInventoryStore, ["orderAction","getpayment"]),
     async submitOrder() {
       try {
-        console.log("masuk submit");
         let postId = this.$route.params.id;
         const data = await this.orderAction({
           postId:postId,

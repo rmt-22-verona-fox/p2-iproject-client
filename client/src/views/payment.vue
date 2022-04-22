@@ -6,7 +6,7 @@
 
     <!-- Header & Price -->
     <p class="text-3xl text-gray-700 font-semibold">  </p>
-    <p class="text-xl text-gray-700 font-semibold mt-1"> Total Rp {{posts.payment}} </p>
+    <p class="text-xl text-gray-700 font-semibold mt-1"> Total Rp.50000 </p>
 
     <!-- Description -->
     <p class="text-sm text-gray-700 font-light mt-5 leading-7"> do you really want to make a transaction, if it's true then click the order button below </p>
@@ -33,8 +33,8 @@ export default {
     }
   },
   computed:{
-    ...mapState(useInventoryStore, ["posts","payment"])
-  }
+    ...mapState(useInventoryStore, ["myorder","payment"])
+  },
 }
 </script>
 
