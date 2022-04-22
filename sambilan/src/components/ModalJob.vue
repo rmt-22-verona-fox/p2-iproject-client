@@ -96,8 +96,8 @@ export default {
         </div>
         <div class="modal-body">
           <div v-html="data.description"></div>
-          <div>
-            <iframe src="{{this.videoUrl}}" height="200" width="300" title="Iframe Example"></iframe>
+          <div style="text-align: center;">
+            <iframe :src="videoUrl" height="200" width="300" title="Iframe Example"></iframe>
           </div>
         </div>
         <div class="modal-footer">
