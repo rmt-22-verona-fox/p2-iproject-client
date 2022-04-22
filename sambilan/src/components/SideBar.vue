@@ -22,25 +22,30 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <form>
-      <div class="row mb-3">
-        <label class="col-sm-2 col-form-label">Filter by Title Job</label>
-        <div class="col-sm-10">
-          <input v-model="dataFilter.title" type="text" class="form-control" />
+  <div class="row tm-row">
+    <div class="col-12 tm-mb-75">
+      <div class="form-group row mb-3">
+        <div class="col-sm-12">
+          <input
+            v-model="dataFilter.title"
+            type="text"
+            class="form-control mr-0 ml-auto"
+            placeholder="filter by title job"
+          />
         </div>
       </div>
 
       <div class="row g-3">
         <div class="col">
           <div class="mb-3">
-            <label class="form-label">Filter by Status Remote Job</label>
             <select
               v-model="dataFilter.remote"
-              class="form-select"
+              class="form-control"
               aria-label="filter-remote"
             >
-              <option selected disabled value="">Status Remote</option>
+              <option selected disabled value="">
+                filter by status remote
+              </option>
               <option value="true">Yes</option>
               <option value="false">No</option>
             </select>
@@ -49,13 +54,12 @@ export default {
 
         <div class="col">
           <div class="mb-3">
-            <label class="form-label">Filter by Source Job</label>
             <select
               v-model="dataFilter.source"
-              class="form-select"
+              class="form-control"
               aria-label="filter-source"
             >
-              <option selected disabled value="">Job Source</option>
+              <option selected disabled value="">filter by job source</option>
               <option value="stackoverflow">Stack Overflow</option>
               <option value="remoteok">Remote OK</option>
               <option value="weworkremotely">WeWorkRemotely</option>
@@ -67,11 +71,16 @@ export default {
         </div>
       </div>
 
-      <div class="mb-3">
-        <button class="btn btn-primary" @click.prevent="submitFilter">
-          Submit
-        </button>
+      <div class="form-group row text-right">
+        <div class="col-12">
+          <button
+            class="tm-btn tm-btn-primary tm-btn-small"
+            @click.prevent="submitFilter"
+          >
+            <i class="fas fa-search tm-search-icon"></i>
+          </button>
+        </div>
       </div>
-    </form>
+    </div>
   </div>
 </template>
