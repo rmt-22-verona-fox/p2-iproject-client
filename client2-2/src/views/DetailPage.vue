@@ -70,7 +70,7 @@ export default {
           <td>{{ book.id }}</td>
           <td>{{ book.hotelName }}</td>
           <td>Rp{{ book.price.toLocaleString() }}</td>
-          <td>{{ book[i].price++ }}</td>
+          <td>{{ i }}</td>
         </tr>
       </tbody>
     </table>
