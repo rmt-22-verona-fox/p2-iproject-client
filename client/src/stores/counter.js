@@ -42,7 +42,7 @@ export const useCounterStore = defineStore({
     },
     setUsername(payload) {
       console.log(payload);
-      this.currentEmail = localStorage.getItem("email");
+      this.currentEmail = payload;
       this.socket.emit("setUsername", payload);
     },
     sendMessage(payload) {

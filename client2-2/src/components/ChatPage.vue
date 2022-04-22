@@ -6,7 +6,7 @@ export default {
   sockets: {
     receiveMessageServer: function (payload) {
       console.log("receiveMessageServer", payload);
-      this.chats = "";
+      this.chats = payload;
     },
   },
   data() {

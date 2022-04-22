@@ -8,7 +8,7 @@ import App from "./App.vue";
 import router from "./router";
 import { useCounterStore } from "./stores/counter";
 
-const socket = io("http://localhost:3000");
+const socket = io("https://step-inn-i-project.herokuapp.com");
 
 const app = createApp(App);
 const pinia = createPinia();
