@@ -13,9 +13,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(useCounterStore, ["loginAction"]),
+    ...mapActions(useCounterStore, ["loginAction", "setUsername"]),
     loginEvent() {
       this.loginAction(this.user);
+    },
+    SubmitEmail() {
+      this.setUsername(this.user.email);
     },
   },
 };
@@ -50,7 +53,11 @@ export default {
               placeholder="Password"
             />
           </div>
-          <button type="submit" class="btn btn-success loginField mb-2">
+          <button
+            @click="SubmitEmail"
+            type="submit"
+            class="btn btn-success loginField mb-2"
+          >
             Login
           </button>
         </div>

@@ -86,7 +86,6 @@ export default {
 }
 
 .city-name span {
-  position: relative;
   top: -60px;
   font-size: 40pt;
   font-family: "Times New Roman", Times, serif;

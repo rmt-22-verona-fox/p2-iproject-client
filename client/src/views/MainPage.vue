@@ -1,12 +1,12 @@
 <script>
 import axios from "axios";
-import { mapWritableState } from "pinia";
+import { mapWritableState, mapActions } from "pinia";
 import { useCounterStore } from "../stores/counter";
-import leaflet from "leaflet";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
+import ChatPage from "../components/ChatPage.vue";
 
 export default {
-  components: {},
+  components: { ChatPage },
   setup() {
     onMounted(() => {
       mapboxgl.accessToken =
@@ -45,6 +45,7 @@ export default {
   },
   data() {
     return {
+      isPage: false,
       hotels: {},
       cityFound: false,
       visible: false,
@@ -214,6 +215,14 @@ export default {
       localStorage.clear();
       this.$router.push("/login");
     },
+    ...mapActions(useCounterStore, [
+      "sendCustomEventToServer",
+      "socket_customEventFromServer",
+    ]),
+
+    chatPage() {
+      this.isPage = true;
+    },
   },
   computed: {
     ...mapWritableState(useCounterStore, ["isLogin"]),
@@ -222,13 +231,14 @@ export default {
     if (localStorage.getItem("email")) {
       this.isLogin = true;
     }
+    this.sendCustomEventToServer();
   },
 };
 </script>
 
 <template>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light">
+  <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">StepInn</a>
       <button
@@ -248,6 +258,16 @@ export default {
             <router-link class="nav-link active" aria-current="page" to="/"
               >Home</router-link
             >
+          </li>
+          <li class="nav-item">
+            <button
+              type="button"
+              class="btn bg-light nav-link active"
+              aria-current="page"
+              @click="chatPage"
+            >
+              Customer care
+            </button>
           </li>
           <li class="nav-item">
             <button
@@ -297,69 +317,88 @@ export default {
   <!-- Wheater card -->
   <div class="container-fluid">
     <div class="row">
-      <div class="col-3 actionSide">
-        <div id="main">
-          <div style="width: 300px">
-            <div
-              class="card rounded my-3 shadow-lg back-card overflow-hidden"
-              v-if="visible"
-            >
-              <!-- weather animation container -->
+      <div class="col-5 actionSide">
+        <div class="row" style="padding: 0">
+          <div class="col-5">
+            <div id="main">
+              <div style="width: 300px">
+                <div
+                  class="card rounded my-3 shadow-lg back-card overflow-hidden"
+                  v-if="visible"
+                >
+                  <!-- weather animation container -->
 
-              <!-- Top of card starts here -->
-              <div class="card-top text-center" style="margin-bottom: 6rem">
-                <div class="city-name my-2">
-                  <p>{{ weather.cityName }}</p>
-                  <span>...</span>
-                  <span
-                    ><p class="" style="margin-top: -10px">
-                      {{ weather.country }}
-                    </p></span
-                  >
-                </div>
-              </div>
-              <!-- top of card ends here -->
-
-              <!--card middle body, card body used cos I want to just update the innerHTML -->
-              <div class="card-body">
-                <!-- card middle starts here -->
-                <div class="card-mid">
-                  <div class="row">
-                    <div class="col-12 text-center temp">
-                      <span>{{ weather.temperature }}&deg;C</span>
-                      <p class="my-4">{{ weather.description }}</p>
+                  <!-- Top of card starts here -->
+                  <div class="card-top text-center" style="margin-bottom: 6rem">
+                    <div class="city-name my-2">
+                      <p>{{ weather.cityName }}</p>
+                      <span>...</span>
+                      <span
+                        ><p class="" style="margin-top: -10px">
+                          {{ weather.country }}
+                        </p></span
+                      >
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col d-flex justify-content-between px-5 mx-5">
-                      <p>
-                        <img src="../assets/up.svg" alt="" />
-                        {{ weather.lowTemp }}&deg;C
-                      </p>
-                      <p>
-                        <img src="../assets/up.svg" alt="" />
-                        {{ weather.highTemp }}&deg;C
-                      </p>
+                  <!-- top of card ends here -->
+
+                  <!--card middle body, card body used cos I want to just update the innerHTML -->
+                  <div class="card-body">
+                    <!-- card middle starts here -->
+                    <div class="card-mid">
+                      <div class="row">
+                        <div class="col-12 text-center temp">
+                          <span>{{ weather.temperature }}&deg;C</span>
+                          <p class="my-4">{{ weather.description }}</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div
+                          class="col d-flex justify-content-between px-5 mx-5"
+                        >
+                          <p>
+                            <img src="../assets/up.svg" alt="" />
+                            {{ weather.lowTemp }}&deg;C
+                          </p>
+                          <p>
+                            <img src="../assets/up.svg" alt="" />
+                            {{ weather.highTemp }}&deg;C
+                          </p>
+                        </div>
+                      </div>
                     </div>
+                    <!-- card middle ends here -->
+
+                    <!-- card bottom starts here -->
+                    <div class="card-bottom px-5 py-2 row">
+                      <div class="col text-center">
+                        <p>{{ weather.feelsLike }}&deg;C</p>
+                        <span>Feels like</span>
+                      </div>
+                      <div class="col text-center">
+                        <p>{{ weather.humidity }}%</p>
+                        <span>humidity</span>
+                      </div>
+                    </div>
+
+                    <!-- card bottom ends here -->
                   </div>
                 </div>
-                <!-- card middle ends here -->
-
-                <!-- card bottom starts here -->
-                <div class="card-bottom px-5 py-2 row">
-                  <div class="col text-center">
-                    <p>{{ weather.feelsLike }}&deg;C</p>
-                    <span>Feels like</span>
-                  </div>
-                  <div class="col text-center">
-                    <p>{{ weather.humidity }}%</p>
-                    <span>humidity</span>
-                  </div>
-                </div>
-
-                <!-- card bottom ends here -->
               </div>
             </div>
+          </div>
+          <div
+            v-if="isPage"
+            class="col-7"
+            style="
+              display: flex;
+              flex-direction: column;
+              background-color: #d1fffa;
+              border-radius: 20px;
+              text-align: center;
+            "
+          >
+            <ChatPage></ChatPage>
           </div>
         </div>
         <div>
@@ -382,7 +421,9 @@ export default {
                 </div>
                 <div class="col-md-8" style="height: 175px">
                   <div class="card-body" style="height: 175px">
-                    <h6 class="card-title">{{ hotel.name }}</h6>
+                    <h6 class="card-title">
+                      {{ hotel.name ? hotel.name : "Unknown" }}
+                    </h6>
                     <h6>Rating</h6>
                     <h6 class="card-text" style="color: orange">
                       {{ hotel.overallGuestRating }}/10
@@ -408,7 +449,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="col-9 mapSide">
+      <div class="col-7 mapSide">
         <div class="" id="map"></div>
       </div>
     </div>
@@ -432,6 +473,9 @@ export default {
   justify-content: space-between;
   width: 430px;
   height: 175px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .overflow {

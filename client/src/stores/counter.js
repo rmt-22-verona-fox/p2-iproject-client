@@ -1,14 +1,15 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { vModelCheckbox } from "vue";
 
 export const useCounterStore = defineStore({
   id: "counter",
   state: () => ({
+    currentEmail: localStorage.getItem("email"),
     isLogin: false,
+    chats: [],
   }),
-  getters: {
-    doubleCount: (state) => state.counter * 2,
-  },
+  getters: {},
   actions: {
     async loginAction(payload) {
       try {
@@ -25,6 +26,30 @@ export const useCounterStore = defineStore({
       } catch (error) {
         console.log(error.response.data.message);
       }
+    },
+    socket_connect() {
+      console.log("connected", this.socket);
+    },
+    socket_disconnect() {
+      console.log("socket_disconnect", this.socket);
+    },
+    socket_customEventFromServer(payload) {
+      console.log("customEventFromServer", payload);
+    },
+
+    sendCustomEventToServer() {
+      this.socket.emit("customEventFromClient", { message: "halooo" });
+    },
+    setUsername(payload) {
+      console.log(payload);
+      this.currentEmail = localStorage.getItem("email");
+      this.socket.emit("setUsername", payload);
+    },
+    sendMessage(payload) {
+      this.socket.emit("sendMessageToServer", {
+        user: this.currentEmail,
+        message: payload.trim(),
+      });
     },
   },
 });
