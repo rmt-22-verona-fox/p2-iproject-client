@@ -21,7 +21,79 @@ export default {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <header class="tm-header" id="tm-header">
+    <div class="tm-header-wrapper">
+      <button
+        class="navbar-toggler"
+        type="button"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="tm-site-header">
+        <div class="mb-3 mx-auto tm-site-logo">
+          <i class="fab fa-glide-g fa-2x"></i>
+        </div>
+        <h1 class="text-center">sambilan</h1>
+      </div>
+      <nav class="tm-nav" id="tm-nav">
+        <ul>
+          <li class="tm-nav-item">
+            <RouterLink
+              v-if="isLogin === true"
+              to="/"
+              class="tm-nav-link"
+              href="#"
+              ><i class="fas fa-home"></i>
+              Home</RouterLink
+            >
+          </li>
+          <li class="tm-nav-item">
+            <RouterLink
+              v-if="isLogin === false"
+              to="/"
+              class="tm-nav-link"
+              href="#"
+              ><i class="fas fa-sign-in-alt"></i>
+              Sign In</RouterLink
+            >
+          </li>
+          <li class="tm-nav-item">
+            <RouterLink
+              v-if="isLogin === false"
+              to="/register"
+              class="tm-nav-link"
+              href="#"
+              ><i class="fas fa-user-plus"></i>Sign Up</RouterLink
+            >
+          </li>
+          <li class="tm-nav-item">
+            <RouterLink
+              v-if="isLogin === true"
+              to="/myapp"
+              class="tm-nav-link"
+              href="#"
+              ><i class="fas fa-tasks"></i>
+              My Application</RouterLink
+            >
+          </li>
+          <li class="tm-nav-item">
+            <RouterLink
+              v-if="isLogin === true"
+              to="/login"
+              class="tm-nav-link"
+              @click.prevent="signOut"
+              href="#"
+              ><i class="fas fa-sign-out-alt"></i>
+              Sign Out</RouterLink
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <RouterLink to="/" class="navbar-brand fw-bolder" href="#"
         >Sambilan</RouterLink
@@ -89,7 +161,7 @@ export default {
         </ul>
       </div>
     </div>
-  </nav>
+  </nav> -->
 </template>
 
 <style scoped></style>

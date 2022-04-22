@@ -122,11 +122,10 @@ export const useJobStore = defineStore({
               access_token: localStorage.access_token,
             }
         })
-        const data = response.data
-        // console.log(data)
+        const result = response.data
         new Swal(
           "Success",
-          `Job ${result.myApplication.jobId} successfully applied, please check your email for more information`,
+          `Job ${result.jobId} successfully applied, please check your email for more information`,
           "success"
         );
       } catch (error) {
@@ -143,13 +142,33 @@ export const useJobStore = defineStore({
               access_token: localStorage.access_token,
             }
         })
-        const data = response.data
-        // console.log(data)
+        const result = response.data
         new Swal(
           "Success",
-          `Job ${result.myApplication.jobId} successfully applied, please check your email for more information`,
+          `Successfully deleted application`,
           "success"
         );
+      } catch (error) {
+        const errorMessage = error.response.data.message;
+        new Swal("Error", errorMessage, "error");
+      }
+    },
+
+    async paymentMyApplication() {
+      try {
+        const response = await axios.post(`${this.serverUrl}/myapplications/payment`, {}, {
+          headers: {
+            access_token: localStorage.access_token,
+          }
+        })
+
+        const tokenToPay = response.data.token
+
+        snap.pay(tokenToPay, {
+          onSuccess: function(result) {
+            new Swal("Success", `Payment success`, "success");
+          },
+        })
       } catch (error) {
         const errorMessage = error.response.data.message;
         new Swal("Error", errorMessage, "error");
